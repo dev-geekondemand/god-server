@@ -2,7 +2,7 @@
   "name": "god-backend",
   "version": "1.0.0",
   "description": "A backend for geek on demand platform",
-  "main": "index.js"
+  "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
