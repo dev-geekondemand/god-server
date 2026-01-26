@@ -17,7 +17,7 @@ const path = require("path");
 const geocodeAddress = require('../utils/geocode.js');
 const sendMail = require('../middlewares/sendMail.js');
 const crypto = require('crypto');
-
+const ServiceRequest = require('../models/serviceRequest.js');
 // Create new Geek
  const verifyOtpAndCreateGeek = asyncHandler(async (req, res) => {
 
@@ -248,6 +248,91 @@ const findGeekById = asyncHandler(async (req, res) => {
   }
 
   return res.status(200).json(user);
+});
+
+
+const updateGeekAssignments = asyncHandler(async (req, res) => {
+  const { geekId } = req.params;
+  const { primarySkill, secondarySkills, brandsServiced } = req.body;
+
+  console.log(req.body, req.params);
+
+  if (!geekId) {
+    return res.status(400).json({ message: 'Geek ID is required' });
+  }
+
+  const geek = await Geek.findById(geekId);
+  if (!geek) {
+    return res.status(404).json({ message: 'Geek not found' });
+  }
+
+  // ----- PRIMARY SKILL -----
+  if (primarySkill) {
+    // Decrement old primary category if changed
+    if (geek.primarySkill && geek.primarySkill.toString() !== primarySkill) {
+      const oldCat = await Category.findById(geek.primarySkill);
+      if (oldCat && oldCat.totalGeeks > 0) {
+        oldCat.totalGeeks -= 1;
+        await oldCat.save();
+      }
+    }
+
+    // Increment new primary category
+    const newCat = await Category.findById(primarySkill);
+    if (newCat) {
+      newCat.totalGeeks += 1;
+      await newCat.save();
+      geek.primarySkill = primarySkill;
+    }
+  }
+
+  // ----- SECONDARY SKILLS -----
+  if (secondarySkills?.length > 0) {
+    const oldSecondary = geek.secondarySkills.map(id => id.toString());
+    const toDecrement = oldSecondary.filter(id => !secondarySkills.includes(id));
+    const toIncrement = secondarySkills.filter(id => !oldSecondary.includes(id));
+
+    await Promise.all(
+      toDecrement.map(async id => {
+        const cat = await Category.findById(id);
+        if (cat && cat.totalGeeks > 0) {
+          cat.totalGeeks -= 1;
+          await cat.save();
+        }
+      })
+    );
+
+    await Promise.all(
+      toIncrement.map(async id => {
+        const cat = await Category.findById(id);
+        if (cat) {
+          cat.totalGeeks += 1;
+          await cat.save();
+        }
+      })
+    );
+
+    geek.secondarySkills = secondarySkills;
+  }
+
+  // ----- BRANDS SERVICED -----
+  if (brandsServiced?.length) {
+    // Merge with existing brands (optional: remove duplicates)
+    geek.brandsServiced = Array.from(new Set(brandsServiced));
+    // Optional: you can also validate brand IDs exist in DB
+    // const validBrands = await Brand.find({ _id: { $in: brandsServiced } });
+    // geek.brandsServiced = validBrands.map(b => b._id);
+  }
+
+  // Save Geek
+  await geek.save();
+
+  // Return updated Geek with populated fields
+  const updatedGeek = await Geek.findById(geekId)
+    .populate('primarySkill secondarySkills brandsServiced')
+    .select('-authToken');
+
+  res.status(200).json(updatedGeek);
 });
 
 
@@ -681,6 +766,7 @@ const searchGeeks = asyncHandler(async (req, res) => {
   // 1️⃣ Delete all related requests FIRST
   await ServiceRequest.deleteMany({ geek: id });
 
+
   // 2️⃣ Update category count
   if (geek.primarySkill) {
     const cat = await Category.findById(geek.primarySkill);
@@ -689,6 +775,20 @@ const searchGeeks = asyncHandler(async (req, res) => {
       await cat.save();
     }
   }
+
+  if(geek.secondarySkills?.length > 0) {
+    await Promise.all(
+      geek.secondarySkills.map(async id => {
+        const cat = await Category.findById(id);
+        if (cat) {
+          cat.totalGeeks = Math.max(0, cat.totalGeeks - 1);
+          await cat.save();
+        }
+      })
+    );
+  }
+
+ 
 
   // 3️⃣ Delete geek
   await Geek.findByIdAndDelete(id);
@@ -1238,7 +1338,8 @@ module.exports = {
   sendVerificationEmail,
   verifyEmail,
   getGeeksByBrand,
-  getGeeksByRefCode
+  getGeeksByRefCode,
+  updateGeekAssignments
 };
 
 

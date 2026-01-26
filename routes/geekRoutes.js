@@ -24,7 +24,8 @@ const {
   sendVerificationEmail,
   verifyEmail,
   getGeeksByBrand,
-  getGeeksByRefCode
+  getGeeksByRefCode,
+  updateGeekAssignments
 } =require('../controllers/geekController.js')
 
 const {geekBaseSchema, addressSchema} = require('../validators/geekValidators.js')
@@ -94,8 +95,10 @@ router.post('/geek-email-verify',protectGeek, sendVerificationEmail);
 router.post('/verify-email/:token',protectGeek, verifyEmail);
 
 router.put('/:id/update-details',  updateGeekDetails);
+router.put('/:geekId/mobile/update-details',  updateGeekAssignments);
 
 router.put('/:id/address', protectGeek, updateAddress);
+
 
 router.delete('/:id/rate-card/:rateId', deleteRateCardItem);
 

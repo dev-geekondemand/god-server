@@ -145,7 +145,7 @@ const loginWithGoogle = asyncHandler(async(req, res) => {
 
   res.redirect(`${process.env.FRONTEND_URL}/login-success?token=${token}`);
 
-})
+}) 
 
 const loginWithGoogleMobile = asyncHandler(async (req, res) => {
   const { token } = req.user; // token from Passport strategy
