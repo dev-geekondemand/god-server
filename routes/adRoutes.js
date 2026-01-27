@@ -1,22 +1,33 @@
 const express = require('express');
-const { createAd, getAds, getAdById, updateAd, deleteAd, getInnerAd, getTopAds } = require('../controllers/adController.js');
-const { protectAdmin } = require('../middlewares/authMiddleware.js');
-const { singleUploader, uploadLimiter } = require('../middlewares/azureUploads.js');
+const {
+  createAd,
+  getInnerAd,
+  getTopAds,
+  updateAd,
+  deleteAd,
+} = require('../controllers/adController');
+const { protectAdmin } = require('../middlewares/authMiddleware');
+const { singleUploader, uploadLimiter } = require('../middlewares/azureUploads');
 
 const router = express.Router();
 
-const adImageUploader = singleUploader(['image/jpeg', 'image/png'], 'adImage');
-router.post('/ad-image', 
-    protectAdmin,
-    uploadLimiter,
-    adImageUploader,
-    createAd
+const adImageUploader = singleUploader(
+  ['image/jpeg', 'image/png'],
+  'adImage'
 );
-// router.get('/', getAds);
-router.get('/inner-ads', getInnerAd);
-router.get('/top-ads', getTopAds);
-// router.get('/:id', getAdById);
-router.put('/:id',protectAdmin, updateAd);
-router.delete('/:id',protectAdmin, deleteAd);
 
-module.exports =  router;
+router.post(
+  '/',
+  protectAdmin,
+  uploadLimiter,
+  adImageUploader,
+  createAd
+);
+
+router.get('/top', getTopAds);
+router.get('/inner', getInnerAd);
+
+router.put('/:id', protectAdmin, updateAd);
+router.delete('/:id', protectAdmin, deleteAd);
+
+module.exports = router;
