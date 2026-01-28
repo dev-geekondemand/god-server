@@ -24,10 +24,10 @@ const cors = require('cors')
  const jwt = require('jsonwebtoken')
 const morgan = require('morgan')
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4001;
  
 const corsOptions = {
-    origin:["http://localhost:3001","http://localhost:3000","https://god-ui.vercel.app","https://god-admin-5l63.vercel.app"], 
+    origin:["http://localhost:3001","http://localhost:3000","https://god-web-avangweyfef2ddec.southindia-01.azurewebsites.net","https://god-admin-5l63.vercel.app"], 
     credentials:true,
     optionSuccessStatus:200,
   } 
@@ -51,34 +51,34 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 app.use(cookieParser());
 
-app.use("/api/apiKey",apiKeyRoute)
+// app.use("/api/apiKey",apiKeyRoute)
 
 
-app.use((req, res, next) => {
-  const openPaths = [
-    "/api/seeker/google",
-    "/api/seeker/google/callback",
-    "/api/seeker/microsoft",
-    "/api/seeker/microsoft/callback",
-    "/api/apiKey/generate"
-  ];
+// app.use((req, res, next) => {
+//   const openPaths = [
+//     "/api/seeker/google",
+//     "/api/seeker/google/callback",
+//     "/api/seeker/microsoft",
+//     "/api/seeker/microsoft/callback",
+//     "/api/apiKey/generate"
+//   ];
 
-  if (openPaths.some(path => req.path.startsWith(path))) {
-    return next();
-  }
+//   if (openPaths.some(path => req.path.startsWith(path))) {
+//     return next();
+//   }
 
-  const apiKey = req.headers["x-api-key"] ;
+//   const apiKey = req.headers["x-api-key"] ;
   
-  if (!apiKey) return res.status(403).json({ message: "API key missing" });
+//   if (!apiKey) return res.status(403).json({ message: "API key missing" });
 
-  try {
-    jwt.verify(apiKey, process.env.API_KEY_SECRET);
-    next();
-  } catch (err) {
-    console.log("API key missing");
-    return res.status(403).json({ message: "Invalid or expired API key" });
-  }
-});
+//   try {
+//     jwt.verify(apiKey, process.env.API_KEY_SECRET);
+//     next();
+//   } catch (err) {
+//     console.log("API key missing");
+//     return res.status(403).json({ message: "Invalid or expired API key" });
+//   }
+// });
 
 
 
@@ -99,6 +99,6 @@ app.use('/api/enquiry', enquiryRoutes);
 
 
 
-app.listen(PORT || 4000,()=>{
+app.listen(PORT || 4001,()=>{
     console.log(`Server running on port ${PORT}`)
 }) 
