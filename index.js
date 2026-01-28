@@ -51,34 +51,34 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 app.use(cookieParser());
 
-// app.use("/api/apiKey",apiKeyRoute)
+app.use("/api/apiKey",apiKeyRoute)
 
 
-// app.use((req, res, next) => {
-//   const openPaths = [
-//     "/api/seeker/google",
-//     "/api/seeker/google/callback",
-//     "/api/seeker/microsoft",
-//     "/api/seeker/microsoft/callback",
-//     "/api/apiKey/generate"
-//   ];
+app.use((req, res, next) => {
+  const openPaths = [
+    "/api/seeker/google",
+    "/api/seeker/google/callback",
+    "/api/seeker/microsoft",
+    "/api/seeker/microsoft/callback",
+    "/api/apiKey/generate"
+  ];
 
-//   if (openPaths.some(path => req.path.startsWith(path))) {
-//     return next();
-//   }
+  if (openPaths.some(path => req.path.startsWith(path))) {
+    return next();
+  }
 
-//   const apiKey = req.headers["x-api-key"] ;
+  const apiKey = req.headers["x-api-key"] ;
   
-//   if (!apiKey) return res.status(403).json({ message: "API key missing" });
+  if (!apiKey) return res.status(403).json({ message: "API key missing" });
 
-//   try {
-//     jwt.verify(apiKey, process.env.API_KEY_SECRET);
-//     next();
-//   } catch (err) {
-//     console.log("API key missing");
-//     return res.status(403).json({ message: "Invalid or expired API key" });
-//   }
-// });
+  try {
+    jwt.verify(apiKey, process.env.API_KEY_SECRET);
+    next();
+  } catch (err) {
+    console.log("API key missing");
+    return res.status(403).json({ message: "Invalid or expired API key" });
+  }
+});
 
 
 
