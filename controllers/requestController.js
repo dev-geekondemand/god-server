@@ -268,7 +268,8 @@ const getGeekPendingRequests = asyncHandler(async (req, res) => {
 
 
 const autoRejectRequest = asyncHandler(async (req, res) => {
-  const requests = await ServiceRequest.find({ status: 'Matched' });
+  const requests = await ServiceRequest.find({ status: 'Matched' }).populate('seeker');
+  
   const now = new Date();
   const oneDay = 24 * 60 * 60 * 1000;
   for (const request of requests) {
@@ -278,13 +279,16 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
       request.geekResponseStatus = 'Expired';
       await request.save();
     }
-    await client.messages.create({
-          body: `Your request for ${request.category.title || "your Service"} has expired due to no response from the selected Geek. Please create a new request with a different Geek.`,
-          from: process.env.TWILIO_PHONE_NUMBER,
-          to: geekState.phone
-        });
-  }
-
+    
+        if(request?.seeker?._id && request?.seeker?.phone){
+          await client.messages.create({
+              body: `Your request for ${request.category.title || "your Service"} has expired due to no response from the selected Geek. Please create a new request with a different Geek.`,
+              from: process.env.TWILIO_PHONE_NUMBER,
+              to: request?.seeker?.phone
+            });
+      }
+    }
+ 
 
 
   res.status(200).json({ message: 'Requests updated successfully' });
