@@ -46,8 +46,8 @@ const geekBaseSchema = Joi.object({
     last: Joi.string().required()
   }).required(),
   email: Joi.string().email().optional(),
-  mobile: Joi.string().required(),
-  profileImage: Joi.object({
+  mobile: Joi.string().required(), 
+  profileImage: Joi.object({ 
     public_id: Joi.string(),
     url: Joi.string()
   }),
