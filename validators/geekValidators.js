@@ -39,7 +39,7 @@ const reviewSchema = Joi.array().items(
 );
 
 const geekBaseSchema = Joi.object({
-  refCode: Joi.string().optional(),
+  refCode: Joi.string().trim().allow(null, '').optional(),
   type: Joi.string().valid('Individual', 'Corporate').required(),
   fullName: Joi.object({
     first: Joi.string().required(),

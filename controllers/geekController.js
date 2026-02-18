@@ -564,15 +564,18 @@ const searchGeeks = asyncHandler(async (req, res) => {
     limit = 10,
   } = req.query;
 
-  
+const normalize = (val) =>
+  typeof val === 'string' ? val.trim().replace(/\s+/g, ' ') : val;  
 
   const matchQuery = {};
 
   if (city) {
-    matchQuery['address.city'] = { $regex: city, $options: 'i' };
+const normCity = normalize(city);
+    matchQuery['address.city'] = { $regex: normCity, $options: 'i' };
   }
   if (state) {
-    matchQuery['address.state'] = { $regex: state, $options: 'i' };
+const normState = normalize(state);
+    matchQuery['address.state'] = { $regex: normState, $options: 'i' };
   }
   if (mode) matchQuery['modeOfService'] = mode;
 
@@ -993,10 +996,15 @@ const verifyGeekAadhaar = asyncHandler(async (req, res) => {
 
 
 const bulkUploadGeeks = asyncHandler(async (req, res) => {
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
   const filePath = path.join(__dirname, "../uploads/geeks.xlsx");
 
   if (!fs.existsSync(filePath)) {
-    return res.status(400).json({ message: "Excel file not found." });
+      throw new Error("Excel file not found.");
   }
 
   const workbook = XLSX.readFile(filePath);
@@ -1004,140 +1012,183 @@ const bulkUploadGeeks = asyncHandler(async (req, res) => {
   const rows = XLSX.utils.sheet_to_json(sheet);
 
   const results = [];
+    const geeksToInsert = [];
+
+    const [allBrands, allCategories, existingGeekDocs] = await Promise.all([
+      Brand.find().session(session),
+      Category.find().session(session),
+      Geek.find({}, "mobile").session(session),
+    ]);
+
+    const brandMap = new Map(allBrands.map(b => [b.name.toLowerCase(), b._id]));
+    const categoryMap = new Map(allCategories.map(c => [c._id.toString(), c]));
+    const existingMobiles = new Set(existingGeekDocs.map(g => g.mobile));
 
   for (let row of rows) {
+      const mobile = row["mobile"]?.toString().trim();
+
     try {
       const fullName = {
         first: row["first"]?.trim(),
-        last: row["last"]?.trim(),
-      };
-
-      const mobile = row["Mobile"]?.toString().trim();
-      const primarySkill = row["PrimarySkill"]?.trim();
-      const secondarySkills = row["SecondarySkills"];
-      const yoeRaw = row["Experience"]?.toString().replace("+", "").trim();
-      const yoe = parseInt(yoeRaw);
-      const address = {
-        line1: row["line1"]?.trim(),
-        line2: row["line2"]?.trim(),
-        city: row["City"]?.trim(),
-        state: row["State"]?.trim(),
-        country: row["Country"]?.trim(),
-        pin: row["PIN Code"]?.toString().trim(),
-      };
-      const fullAddress = `${address.line1}, ${address.line2}, ${address.city}, ${address.state}, ${address.country}, ${address.pin}`;
-      const coordinates = await geocodeAddress(fullAddress);
-
-      if (coordinates) {
-        address.location = {
-          type: "Point",
-          coordinates: coordinates, // [lng, lat]
+          last: row["last"] !== undefined ? row["last"]?.trim() : "",
         };
-      } else {
+
+        const primarySkillId = row["primarySkill"]?.trim();
+        const secondarySkills = row["secondarySkills"];
+        const brandsServiced = row["brandsServiced"];
+        const yoe = parseInt(row["experience"] || 0);
+        const type = row["Type"]?.trim() || "Individual";
+
+        const rawAddress = {
+        line1: row["line1"]?.trim(),
+          city: row["city"]?.trim(),
+          state: row["state"]?.trim(),
+          country: row["country"]?.trim(),
+          pin: row["pincode"]?.toString().trim(),
+      };
+
+        /* ---------- REQUIRED VALIDATION ---------- */
+
+        if (!fullName.first || !fullName.last || !mobile || !primarySkillId || isNaN(yoe)) {
+          results.push({ mobile, status: "skipped", reason: "Missing required fields" });
+          continue;
+        }
+
+        if (!rawAddress.line1 || !rawAddress.city || !rawAddress.pin) {
         results.push({
           mobile,
-          status: "warning",
-          reason: "Geolocation failed, location not added",
-        });
-      }
-
-      const type = row["Type"]?.trim() || "Individual";
-      const brandsServiced = row["brandsServiced"];
-
-
-      // Basic validation
-      if (!fullName.first || !fullName.last || !mobile || !primarySkill || isNaN(yoe) || !address.line1 || !address.city || !address.state || !brandsServiced) {
-        results.push({ mobile, status: "skipped", reason: "Missing required fields" });
+            status: "skipped",
+            reason: "Address incomplete",
+          });
         continue;
       }
 
-      const existingGeek = await Geek.findOne({ mobile });
-      if (existingGeek) {
+        if (existingMobiles.has(mobile)) {
         results.push({ mobile, status: "skipped", reason: "Already exists" });
         continue;
       }
 
-      const primaryCategory = await Category.findOne({ title: new RegExp(`^${primarySkill}$`, 'i') });
+        const primaryCategory = categoryMap.get(primarySkillId);
       if (!primaryCategory) {
-        primaryCategory.totalGeeks++;
-        await primaryCategory.save();
-        results.push({ mobile, status: "failed", reason: `Primary skill not found: ${primarySkill}` });
+          results.push({ mobile, status: "failed", reason: "Primary category not found" });
         continue;
       }
 
-      const secondarySkillArray = secondarySkills ? secondarySkills.split(",") : [];
+        /* ---------- GEOCODE (REQUIRED) ---------- */
+
+        const coords = await geocodeAddress.geocodeByPin(rawAddress.pin);
+
+        if (
+          !Array.isArray(coords) ||
+          coords.length !== 2 ||
+          isNaN(coords[0]) ||
+          isNaN(coords[1])
+        ) {
+          results.push({
+            mobile,
+            status: "skipped",
+            reason: "Invalid address geocode",
+          });
+          continue;
+        }
+
+        /* ---------- CATEGORY COUNTS ---------- */
+
+        primaryCategory.totalGeeks++;
+
       const secondaryCategories = [];
-      for (let skill of secondarySkillArray) {
-        const trimmedSkill = skill.trim();
-        if (!trimmedSkill) continue;
-        const cat = await Category.findOne({ title: new RegExp(`^${trimmedSkill}$`, 'i') });
-        if (cat) cat.totalGeeks++;
-        await cat.save();
-        if (cat) secondaryCategories.push(cat._id);
-        else results.push({ mobile, status: "warning", reason: `Secondary skill not found: ${trimmedSkill}` });
-      }
+        if (secondarySkills) {
+          for (let skillId of secondarySkills.split(",")) {
+            const cat = categoryMap.get(skillId.trim());
+            if (cat) {
+              cat.totalGeeks++;
+              secondaryCategories.push(cat._id);
+            }
+          }
+        }
 
-      const brandArray = brandsServiced ? brandsServiced.split(",") : [];
-      const brandIds = [];
-      for (let b of brandArray) {
-        const trimmedBrand = b.trim();
-        if (!trimmedBrand) continue;
-        const brand = await Brand.findOne({ name: new RegExp(`^${trimmedBrand}$`, 'i') });
-        if (brand) brandIds.push(brand._id);
-        else results.push({ mobile, status: "warning", reason: `Brand not found: ${trimmedBrand}` });
-      }
-let newGeek;
-if (type === "Individual") {
-  newGeek = await IndividualGeek.create({
+        /* ---------- BRAND LOOKUP ---------- */
+
+        const brandIds = [];
+        if (brandsServiced) {
+          for (let b of brandsServiced.split(",")) {
+            const id = brandMap.get(b.trim().toLowerCase());
+            if (id) brandIds.push(id);
+          }
+        }
+
+        /* ---------- BUILD DOCUMENT ---------- */
+
+        const address = {
+          ...rawAddress,
+          location: {
+            type: "Point",
+            coordinates: [Number(coords[0]), Number(coords[1])],
+          },
+        };
+
+        const baseGeekData = {
     fullName,
     mobile,
     primarySkill: primaryCategory._id,
     secondarySkills: secondaryCategories,
     yoe,
-    address,
     brandsServiced: brandIds,
-  });
-} else if (type === "Corporate") {
-  newGeek = await CorporateGeek.create({
-    companyName: row["CompanyName"]?.trim(),
-    fullName,
-    mobile,
-    primarySkill: primaryCategory._id,
-    secondarySkills: secondaryCategories,
-    yoe,
     address,
-    brandsServiced: brandIds,
-  });
-} else {
-  // fallback
-  newGeek = await IndividualGeek.create({
-    fullName,
-    mobile,
-    primarySkill: primaryCategory._id,
-    secondarySkills: secondaryCategories,
-    yoe,
-    address,
-    brandsServiced: brandIds,
-  });
-}
+          createdAt: new Date(),
+        };
 
+        geeksToInsert.push(
+          type === "Corporate"
+            ? { __t: "Corporate", companyName: row["CompanyName"]?.trim(), ...baseGeekData }
+            : { __t: "Individual", ...baseGeekData }
+        );
 
-      results.push({ mobile, status: "created", id: newGeek._id });
+        existingMobiles.add(mobile);
+        results.push({ mobile, status: "validated" });
 
     } catch (err) {
       results.push({
-        mobile: row["Mobile"]?.toString() || "unknown",
+          mobile: mobile || "unknown",
         status: "error",
         reason: err.message,
       });
     }
   }
 
+    /* ---------- SAVE COUNTS ---------- */
+
+    for (let category of categoryMap.values()) {
+      await category.save({ session });
+    }
+
+    /* ---------- BULK INSERT ---------- */
+
+    if (geeksToInsert.length) {
+      await Geek.insertMany(geeksToInsert, { session });
+    }
+
+    await session.commitTransaction();
+
   res.status(200).json({
-    message: "Upload completed",
+      message: "Bulk upload completed",
+      inserted: geeksToInsert.length,
     summary: results,
   });
+
+  } catch (err) {
+    if (session.inTransaction()) await session.abortTransaction();
+
+    res.status(500).json({
+      message: "Bulk upload failed",
+      error: err.message,
+    });
+  } finally {
+    session.endSession();
+  }
 });
+
+
 
 
 // controllers/geekController.ts

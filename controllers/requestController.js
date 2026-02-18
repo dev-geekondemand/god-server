@@ -354,11 +354,11 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
         const data={
             to:seeker.email,
             from:process.env.SMTP_EMAIL,
-            subject:"Service Request Sent",
+            subject:"Service Request Accepted",
             text:
-            `Hey ${seeker.fullName.first} ${seeker.fullName.last},
+            `Hey ${seeker?.fullName?.first || ''} ${seeker.fullName?.last || ''},
             
-            Your service request for ${request?.category?.title} has been sent. We'll notify you once a Geek accepts your request.`,
+            Your service request for ${request?.category?.title || 'your service'} has been accepted.You can now connect and resolve the issue.`,
 
         }
         await sendMail(data)
@@ -384,7 +384,7 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
       return res.status(404).json({ message: 'Geek not found' });
     }
   
-    const request = await ServiceRequest.findById(id);
+    const request = await ServiceRequest.findById(id).populate('seeker').populate('geek').populate('category');
 
     if (!request || request.geek.toString() !== geekId.toString()) {
       return res.status(403).json({ message: 'Not authorized or invalid request' });
@@ -426,7 +426,7 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
 
         if (phone && phone.startsWith('+')) {
           await client.messages.create({
-          body: `The request for ${request?.category?.title || 'your service'} was Accepted by ${geek.fullName?.first || 'your Geek'}. You can now connect and resolve the issue.`,
+          body: `The request for ${request?.category?.title || 'your service'} was Rejected by ${geek.fullName?.first || 'your Geek'}. You can choose another geek to resolve the issue.`,
           from: process.env.TWILIO_PHONE_NUMBER,
           to: seeker.phone
         })
@@ -434,11 +434,11 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
         const data={
             to:seeker.email,
             from:process.env.SMTP_EMAIL,
-            subject:"Service Request Sent",
+            subject:"Service Request Rejected",
             text:
-            `Hey ${seeker.fullName.first} ${seeker.fullName.last},
+            `Hey ${seeker.fullName.first} ${seeker.fullName?.last || ''},
             
-            Your service request for ${request?.category?.title} has been sent. We'll notify you once a Geek accepts your request.`,
+            Your service request for ${request?.category?.title || 'your service'} has been rejected. You can choose another geek to resolve the issue.`,
 
         }
         await sendMail(data)
@@ -560,10 +560,11 @@ const completeRequest = asyncHandler(async (req, res) => {
   
   const { id } = req.params;
 
-  const request = await ServiceRequest.findById(id);
+  const request = await ServiceRequest.findById(id).populate('geek').populate('seeker').populate('category');
   if (!request) return res.status(404).json({ message: 'Request not found' });
 
-  if (request.geek?.toString() !== req.user?._id?.toString()) {
+  if (request.geek?._id?.toString() !== req.user?._id?.toString()) {
+ 
     return res.status(403).json({ message: 'Unauthorized' });
   }
 
@@ -600,12 +601,15 @@ const completeRequest = asyncHandler(async (req, res) => {
   request.isCompleted = true;
 
   const seeker = await Seeker.findById(request.seeker);
+  const geek = await Geek.findById(request.geek);
 
+  await request.save();
   if ( seeker && seeker?.expoPushToken) {
     if (!Expo.isExpoPushToken(seeker?.expoPushToken)) {
         console.log("Invalid push token");
         throw new Error("Invalid push token", 400);
       }
+
 
       const message = {
         to: seeker?.expoPushToken, 
@@ -621,7 +625,28 @@ const completeRequest = asyncHandler(async (req, res) => {
           console.log(tickets);
         }
 
-  await request.save();
+        const phone = seeker?.phone?.trim();
+
+        if (phone && phone.startsWith('+')) {
+          await client.messages.create({
+          body: `The request for ${request?.category?.title || 'your service'} was Completed by ${geek.fullName?.first || 'your Geek'}. You can now  review the service.`,
+          from: process.env.TWILIO_PHONE_NUMBER,
+          to: seeker.phone
+        })
+      }else{
+        const data={
+            to:seeker.email,
+            from:process.env.SMTP_EMAIL,
+            subject:"Service Request Completed",
+            text:
+            `Hey ${seeker.fullName.first} ${seeker.fullName?.last || ''},
+            
+           The request for ${request?.category?.title || 'your service'} was Completed by ${geek?.fullName?.first || 'your Geek'}. You can now  review the service.`,
+
+        }
+        await sendMail(data)
+      }
+
   res.status(200).json({ message: 'Request marked as completed', media: request.media });
 });
 
@@ -644,6 +669,8 @@ const addReviewBySeeker = asyncHandler(async (req, res) => {
     return res.status(403).json({ message: 'Unauthorized' });
   }
 
+  const geek = await Geek.findById(request.geek);
+
 const newRating = await Review.create({
     postedBy: req.user.id,
     rating,
@@ -653,6 +680,7 @@ const newRating = await Review.create({
 
   request.reviews?.push(newRating._id);
   request.totalRating = (request.totalRating * request.reviews.length + rating) / (request.reviews.length + 1);
+  geek.totalRating = (geek.totalRating * geek.reviews.length + rating) / (geek.reviews.length + 1);
 
   await request.save();
   res.status(200).json({ message: 'Review added successfully' });
