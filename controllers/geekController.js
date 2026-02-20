@@ -564,17 +564,17 @@ const searchGeeks = asyncHandler(async (req, res) => {
     limit = 10,
   } = req.query;
 
-const normalize = (val) =>
-  typeof val === 'string' ? val.trim().replace(/\s+/g, ' ') : val;  
+  const normalize = (val) =>
+  typeof val === 'string' ? val.trim().replace(/\s+/g, ' ') : val;
 
   const matchQuery = {};
 
   if (city) {
-const normCity = normalize(city);
+    const normCity = normalize(city);
     matchQuery['address.city'] = { $regex: normCity, $options: 'i' };
   }
   if (state) {
-const normState = normalize(state);
+    const normState = normalize(state);
     matchQuery['address.state'] = { $regex: normState, $options: 'i' };
   }
   if (mode) matchQuery['modeOfService'] = mode;
@@ -1001,17 +1001,17 @@ const bulkUploadGeeks = asyncHandler(async (req, res) => {
   try {
     session.startTransaction();
 
-  const filePath = path.join(__dirname, "../uploads/geeks.xlsx");
+    const filePath = path.join(__dirname, "../uploads/geeks.xlsx");
 
-  if (!fs.existsSync(filePath)) {
+    if (!fs.existsSync(filePath)) {
       throw new Error("Excel file not found.");
-  }
+    }
 
-  const workbook = XLSX.readFile(filePath);
-  const sheet = workbook.Sheets[workbook.SheetNames[0]];
-  const rows = XLSX.utils.sheet_to_json(sheet);
+    const workbook = XLSX.readFile(filePath);
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(sheet);
 
-  const results = [];
+    const results = [];
     const geeksToInsert = [];
 
     const [allBrands, allCategories, existingGeekDocs] = await Promise.all([
@@ -1024,12 +1024,16 @@ const bulkUploadGeeks = asyncHandler(async (req, res) => {
     const categoryMap = new Map(allCategories.map(c => [c._id.toString(), c]));
     const existingMobiles = new Set(existingGeekDocs.map(g => g.mobile));
 
-  for (let row of rows) {
-      const mobile = row["mobile"]?.toString().trim();
+    for (let row of rows) {
+      let mobile = row["mobile"]?.toString().trim();
+      if(mobile?.toString().startsWith("91")){
+        mobile = mobile.slice(2);
+      }
+      mobile = "+91" + mobile;
 
-    try {
-      const fullName = {
-        first: row["first"]?.trim(),
+      try {
+        const fullName = {
+          first: row["first"]?.trim(),
           last: row["last"] !== undefined ? row["last"]?.trim() : "",
         };
 
@@ -1040,12 +1044,12 @@ const bulkUploadGeeks = asyncHandler(async (req, res) => {
         const type = row["Type"]?.trim() || "Individual";
 
         const rawAddress = {
-        line1: row["line1"]?.trim(),
+          line1: row["line1"]?.trim(),
           city: row["city"]?.trim(),
           state: row["state"]?.trim(),
           country: row["country"]?.trim(),
           pin: row["pincode"]?.toString().trim(),
-      };
+        };
 
         /* ---------- REQUIRED VALIDATION ---------- */
 
@@ -1055,24 +1059,24 @@ const bulkUploadGeeks = asyncHandler(async (req, res) => {
         }
 
         if (!rawAddress.line1 || !rawAddress.city || !rawAddress.pin) {
-        results.push({
-          mobile,
+          results.push({
+            mobile,
             status: "skipped",
             reason: "Address incomplete",
           });
-        continue;
-      }
+          continue;
+        }
 
         if (existingMobiles.has(mobile)) {
-        results.push({ mobile, status: "skipped", reason: "Already exists" });
-        continue;
-      }
+          results.push({ mobile, status: "skipped", reason: "Already exists" });
+          continue;
+        }
 
         const primaryCategory = categoryMap.get(primarySkillId);
-      if (!primaryCategory) {
+        if (!primaryCategory) {
           results.push({ mobile, status: "failed", reason: "Primary category not found" });
-        continue;
-      }
+          continue;
+        }
 
         /* ---------- GEOCODE (REQUIRED) ---------- */
 
@@ -1096,7 +1100,7 @@ const bulkUploadGeeks = asyncHandler(async (req, res) => {
 
         primaryCategory.totalGeeks++;
 
-      const secondaryCategories = [];
+        const secondaryCategories = [];
         if (secondarySkills) {
           for (let skillId of secondarySkills.split(",")) {
             const cat = categoryMap.get(skillId.trim());
@@ -1128,13 +1132,13 @@ const bulkUploadGeeks = asyncHandler(async (req, res) => {
         };
 
         const baseGeekData = {
-    fullName,
-    mobile,
-    primarySkill: primaryCategory._id,
-    secondarySkills: secondaryCategories,
-    yoe,
-    brandsServiced: brandIds,
-    address,
+          fullName,
+          mobile,
+          primarySkill: primaryCategory._id,
+          secondarySkills: secondaryCategories,
+          yoe,
+          brandsServiced: brandIds,
+          address,
           createdAt: new Date(),
         };
 
@@ -1147,14 +1151,14 @@ const bulkUploadGeeks = asyncHandler(async (req, res) => {
         existingMobiles.add(mobile);
         results.push({ mobile, status: "validated" });
 
-    } catch (err) {
-      results.push({
+      } catch (err) {
+        results.push({
           mobile: mobile || "unknown",
-        status: "error",
-        reason: err.message,
-      });
+          status: "error",
+          reason: err.message,
+        });
+      }
     }
-  }
 
     /* ---------- SAVE COUNTS ---------- */
 
@@ -1170,11 +1174,11 @@ const bulkUploadGeeks = asyncHandler(async (req, res) => {
 
     await session.commitTransaction();
 
-  res.status(200).json({
+    res.status(200).json({
       message: "Bulk upload completed",
       inserted: geeksToInsert.length,
-    summary: results,
-  });
+      summary: results,
+    });
 
   } catch (err) {
     if (session.inTransaction()) await session.abortTransaction();

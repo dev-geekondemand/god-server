@@ -373,7 +373,6 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
 
   // Reject request
  const rejectRequest = asyncHandler(async (req, res) => {
-  // console.log("Reject request called");
   
     const { id } = req.params;
     const geekId = req.user?._id;
@@ -386,7 +385,8 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
   
     const request = await ServiceRequest.findById(id).populate('seeker').populate('geek').populate('category');
 
-    if (!request || request.geek.toString() !== geekId.toString()) {
+    if (!request || request.geek?._id?.toString() !== geekId.toString()) {
+      console.log("Not authorized or invalid request",  request.geek?._id?.toString(),  geekId.toString());
       return res.status(403).json({ message: 'Not authorized or invalid request' });
     }
 

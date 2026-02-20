@@ -27,7 +27,7 @@ const app = express();
 const PORT = process.env.PORT || 4001;
  
 const corsOptions = {
-    origin:["http://localhost:3001","http://localhost:3000","https://god-web-avangweyfef2ddec.southindia-01.azurewebsites.net","https://god-admin-5l63.vercel.app"], 
+    origin:["http://localhost:3001","https://geekondemand.in","http://localhost:3000","https://god-web-avangweyfef2ddec.southindia-01.azurewebsites.net","https://god-admin-5l63.vercel.app"], 
     credentials:true,
     optionSuccessStatus:200,
   } 
@@ -81,7 +81,7 @@ app.use((req, res, next) => {
 });
 
 
-
+ 
 app.get("/", (req, res) => { res.send("Welcome to the Server"); })
 app.use('/api/auth', authRoutes)
 app.use('/api/ad', adRoutes)
