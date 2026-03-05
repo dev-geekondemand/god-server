@@ -44,7 +44,7 @@ router.post('/custom/register', registerCustomUser);
 router.post('/seekers-by-refCode',protectAdmin, getSeekersByRefCode);
 router.post('/seeker-login', verifyOtpAndLogin);
 router.get('/get-all',getAllUsers)
-router.delete('/delete/:userId',deleteUser);
+router.delete('/delete',authenticateMobileJWT, deleteUser);
 
 router.get('/google',
     passport.authenticate('google', { scope: ['profile', 'email'], session: false })
@@ -150,7 +150,7 @@ router.post('/google-mobile', async (req, res) => {
       { email: profile.email, authProvider: 'google' },
       {
         authProvider: 'google',
-          authProviderId: profile.id,
+          authProviderId: profile.sub,
           email: profile.email,
           isEmailVerified: profile.email_verified,
           phone: profile?.phone ? profile.phone : null,

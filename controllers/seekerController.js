@@ -11,6 +11,7 @@ const crypto = require('crypto');
 const { deleteFromAzure } = require('../utils/azureBlob');
 const { uploadToAzure } = require('../middlewares/azureUploads');
 const {  geocodeByPin } = require('../utils/geocode');
+const serviceRequest = require('../models/serviceRequest');
 
 // /controllers/authController.js
 const registerCustomUser = asyncHandler(async (req, res) => {
@@ -316,12 +317,21 @@ const getAllUsers = asyncHandler(async (req, res) => {
 });
 
 const deleteUser = asyncHandler(async (req, res) => {
-  try
-    {const { userId } = req.params;
-    const user = await Seeker.findByIdAndDelete(userId);    
+  try{
+      const userId = req.user?.id;
+      console.log("User ID to delete:", userId);
+      const seeker = await Seeker.findById(userId);
+      if (!seeker) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+       console.log("Seeker found for deletion:", seeker);
+    if (!userId) return res.status(400).json({ message: 'User ID is required' });
+    const deletedServices = await serviceRequest.deleteMany({ seeker: userId });
+    const user = await Seeker.findByIdAndDelete(userId);
     if(!user) return res.status(404).json({ message: 'User not found' });
     res.status(200).json({ message: 'User deleted successfully' });
   }catch(err){
+    console.log("Error",err)
     res.status(500).json({ message: 'Error deleting user', error: err });
   }
 });
