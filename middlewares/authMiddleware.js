@@ -21,10 +21,11 @@ const Admin = require('../models/adminModel.js');
 
 const authenticateMobileJWT = (req, res, next) => {
   const token = req.headers['authorization']?.split(' ')[1] || req.cookies?.auth_token || req.cookies?.geek_auth_token // Get token from cookies;
-  if (!token) {
+  if (!token || token === 'null') {
     return res.status(403).json({ message: "No token provided, authorization denied." });
   }
-
+  
+  
     try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
