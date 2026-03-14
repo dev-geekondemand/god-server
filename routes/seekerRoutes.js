@@ -171,6 +171,79 @@ router.post('/google-mobile', async (req, res) => {
   }
 });
 
+// APPLE SIGN-IN
+router.post('/apple-mobile', async (req, res) => {
+  try {
+    const { identity_token, full_name } = req.body;
+
+    if (!identity_token) {
+      return res.status(400).json({ error: 'Identity token is required' });
+    }
+
+    // Decode the token header to get the key ID (kid)
+    const decoded = jwt.decode(identity_token, { complete: true });
+    if (!decoded) {
+      return res.status(400).json({ error: 'Invalid identity token' });
+    }
+
+    // Fetch Apple's public keys
+    const appleKeysResponse = await fetch('https://appleid.apple.com/auth/keys');
+    if (!appleKeysResponse.ok) {
+      return res.status(500).json({ error: 'Failed to fetch Apple public keys' });
+    }
+    const { keys } = await appleKeysResponse.json();
+
+    // Find the matching key by kid
+    const matchingKey = keys.find(k => k.kid === decoded.header.kid);
+    if (!matchingKey) {
+      return res.status(401).json({ error: 'No matching Apple public key found' });
+    }
+
+    // Convert JWK to PEM and verify
+    const jwkToPem = require('jwk-to-pem');
+    const pem = jwkToPem(matchingKey);
+
+    let payload;
+    try {
+      payload = jwt.verify(identity_token, pem, {
+        algorithms: ['RS256'],
+        issuer: 'https://appleid.apple.com',
+        audience: process.env.APPLE_CLIENT_ID,
+      });
+    } catch (verifyErr) {
+      console.error('Apple token verification failed:', verifyErr);
+      return res.status(401).json({ error: 'Invalid or expired Apple identity token' });
+    }
+
+    const appleUserId = payload.sub;
+    const email = payload.email || null;
+
+    // Find or create the user
+    const user = await Seeker.findOneAndUpdate(
+      { authProvider: 'apple', authProviderId: appleUserId },
+      {
+        authProvider: 'apple',
+        authProviderId: appleUserId,
+        ...(email && { email, isEmailVerified: true }),
+        ...(full_name?.givenName && {
+          fullName: {
+            first: full_name.givenName,
+            last: full_name.familyName || '',
+          },
+        }),
+      },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    res.json({ token, user });
+  } catch (err) {
+    console.error('Apple OAuth error:', err);
+    res.status(500).json({ error: 'Server error during Apple login' });
+  }
+});
+
+
 // MICROSOFT SIGN-IN
 router.post('/microsoft-mobile', async (req, res) => {
   try {

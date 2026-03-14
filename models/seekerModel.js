@@ -37,7 +37,7 @@ const seekerSchema = new mongoose.Schema({
     },
     authProvider: {
         type: String,
-        enum: ['google', 'linkedin', 'microsoft', 'custom'],
+        enum: ['google', 'linkedin', 'microsoft', 'custom', 'apple'],
         required: true,
       },
       authProviderId: {
@@ -70,7 +70,7 @@ const seekerSchema = new mongoose.Schema({
         default: false,
       },
       fullName: {
-        first: { type: String, required: true },
+        first: { type: String, required: function() { return this.authProvider !== 'apple'; } },
         last: { type: String, required: false },
       },
       profileImage: String,
