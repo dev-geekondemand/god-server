@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { generateSasUrl, deleteFromAzure } = require('../utils/azureBlob.js');
 const { default: mongoose } = require('mongoose');
-const XLSX = require("xlsx");
+// const XLSX = require("xlsx");
 // const slugify = require("slugify");
 const fs = require("fs");
 const path = require("path");
@@ -995,202 +995,202 @@ const verifyGeekAadhaar = asyncHandler(async (req, res) => {
 
 
 
-const bulkUploadGeeks = asyncHandler(async (req, res) => {
-  const session = await mongoose.startSession();
+// const bulkUploadGeeks = asyncHandler(async (req, res) => {
+//   const session = await mongoose.startSession();
 
-  try {
-    session.startTransaction();
+//   try {
+//     session.startTransaction();
 
-    const filePath = path.join(__dirname, "../uploads/geeks.xlsx");
+//     const filePath = path.join(__dirname, "../uploads/geeks.xlsx");
 
-    if (!fs.existsSync(filePath)) {
-      throw new Error("Excel file not found.");
-    }
+//     if (!fs.existsSync(filePath)) {
+//       throw new Error("Excel file not found.");
+//     }
 
-    const workbook = XLSX.readFile(filePath);
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(sheet);
+//     const workbook = XLSX.readFile(filePath);
+//     const sheet = workbook.Sheets[workbook.SheetNames[0]];
+//     const rows = XLSX.utils.sheet_to_json(sheet);
 
-    const results = [];
-    const geeksToInsert = [];
+//     const results = [];
+//     const geeksToInsert = [];
 
-    const [allBrands, allCategories, existingGeekDocs] = await Promise.all([
-      Brand.find().session(session),
-      Category.find().session(session),
-      Geek.find({}, "mobile").session(session),
-    ]);
+//     const [allBrands, allCategories, existingGeekDocs] = await Promise.all([
+//       Brand.find().session(session),
+//       Category.find().session(session),
+//       Geek.find({}, "mobile").session(session),
+//     ]);
 
-    const brandMap = new Map(allBrands.map(b => [b.name.toLowerCase(), b._id]));
-    const categoryMap = new Map(allCategories.map(c => [c._id.toString(), c]));
-    const existingMobiles = new Set(existingGeekDocs.map(g => g.mobile));
+//     const brandMap = new Map(allBrands.map(b => [b.name.toLowerCase(), b._id]));
+//     const categoryMap = new Map(allCategories.map(c => [c._id.toString(), c]));
+//     const existingMobiles = new Set(existingGeekDocs.map(g => g.mobile));
 
-    for (let row of rows) {
-      let mobile = row["mobile"]?.toString().trim();
-      if(mobile?.toString().startsWith("91")){
-        mobile = mobile.slice(2);
-      }
-      mobile = "+91" + mobile;
+//     for (let row of rows) {
+//       let mobile = row["mobile"]?.toString().trim();
+//       if(mobile?.toString().startsWith("91")){
+//         mobile = mobile.slice(2);
+//       }
+//       mobile = "+91" + mobile;
 
-      try {
-        const fullName = {
-          first: row["first"]?.trim(),
-          last: row["last"] !== undefined ? row["last"]?.trim() : "",
-        };
+//       try {
+//         const fullName = {
+//           first: row["first"]?.trim(),
+//           last: row["last"] !== undefined ? row["last"]?.trim() : "",
+//         };
 
-        const primarySkillId = row["primarySkill"]?.trim();
-        const secondarySkills = row["secondarySkills"];
-        const brandsServiced = row["brandsServiced"];
-        const yoe = parseInt(row["experience"] || 0);
-        const type = row["Type"]?.trim() || "Individual";
+//         const primarySkillId = row["primarySkill"]?.trim();
+//         const secondarySkills = row["secondarySkills"];
+//         const brandsServiced = row["brandsServiced"];
+//         const yoe = parseInt(row["experience"] || 0);
+//         const type = row["Type"]?.trim() || "Individual";
 
-        const rawAddress = {
-          line1: row["line1"]?.trim(),
-          city: row["city"]?.trim(),
-          state: row["state"]?.trim(),
-          country: row["country"]?.trim(),
-          pin: row["pincode"]?.toString().trim(),
-        };
+//         const rawAddress = {
+//           line1: row["line1"]?.trim(),
+//           city: row["city"]?.trim(),
+//           state: row["state"]?.trim(),
+//           country: row["country"]?.trim(),
+//           pin: row["pincode"]?.toString().trim(),
+//         };
 
-        /* ---------- REQUIRED VALIDATION ---------- */
+//         /* ---------- REQUIRED VALIDATION ---------- */
 
-        if (!fullName.first || !fullName.last || !mobile || !primarySkillId || isNaN(yoe)) {
-          results.push({ mobile, status: "skipped", reason: "Missing required fields" });
-          continue;
-        }
+//         if (!fullName.first || !fullName.last || !mobile || !primarySkillId || isNaN(yoe)) {
+//           results.push({ mobile, status: "skipped", reason: "Missing required fields" });
+//           continue;
+//         }
 
-        if (!rawAddress.line1 || !rawAddress.city || !rawAddress.pin) {
-          results.push({
-            mobile,
-            status: "skipped",
-            reason: "Address incomplete",
-          });
-          continue;
-        }
+//         if (!rawAddress.line1 || !rawAddress.city || !rawAddress.pin) {
+//           results.push({
+//             mobile,
+//             status: "skipped",
+//             reason: "Address incomplete",
+//           });
+//           continue;
+//         }
 
-        if (existingMobiles.has(mobile)) {
-          results.push({ mobile, status: "skipped", reason: "Already exists" });
-          continue;
-        }
+//         if (existingMobiles.has(mobile)) {
+//           results.push({ mobile, status: "skipped", reason: "Already exists" });
+//           continue;
+//         }
 
-        const primaryCategory = categoryMap.get(primarySkillId);
-        if (!primaryCategory) {
-          results.push({ mobile, status: "failed", reason: "Primary category not found" });
-          continue;
-        }
+//         const primaryCategory = categoryMap.get(primarySkillId);
+//         if (!primaryCategory) {
+//           results.push({ mobile, status: "failed", reason: "Primary category not found" });
+//           continue;
+//         }
 
-        /* ---------- GEOCODE (REQUIRED) ---------- */
+//         /* ---------- GEOCODE (REQUIRED) ---------- */
 
-        const coords = await geocodeAddress.geocodeByPin(rawAddress.pin);
+//         const coords = await geocodeAddress.geocodeByPin(rawAddress.pin);
 
-        if (
-          !Array.isArray(coords) ||
-          coords.length !== 2 ||
-          isNaN(coords[0]) ||
-          isNaN(coords[1])
-        ) {
-          results.push({
-            mobile,
-            status: "skipped",
-            reason: "Invalid address geocode",
-          });
-          continue;
-        }
+//         if (
+//           !Array.isArray(coords) ||
+//           coords.length !== 2 ||
+//           isNaN(coords[0]) ||
+//           isNaN(coords[1])
+//         ) {
+//           results.push({
+//             mobile,
+//             status: "skipped",
+//             reason: "Invalid address geocode",
+//           });
+//           continue;
+//         }
 
-        /* ---------- CATEGORY COUNTS ---------- */
+//         /* ---------- CATEGORY COUNTS ---------- */
 
-        primaryCategory.totalGeeks++;
+//         primaryCategory.totalGeeks++;
 
-        const secondaryCategories = [];
-        if (secondarySkills) {
-          for (let skillId of secondarySkills.split(",")) {
-            const cat = categoryMap.get(skillId.trim());
-            if (cat) {
-              cat.totalGeeks++;
-              secondaryCategories.push(cat._id);
-            }
-          }
-        }
+//         const secondaryCategories = [];
+//         if (secondarySkills) {
+//           for (let skillId of secondarySkills.split(",")) {
+//             const cat = categoryMap.get(skillId.trim());
+//             if (cat) {
+//               cat.totalGeeks++;
+//               secondaryCategories.push(cat._id);
+//             }
+//           }
+//         }
 
-        /* ---------- BRAND LOOKUP ---------- */
+//         /* ---------- BRAND LOOKUP ---------- */
 
-        const brandIds = [];
-        if (brandsServiced) {
-          for (let b of brandsServiced.split(",")) {
-            const id = brandMap.get(b.trim().toLowerCase());
-            if (id) brandIds.push(id);
-          }
-        }
+//         const brandIds = [];
+//         if (brandsServiced) {
+//           for (let b of brandsServiced.split(",")) {
+//             const id = brandMap.get(b.trim().toLowerCase());
+//             if (id) brandIds.push(id);
+//           }
+//         }
 
-        /* ---------- BUILD DOCUMENT ---------- */
+//         /* ---------- BUILD DOCUMENT ---------- */
 
-        const address = {
-          ...rawAddress,
-          location: {
-            type: "Point",
-            coordinates: [Number(coords[0]), Number(coords[1])],
-          },
-        };
+//         const address = {
+//           ...rawAddress,
+//           location: {
+//             type: "Point",
+//             coordinates: [Number(coords[0]), Number(coords[1])],
+//           },
+//         };
 
-        const baseGeekData = {
-          fullName,
-          mobile,
-          primarySkill: primaryCategory._id,
-          secondarySkills: secondaryCategories,
-          yoe,
-          brandsServiced: brandIds,
-          address,
-          createdAt: new Date(),
-        };
+//         const baseGeekData = {
+//           fullName,
+//           mobile,
+//           primarySkill: primaryCategory._id,
+//           secondarySkills: secondaryCategories,
+//           yoe,
+//           brandsServiced: brandIds,
+//           address,
+//           createdAt: new Date(),
+//         };
 
-        geeksToInsert.push(
-          type === "Corporate"
-            ? { __t: "Corporate", companyName: row["CompanyName"]?.trim(), ...baseGeekData }
-            : { __t: "Individual", ...baseGeekData }
-        );
+//         geeksToInsert.push(
+//           type === "Corporate"
+//             ? { __t: "Corporate", companyName: row["CompanyName"]?.trim(), ...baseGeekData }
+//             : { __t: "Individual", ...baseGeekData }
+//         );
 
-        existingMobiles.add(mobile);
-        results.push({ mobile, status: "validated" });
+//         existingMobiles.add(mobile);
+//         results.push({ mobile, status: "validated" });
 
-      } catch (err) {
-        results.push({
-          mobile: mobile || "unknown",
-          status: "error",
-          reason: err.message,
-        });
-      }
-    }
+//       } catch (err) {
+//         results.push({
+//           mobile: mobile || "unknown",
+//           status: "error",
+//           reason: err.message,
+//         });
+//       }
+//     }
 
-    /* ---------- SAVE COUNTS ---------- */
+//     /* ---------- SAVE COUNTS ---------- */
 
-    for (let category of categoryMap.values()) {
-      await category.save({ session });
-    }
+//     for (let category of categoryMap.values()) {
+//       await category.save({ session });
+//     }
 
-    /* ---------- BULK INSERT ---------- */
+//     /* ---------- BULK INSERT ---------- */
 
-    if (geeksToInsert.length) {
-      await Geek.insertMany(geeksToInsert, { session });
-    }
+//     if (geeksToInsert.length) {
+//       await Geek.insertMany(geeksToInsert, { session });
+//     }
 
-    await session.commitTransaction();
+//     await session.commitTransaction();
 
-    res.status(200).json({
-      message: "Bulk upload completed",
-      inserted: geeksToInsert.length,
-      summary: results,
-    });
+//     res.status(200).json({
+//       message: "Bulk upload completed",
+//       inserted: geeksToInsert.length,
+//       summary: results,
+//     });
 
-  } catch (err) {
-    if (session.inTransaction()) await session.abortTransaction();
+//   } catch (err) {
+//     if (session.inTransaction()) await session.abortTransaction();
 
-    res.status(500).json({
-      message: "Bulk upload failed",
-      error: err.message,
-    });
-  } finally {
-    session.endSession();
-  }
-});
+//     res.status(500).json({
+//       message: "Bulk upload failed",
+//       error: err.message,
+//     });
+//   } finally {
+//     session.endSession();
+//   }
+// });
 
 
 
@@ -1388,7 +1388,7 @@ module.exports = {
   findGeekById,
   pollAadhaarStatus,
   logoutGeek,
-  bulkUploadGeeks,
+  // bulkUploadGeeks,
   updateGeekRateCard,
   sendVerificationEmail,
   verifyEmail,

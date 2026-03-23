@@ -101,6 +101,10 @@ app.use('/api/admin', adminRoutes);
 
 
 
-app.listen(PORT || 4001,()=>{
-    console.log(`Server running on port ${PORT}`)
-}) 
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT || 4001, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;

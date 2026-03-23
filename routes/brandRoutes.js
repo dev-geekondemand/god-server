@@ -7,13 +7,13 @@ const { uploadLimiter, singleUploader } = require('../middlewares/azureUploads.j
 const router = express.Router();
 
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
-  filename: (req, file, cb) => cb(null, "brands.xlsx"),
-});
-const upload = multer({ storage });
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => cb(null, "uploads/"),
+//   filename: (req, file, cb) => cb(null, "brands.xlsx"),
+// });
+// const upload = multer({ storage });
 
-router.post('/upload-brands', upload.single('file'), uploadBrandsExcel);
+// router.post('/upload-brands', upload.single('file'), uploadBrandsExcel);
 const brandImageUploader = singleUploader(['image/jpeg', 'image/png'], 'brandImage');
 
 router.post('/:id/brand-image', 

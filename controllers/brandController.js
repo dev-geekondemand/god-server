@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const validateMongodbId = require('../utils/validateMongodbId.js');
 const slugify = require('slugify');
 const Category = require('../models/serviceCategory.js');
-const XLSX = require('xlsx');
+// const XLSX = require('xlsx');
 const path = require('path');
 const fs = require("fs");
 const unzipper = require('unzipper');
@@ -11,71 +11,71 @@ const sharp = require('sharp');
 const {uploadToAzure} = require('../middlewares/azureUploads.js');
 const {generateSasUrl,deleteFromAzure} = require('../utils/azureBlob.js');
 
-const uploadBrandsExcel = asyncHandler(async (req, res) => {
-  const filePath = path.join(__dirname, "../uploads/brands.xlsx");
+// const uploadBrandsExcel = asyncHandler(async (req, res) => {
+//   const filePath = path.join(__dirname, "../uploads/brands.xlsx");
 
-  if (!fs.existsSync(filePath)) {
-    return res.status(400).json({ message: "Excel file not found." });
-  }
+//   if (!fs.existsSync(filePath)) {
+//     return res.status(400).json({ message: "Excel file not found." });
+//   }
 
-  const workbook = XLSX.readFile(filePath);
-  const sheet = workbook.Sheets[workbook.SheetNames[0]];
-  const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+//   const workbook = XLSX.readFile(filePath);
+//   const sheet = workbook.Sheets[workbook.SheetNames[0]];
+//   const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-  const results = [];
+//   const results = [];
 
-  // First row = category IDs
-  const categoryIds = data[0].filter(Boolean);
+//   // First row = category IDs
+//   const categoryIds = data[0].filter(Boolean);
 
-  for (let col = 0; col < categoryIds.length; col++) {
-    const categoryId = categoryIds[col];
+//   for (let col = 0; col < categoryIds.length; col++) {
+//     const categoryId = categoryIds[col];
 
-    // Check if valid ObjectId and category exists
-    const category = await Category.findById(categoryId);
-    if (!category) {
-      results.push({ categoryId, status: "failed", reason: "Invalid Category ID" });
-      continue;
-    }
+//     // Check if valid ObjectId and category exists
+//     const category = await Category.findById(categoryId);
+//     if (!category) {
+//       results.push({ categoryId, status: "failed", reason: "Invalid Category ID" });
+//       continue;
+//     }
 
-    for (let row = 1; row < data.length; row++) {
-      const rawBrandName = data[row][col];
-      if (!rawBrandName || typeof rawBrandName !== "string") continue;
+//     for (let row = 1; row < data.length; row++) {
+//       const rawBrandName = data[row][col];
+//       if (!rawBrandName || typeof rawBrandName !== "string") continue;
 
-      const brandName = rawBrandName.trim();
-      let baseSlug = slugify(brandName, { lower: true });
-      let slug = baseSlug;
+//       const brandName = rawBrandName.trim();
+//       let baseSlug = slugify(brandName, { lower: true });
+//       let slug = baseSlug;
 
-      // Avoid duplicate brand names or slugs
-      const existing = await Brand.findOne({
-        $or: [{ name: brandName }, { slug }],
-      });
+//       // Avoid duplicate brand names or slugs
+//       const existing = await Brand.findOne({
+//         $or: [{ name: brandName }, { slug }],
+//       });
 
-      if (existing) {
-        results.push({ brand: brandName, status: "skipped", reason: "Already exists" });
-        continue;
-      }
+//       if (existing) {
+//         results.push({ brand: brandName, status: "skipped", reason: "Already exists" });
+//         continue;
+//       }
 
-      // Ensure slug uniqueness by appending counter if needed
-      let counter = 1;
-      while (await Brand.findOne({ slug })) {
-        slug = `${baseSlug}-${counter++}`;
-      }
+//       // Ensure slug uniqueness by appending counter if needed
+//       let counter = 1;
+//       while (await Brand.findOne({ slug })) {
+//         slug = `${baseSlug}-${counter++}`;
+//       }
 
-      const newBrand = await Brand.create({
-        name: brandName,
-        slug,
-        category: category._id,
-      });
+//       const newBrand = await Brand.create({
+//         name: brandName,
+//         slug,
+//         category: category._id,
+//       });
 
-      results.push({ brand: brandName, status: "created", id: newBrand._id });
-    }
-  }
+//       results.push({ brand: brandName, status: "created", id: newBrand._id });
+//     }
+//   }
 
-  res.status(200).json({
-    message: "Brand upload completed",
-    summary: results,
-  });
-});
+//   res.status(200).json({
+//     message: "Brand upload completed",
+//     summary: results,
+//   });
+// });
 
 
 
@@ -330,4 +330,6 @@ const uploadBrandImagesFromZip = asyncHandler(async (req, res) => {
 
 
 
-module.exports = { createBrand,updateBrandImage,uploadBrandImagesFromZip, getBrands, getBrandById, updateBrand, deleteBrand,uploadBrandsExcel, getBrandsByCategory };
+module.exports = { createBrand,updateBrandImage,uploadBrandImagesFromZip, getBrands, getBrandById, updateBrand, deleteBrand,
+  // uploadBrandsExcel,
+   getBrandsByCategory };

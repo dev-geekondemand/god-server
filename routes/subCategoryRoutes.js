@@ -8,7 +8,7 @@ const {
 } = require('../controllers/subCategoryController.js');
 
 const { protectAdmin } = require('../middlewares/authMiddleware.js');
-const { bulkUploadSubCategories } = require("../controllers/subCategoryController");
+// const { bulkUploadSubCategories } = require("../controllers/subCategoryController");
 const multer = require('multer');
 
 const router = express.Router();
@@ -20,12 +20,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Route to handle Excel upload and insertion
-router.post(
-  "/bulk-upload",
-  protectAdmin,
-  upload.single("file"),
-  bulkUploadSubCategories
-);
+// router.post(
+//   "/bulk-upload",
+//   protectAdmin,
+//   upload.single("file"),
+//   bulkUploadSubCategories
+// );
 
 router.post('/',protectAdmin, createSubCategory);
 router.get('/', getSubCategories);

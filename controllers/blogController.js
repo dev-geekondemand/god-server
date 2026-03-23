@@ -1,7 +1,7 @@
 const Blog = require('../models/blogModel');
 const asyncHandler = require('express-async-handler');
 const slugify = require('slugify');
-const XLSX = require("xlsx");
+// const XLSX = require("xlsx");
 // const slugify = require("slugify");
 const fs = require("fs");
 const path = require("path");
@@ -126,55 +126,55 @@ const replyToComment = asyncHandler(async (req, res) => {
 });
 
 
-const importBlogs = asyncHandler(async (req, res) => {
-  const filePath = path.join(__dirname, "../uploads/blogs.xlsx");
+// const importBlogs = asyncHandler(async (req, res) => {
+//   const filePath = path.join(__dirname, "../uploads/blogs.xlsx");
 
-  if (!fs.existsSync(filePath)) {
-    return res.status(400).json({ message: "Excel file not found." });
-  }
+//   if (!fs.existsSync(filePath)) {
+//     return res.status(400).json({ message: "Excel file not found." });
+//   }
 
-  const workbook = XLSX.readFile(filePath);
-  const sheet = workbook.Sheets[workbook.SheetNames[0]];
-  const rows = XLSX.utils.sheet_to_json(sheet);
+//   const workbook = XLSX.readFile(filePath);
+//   const sheet = workbook.Sheets[workbook.SheetNames[0]];
+//   const rows = XLSX.utils.sheet_to_json(sheet);
 
-  const results = [];
+//   const results = [];
 
-  for (let row of rows) {
-    try {
-      const title = row["Title"]?.trim();
-      const slug = slugify(title, { lower: true, strict: true });
-      const description = row["Description"]?.trim();
-      const summary = row["Summary"]?.trim();
+//   for (let row of rows) {
+//     try {
+//       const title = row["Title"]?.trim();
+//       const slug = slugify(title, { lower: true, strict: true });
+//       const description = row["Description"]?.trim();
+//       const summary = row["Summary"]?.trim();
 
-      const existingBlog = await Blog.findOne({ title });
-      if (existingBlog) {
-        results.push({ title, status: "skipped", reason: "Already exists" });
-        continue;
-      }
+//       const existingBlog = await Blog.findOne({ title });
+//       if (existingBlog) {
+//         results.push({ title, status: "skipped", reason: "Already exists" });
+//         continue;
+//       }
 
-      const newBlog = await Blog.create({
-        title,
-        slug,
-        description,
-        summary,
-      });
+//       const newBlog = await Blog.create({
+//         title,
+//         slug,
+//         description,
+//         summary,
+//       });
 
-      results.push({ title, status: "created", id: newBlog._id });
+//       results.push({ title, status: "created", id: newBlog._id });
 
-    } catch (err) {
-      results.push({
-        title: row["Title"]?.toString() || "unknown",
-        status: "error",
-        reason: err.message,
-      });
-    }
-  }
+//     } catch (err) {
+//       results.push({
+//         title: row["Title"]?.toString() || "unknown",
+//         status: "error",
+//         reason: err.message,
+//       });
+//     }
+//   }
 
-  res.status(200).json({
-    message: "Upload completed",
-    summary: results,
-  });
-});
+//   res.status(200).json({
+//     message: "Upload completed",
+//     summary: results,
+//   });
+// });
 
 const updateBlogImage = asyncHandler(async (req, res) => {
  try{
@@ -211,6 +211,6 @@ module.exports = {
   getBlogBySlug,
   addComment,
   replyToComment,
-  importBlogs,
+  // importBlogs,
   updateBlogImage
 };

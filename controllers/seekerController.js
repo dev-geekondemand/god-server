@@ -12,7 +12,7 @@ const { deleteFromAzure } = require('../utils/azureBlob');
 const { uploadToAzure } = require('../middlewares/azureUploads');
 const {  geocodeByPin } = require('../utils/geocode');
 const serviceRequest = require('../models/serviceRequest');
-const XLSX = require('xlsx');
+// const XLSX = require('xlsx');
 
 // /controllers/authController.js
 const registerCustomUser = asyncHandler(async (req, res) => {
@@ -560,87 +560,87 @@ const getSeekersByRefCode = asyncHandler(async (req, res) => {
 });
 
 
-const bulkUploadSeekers = asyncHandler(async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: 'No Excel file uploaded.' });
-  }
+// const bulkUploadSeekers = asyncHandler(async (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).json({ message: 'No Excel file uploaded.' });
+//   }
 
-  const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
-  const sheet = workbook.Sheets[workbook.SheetNames[0]];
-  const rows = XLSX.utils.sheet_to_json(sheet);
+//   const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
+//   const sheet = workbook.Sheets[workbook.SheetNames[0]];
+//   const rows = XLSX.utils.sheet_to_json(sheet);
 
-  if (!rows.length) {
-    return res.status(400).json({ message: 'Excel file is empty.' });
-  }
+//   if (!rows.length) {
+//     return res.status(400).json({ message: 'Excel file is empty.' });
+//   }
 
-  const existingPhones = new Set(
-    (await Seeker.find({}, 'phone').lean()).map(s => s.phone)
-  );
+//   const existingPhones = new Set(
+//     (await Seeker.find({}, 'phone').lean()).map(s => s.phone)
+//   );
 
-  const results = [];
-  const toInsert = [];
+//   const results = [];
+//   const toInsert = [];
 
-  for (const row of rows) {
-    let mobile = row['mobile']?.toString().trim();
-    const first = row['first']?.toString().trim();
-    const last = row['last'] !== undefined ? row['last']?.toString().trim() : '';
-    const refCode = row['refCode']?.toString().trim() || null;
+//   for (const row of rows) {
+//     let mobile = row['mobile']?.toString().trim();
+//     const first = row['first']?.toString().trim();
+//     const last = row['last'] !== undefined ? row['last']?.toString().trim() : '';
+//     const refCode = row['refCode']?.toString().trim() || null;
 
-    if (!mobile || !first) {
-      results.push({ mobile, status: 'skipped', reason: 'Missing required fields (mobile, first)' });
-      continue;
-    }
+//     if (!mobile || !first) {
+//       results.push({ mobile, status: 'skipped', reason: 'Missing required fields (mobile, first)' });
+//       continue;
+//     }
 
-    // Normalise to +91XXXXXXXXXX
-    mobile = mobile.replace(/\D/g, '');
-    if (mobile.startsWith('91') && mobile.length === 12) {
-      mobile = mobile.slice(2);
-    }
-    mobile = '+91' + mobile;
+//     // Normalise to +91XXXXXXXXXX
+//     mobile = mobile.replace(/\D/g, '');
+//     if (mobile.startsWith('91') && mobile.length === 12) {
+//       mobile = mobile.slice(2);
+//     }
+//     mobile = '+91' + mobile;
 
-    if (existingPhones.has(mobile)) {
-      results.push({ mobile, status: 'skipped', reason: 'Already exists' });
-      continue;
-    }
+//     if (existingPhones.has(mobile)) {
+//       results.push({ mobile, status: 'skipped', reason: 'Already exists' });
+//       continue;
+//     }
 
-    toInsert.push({ mobile, first, last, refCode });
-    existingPhones.add(mobile); // prevent duplicates within the same file
-  }
+//     toInsert.push({ mobile, first, last, refCode });
+//     existingPhones.add(mobile); // prevent duplicates within the same file
+//   }
 
-  const inserted = [];
-  const failed = [];
+//   const inserted = [];
+//   const failed = [];
 
-  await Promise.all(
-    toInsert.map(async ({ mobile, first, last, refCode }) => {
-      try {
-        await Seeker.create({
-          authProvider: 'custom',
-          authProviderId: mobile,
-          phone: mobile,
-          isPhoneVerified: false,
-          fullName: { first, last },
-          refCode,
-          profileCompleted: false,
-          needsReminderToCompleteProfile: true,
-        });
-        inserted.push({ mobile, status: 'created' });
-      } catch (err) {
-        failed.push({ mobile, status: 'failed', reason: err.message });
-      }
-    })
-  );
+//   await Promise.all(
+//     toInsert.map(async ({ mobile, first, last, refCode }) => {
+//       try {
+//         await Seeker.create({
+//           authProvider: 'custom',
+//           authProviderId: mobile,
+//           phone: mobile,
+//           isPhoneVerified: false,
+//           fullName: { first, last },
+//           refCode,
+//           profileCompleted: false,
+//           needsReminderToCompleteProfile: true,
+//         });
+//         inserted.push({ mobile, status: 'created' });
+//       } catch (err) {
+//         failed.push({ mobile, status: 'failed', reason: err.message });
+//       }
+//     })
+//   );
 
-  return res.status(200).json({
-    message: 'Bulk upload completed',
-    summary: {
-      total: rows.length,
-      created: inserted.length,
-      skipped: results.filter(r => r.status === 'skipped').length,
-      failed: failed.length,
-    },
-    details: [...results, ...inserted, ...failed],
-  });
-});
+//   return res.status(200).json({
+//     message: 'Bulk upload completed',
+//     summary: {
+//       total: rows.length,
+//       created: inserted.length,
+//       skipped: results.filter(r => r.status === 'skipped').length,
+//       failed: failed.length,
+//     },
+//     details: [...results, ...inserted, ...failed],
+//   });
+// });
 
 
 module.exports = {
@@ -659,5 +659,5 @@ module.exports = {
   loginWithGoogleMobile,
   updateProfileImage,
   getSeekersByRefCode,
-  bulkUploadSeekers,
+  // bulkUploadSeekers,
 };

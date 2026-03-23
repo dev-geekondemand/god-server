@@ -47,7 +47,7 @@ const excelUploader = singleUploader(
   ],
   'file'
 );
-router.post('/bulk-upload',  excelUploader, bulkUploadSeekers);
+// router.post('/bulk-upload',  excelUploader, bulkUploadSeekers);
 
 router.post('/custom/send-otp', sendOtpToPhone);
 router.post('/custom/register', registerCustomUser);

@@ -1,7 +1,7 @@
 const SubCategory = require('../models/subCategory.js');
 const asyncHandler = require('express-async-handler');
 const Category = require('../models/serviceCategory.js');
-const XLSX = require("xlsx");
+// const XLSX = require("xlsx");
 const slugify = require("slugify");
 const fs = require("fs");
 const path = require("path");
@@ -13,63 +13,63 @@ const generateSlug = (text) =>
 
 
 
-const bulkUploadSubCategories = asyncHandler(async (req, res) => {
-  const filePath = path.join(__dirname, "../uploads/subcategories.xlsx");
+// const bulkUploadSubCategories = asyncHandler(async (req, res) => {
+//   const filePath = path.join(__dirname, "../uploads/subcategories.xlsx");
 
-  if (!fs.existsSync(filePath)) {
-    return res.status(400).json({ message: "Excel file not found." });
-  }
+//   if (!fs.existsSync(filePath)) {
+//     return res.status(400).json({ message: "Excel file not found." });
+//   }
 
-  const workbook = XLSX.readFile(filePath);
-  const sheet = workbook.Sheets[workbook.SheetNames[0]];
-  const rows = XLSX.utils.sheet_to_json(sheet);
+//   const workbook = XLSX.readFile(filePath);
+//   const sheet = workbook.Sheets[workbook.SheetNames[0]];
+//   const rows = XLSX.utils.sheet_to_json(sheet);
 
-  const results = [];
-  for (let row of rows) {
-    const parentTitle = row["Parent Category"];
-    const issueTitle = row["Sub Category"];
-    if (
-        parentTitle?.toLowerCase() === "parent category" ||
-        issueTitle?.toLowerCase() === "common issues"
-      ) {
-        continue;
-      }
-    if (!parentTitle || !issueTitle) continue;
+//   const results = [];
+//   for (let row of rows) {
+//     const parentTitle = row["Parent Category"];
+//     const issueTitle = row["Sub Category"];
+//     if (
+//         parentTitle?.toLowerCase() === "parent category" ||
+//         issueTitle?.toLowerCase() === "common issues"
+//       ) {
+//         continue;
+//       }
+//     if (!parentTitle || !issueTitle) continue;
 
-    const parentCategory = await Category.findById(parentTitle);
+//     const parentCategory = await Category.findById(parentTitle);
     
-    if (!parentCategory) {
-      results.push({ issueTitle, status: "failed", reason: "Parent category not found" });
-      continue;
-    }
+//     if (!parentCategory) {
+//       results.push({ issueTitle, status: "failed", reason: "Parent category not found" });
+//       continue;
+//     }
 
-    const slug = slugify(issueTitle, { lower: true });
+//     const slug = slugify(issueTitle, { lower: true });
 
-    // Check if subcategory already exists
-    const exists = await SubCategory.findOne({ title: issueTitle.trim() });
-    if (exists) {
-      results.push({ issueTitle, status: "skipped", reason: "Already exists" });
-      continue;
-    }
+//     // Check if subcategory already exists
+//     const exists = await SubCategory.findOne({ title: issueTitle.trim() });
+//     if (exists) {
+//       results.push({ issueTitle, status: "skipped", reason: "Already exists" });
+//       continue;
+//     }
 
-    const subCat = await SubCategory.create({
-      title: issueTitle.trim(),
-      slug,
-      parentCategory: parentCategory._id,
-    });
+//     const subCat = await SubCategory.create({
+//       title: issueTitle.trim(),
+//       slug,
+//       parentCategory: parentCategory._id,
+//     });
 
-    await Category.findByIdAndUpdate(parentCategory._id, {
-      $addToSet: { subCategories: subCat._id },
-    });
+//     await Category.findByIdAndUpdate(parentCategory._id, {
+//       $addToSet: { subCategories: subCat._id },
+//     });
 
-    results.push({ issueTitle, status: "created", id: subCat._id });
-  }
+//     results.push({ issueTitle, status: "created", id: subCat._id });
+//   }
 
-  res.status(200).json({
-    message: "Upload completed",
-    summary: results,
-  });
-});
+//   res.status(200).json({
+//     message: "Upload completed",
+//     summary: results,
+//   });
+// });
 
 
 
@@ -151,5 +151,5 @@ module.exports = {
   getSubCategoryById,
   updateSubCategory,
   deleteSubCategory,
-  bulkUploadSubCategories
+  // bulkUploadSubCategories
 };

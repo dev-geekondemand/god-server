@@ -28,12 +28,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Route to handle Excel upload and insertion
-router.post(
-  "/bulk-upload",
-  // protectAdmin,
-  upload.single("file"),
-  importBlogs
-);
+// router.post(
+//   "/bulk-upload",
+//   // protectAdmin,
+//   upload.single("file"),
+//   importBlogs
+// );
 
 const profileImageUploader = singleUploader(['image/jpeg', 'image/png'], 'blogImage');
 

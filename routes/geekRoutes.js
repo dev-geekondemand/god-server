@@ -19,7 +19,7 @@ const {
   getGeekById,
   findGeekById,
   logoutGeek,
-  bulkUploadGeeks,
+  // bulkUploadGeeks,
   updateGeekRateCard,
   sendVerificationEmail,
   verifyEmail,
@@ -48,12 +48,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Route to handle Excel upload and insertion
-router.post(
-  "/bulk-upload",
-  // protectAdmin,
-  upload.single("file"),
-  bulkUploadGeeks
-);
+// router.post(
+//   "/bulk-upload",
+//   // protectAdmin,
+//   upload.single("file"),
+//   bulkUploadGeeks
+// );
 
  
 
