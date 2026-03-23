@@ -35,7 +35,7 @@ const corsOptions = {
   
   app.use(cors(corsOptions));
  
-dbConnect();
+dbConnect();  
 
 app.use(morgan("dev"))
 
