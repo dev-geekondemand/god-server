@@ -48,7 +48,7 @@ const seekerSchema = new mongoose.Schema({
       email: {
         type: String,
         required: function () {
-          return this.authProvider !== 'custom';
+          return this.authProvider !== 'custom' && this.authProvider !== 'apple';
         },
         lowercase: true,
         trim: true,

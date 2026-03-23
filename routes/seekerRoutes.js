@@ -1,19 +1,20 @@
 const express = require("express");
 const asyncHandler = require('express-async-handler');
 const {updateProfile,
-    sendOtpToPhone, 
+    sendOtpToPhone,
     registerCustomUser,
-    getAllUsers, 
+    getAllUsers,
     deleteUser,
      loginWithGoogle,
      loginWithMS,
-      verifyOtpAndLogin, 
+      verifyOtpAndLogin,
       logout,
       updateAddress,
       sendVerificationEmail,
       verifyEmail,
       updateProfileImage,
       getSeekersByRefCode,
+      bulkUploadSeekers,
     } = require('../controllers/seekerController.js')
 const multer = require('multer');
 const {authenticateJWT, authenticateMobileJWT, protectAdmin} = require("../middlewares/authMiddleware.js")
@@ -33,11 +34,20 @@ const client = new OAuth2Client(process.env.GOOGLE_OAUTH_MOBILE_CLIENT_ID);
 const msalClient = new ConfidentialClientApplication(msalConfig);
 
 const profileImageUploader = singleUploader(['image/jpeg', 'image/png'], 'profileImage');
-router.post('/:id/profile-image', 
+router.post('/:id/profile-image',
   uploadLimiter,
   profileImageUploader,
   updateProfileImage
 );
+
+const excelUploader = singleUploader(
+  [
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-excel',
+  ],
+  'file'
+);
+router.post('/bulk-upload',  excelUploader, bulkUploadSeekers);
 
 router.post('/custom/send-otp', sendOtpToPhone);
 router.post('/custom/register', registerCustomUser);

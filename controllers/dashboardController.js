@@ -283,10 +283,46 @@ const getRequestsCategorySummary = asyncHandler(async (req, res) => {
   });
 });
 
+// ---------------------------------------------------------------------------
+// GET /api/admin/dashboard/geeks/secondary-skills
+// Count how many geeks list each category as a secondary skill
+// ---------------------------------------------------------------------------
+const getGeeksSecondarySkills = asyncHandler(async (req, res) => {
+  const data = await Geek.aggregate([
+    { $match: { secondarySkills: { $exists: true, $not: { $size: 0 } } } },
+    { $unwind: '$secondarySkills' },
+    { $group: { _id: '$secondarySkills', count: { $sum: 1 } } },
+    {
+      $lookup: {
+        from: 'categories',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'categoryInfo',
+      },
+    },
+    { $unwind: { path: '$categoryInfo', preserveNullAndEmptyArrays: true } },
+    {
+      $project: {
+        _id: 0,
+        categoryId: '$_id',
+        categoryTitle: { $ifNull: ['$categoryInfo.title', 'Unknown'] },
+        count: 1,
+      },
+    },
+    { $sort: { count: -1 } },
+  ]);
+
+  res.status(200).json({
+    total: data.reduce((sum, d) => sum + d.count, 0),
+    skills: data,
+  });
+});
+
 module.exports = {
   getDashboardSummary,
   getSeekersOverTime,
   getGeeksOverTime,
   getRequestsByCategory,
   getRequestsCategorySummary,
+  getGeeksSecondarySkills,
 };

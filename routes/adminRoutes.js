@@ -7,7 +7,14 @@ const {
   getGeeksOverTime,
   getRequestsByCategory,
   getRequestsCategorySummary,
+  getGeeksSecondarySkills,
 } = require('../controllers/dashboardController.js');
+const {
+  getAllRequestsAdmin,
+  getHiringRequestsAdmin,
+  getRejectedRequestsAdmin,
+  getRequestById,
+} = require('../controllers/requestController.js');
 const { protectAdmin } = require('../middlewares/authMiddleware.js');
 
 const router = express.Router();
@@ -23,5 +30,12 @@ router.get('/dashboard/seekers',             protectAdmin, getSeekersOverTime);
 router.get('/dashboard/geeks',               protectAdmin, getGeeksOverTime);
 router.get('/dashboard/requests',            protectAdmin, getRequestsByCategory);
 router.get('/dashboard/requests/summary',    protectAdmin, getRequestsCategorySummary);
+router.get('/dashboard/geeks/secondary-skills', protectAdmin, getGeeksSecondarySkills);
+
+// Request reports (admin)
+router.get('/requests',          protectAdmin, getAllRequestsAdmin);
+router.get('/requests/hiring',   protectAdmin, getHiringRequestsAdmin);
+router.get('/requests/rejected', protectAdmin, getRejectedRequestsAdmin);
+router.get('/requests/:id',      protectAdmin, getRequestById);
 
 module.exports = router;

@@ -31,29 +31,29 @@ const geocodeAddress = async ({ pin, city, state }) => {
   return feature.center; // [lng, lat]
 };
 
- const geocodeByPin = async (pin) => {
-  const query = `${pin}, India`;
+const geocodeByPin = async (pin) => {
+    const query = `${pin}, India`;
 
-  const { data } = await axios.get(
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json`,
-    {
-      params: {
-        access_token: process.env.MAPBOX_TOKEN,
-        limit: 1,
-        country: "IN",
+    const { data } = await axios.get(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json`,
+      {
+        params: {
+          access_token: process.env.MAPBOX_TOKEN,
+          limit: 1,
+          country: "IN",
         types: "postcode"
       }
-    }
-  );
+      }
+    );
 
   console.log(data);
 
-  if (!data?.features?.length) return null;
+    if (!data?.features?.length) return null;
 
-  const feature = data.features[0];
+    const feature = data.features[0];
 
   // stricter for PIN
-  if (feature.relevance < 0.7) return null;
+    if (feature.relevance < 0.7) return null;
 
   return feature.center;
 };

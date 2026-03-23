@@ -724,6 +724,39 @@ const deleteReviweBySeeker = asyncHandler(async (req, res) => {
   
 
 
+const getAllRequestsAdmin = asyncHandler(async (req, res) => {
+  const requests = await ServiceRequest.find({})
+    .populate('seeker', '-authToken')
+    .populate('geek')
+    .populate('category')
+    .sort({ createdAt: -1 });
+  res.status(200).json({ requests });
+});
+
+const getHiringRequestsAdmin = asyncHandler(async (req, res) => {
+  const requests = await ServiceRequest.find({ status: 'Completed' })
+    .populate('seeker', '-authToken')
+    .populate('geek')
+    .populate('category')
+    .sort({ createdAt: -1 });
+  res.status(200).json({ requests });
+});
+
+const getRejectedRequestsAdmin = asyncHandler(async (req, res) => {
+  const requests = await ServiceRequest.find({
+    $or: [
+      { status: 'Rejected' },
+      { status: 'Cancelled' },
+      { geekResponseStatus: 'Rejected' },
+    ],
+  })
+    .populate('seeker', '-authToken')
+    .populate('geek')
+    .populate('category')
+    .sort({ createdAt: -1 });
+  res.status(200).json({ requests });
+});
+
   module.exports = {
     getMatchedGeeks,
     createRequestWithSelectedGeek,
@@ -737,5 +770,8 @@ const deleteReviweBySeeker = asyncHandler(async (req, res) => {
     uploadRequestMedia,
     completeRequest,
     addReviewBySeeker,
-    deleteReviweBySeeker
+    deleteReviweBySeeker,
+    getAllRequestsAdmin,
+    getHiringRequestsAdmin,
+    getRejectedRequestsAdmin,
   };
