@@ -11,7 +11,7 @@ const crypto = require('crypto');
 const { deleteFromAzure } = require('../utils/azureBlob');
 const { uploadToAzure } = require('../middlewares/azureUploads');
 const {  geocodeByPin } = require('../utils/geocode');
-const serviceRequest = require('../models/serviceRequest');
+const serviceRequest = require('../models/ServiceRequest');
 // const XLSX = require('xlsx');
 
 // /controllers/authController.js
