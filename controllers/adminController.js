@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/adminModel.js');
-// const Request = require('../models/serviceRequest.js');
+// const Request = require('../models/ServiceRequest.js');
 // const Seeker = require('../models/seekerModel.js');
 // const Geek = require('../models/geekModel.js');
 

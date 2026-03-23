@@ -17,7 +17,7 @@ const path = require("path");
 const geocodeAddress = require('../utils/geocode.js');
 const sendMail = require('../middlewares/sendMail.js');
 const crypto = require('crypto');
-const ServiceRequest = require('../models/serviceRequest.js');
+const ServiceRequest = require('../models/ServiceRequest.js');
 // Create new Geek
  const verifyOtpAndCreateGeek = asyncHandler(async (req, res) => {
 
