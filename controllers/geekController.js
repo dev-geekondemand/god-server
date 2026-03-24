@@ -18,6 +18,7 @@ const geocodeAddress = require('../utils/geocode.js');
 const sendMail = require('../middlewares/sendMail.js');
 const crypto = require('crypto');
 const ServiceRequest = require('../models/ServiceRequest.js');
+const LoginEvent = require('../models/LoginEvent.js');
 // Create new Geek
  const verifyOtpAndCreateGeek = asyncHandler(async (req, res) => {
 
@@ -146,6 +147,8 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
   
     // Save the hashed token to the user record in the database
     user.authToken = hashedToken;
+
+    LoginEvent.create({ userId: user._id, role: 'Geek', authProvider: 'custom' }).catch(() => {});
 
     if (user.profileImage?.public_id) {
 

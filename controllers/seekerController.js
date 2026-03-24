@@ -12,6 +12,7 @@ const { deleteFromAzure } = require('../utils/azureBlob');
 const { uploadToAzure } = require('../middlewares/azureUploads');
 const {  geocodeByPin } = require('../utils/geocode');
 const serviceRequest = require('../models/ServiceRequest');
+const LoginEvent = require('../models/LoginEvent');
 // const XLSX = require('xlsx');
 
 // /controllers/authController.js
@@ -136,7 +137,12 @@ const updateProfile = asyncHandler(async (req, res) => {
 
 const loginWithGoogle = asyncHandler(async(req, res) => {
   const { token } = req.user; // token is returned from passport strategy
-  
+
+  const decoded = jwt.decode(token);
+  if (decoded?.id) {
+    LoginEvent.create({ userId: decoded.id, role: 'Seeker', authProvider: 'google' }).catch(() => {});
+  }
+
    // Store JWT token in HttpOnly cookie
       res.cookie('auth_token', token, {
         httpOnly: true, // Can't be accessed by JavaScript
@@ -151,6 +157,11 @@ const loginWithGoogle = asyncHandler(async(req, res) => {
 
 const loginWithGoogleMobile = asyncHandler(async (req, res) => {
   const { token } = req.user; // token from Passport strategy
+
+  const decoded = jwt.decode(token);
+  if (decoded?.id) {
+    LoginEvent.create({ userId: decoded.id, role: 'Seeker', authProvider: 'google' }).catch(() => {});
+  }
 
   // Normally you might store in DB, but for mobile just return JWT
   res.status(200).json({
@@ -201,6 +212,8 @@ const loginWithMS = asyncHandler(async(req,res)=>{
 
     user.authToken = hashedToken;
     await user.save();
+
+    LoginEvent.create({ userId: user._id, role: 'Seeker', authProvider: 'microsoft' }).catch(() => {});
 
     res.cookie('auth_token', token, {
         httpOnly: true,
@@ -272,10 +285,12 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
     
       // Save the hashed token to the user record in the database
       user.authToken = hashedToken;
-      
-      
+
+
       await user.save();
-    
+
+      LoginEvent.create({ userId: user._id, role: 'Seeker', authProvider: 'custom' }).catch(() => {});
+
       // Store JWT token in HttpOnly cookie
       res.cookie('auth_token', token, {
         httpOnly: true, // Can't be accessed by JavaScript

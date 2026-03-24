@@ -25,7 +25,7 @@ const cors = require('cors')
  const jwt = require('jsonwebtoken')
 const morgan = require('morgan')
 const app = express();
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 4002;
  
 const corsOptions = {
     origin:["http://localhost:3001","https://geekondemand.in","http://localhost:3000","https://god-web-avangweyfef2ddec.southindia-01.azurewebsites.net","https://god-admin-5l63.vercel.app","https://god-admin-5l63.vercel.app"], 
