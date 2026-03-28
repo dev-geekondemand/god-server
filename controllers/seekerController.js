@@ -10,6 +10,7 @@ const msalClient = new ConfidentialClientApplication(msalConfig);
 const crypto = require('crypto');
 const { deleteFromAzure } = require('../utils/azureBlob');
 const { uploadToAzure } = require('../middlewares/azureUploads');
+const { handleMongoError } = require('../utils/handleMongoError');
 const {  geocodeByPin } = require('../utils/geocode');
 const serviceRequest = require('../models/ServiceRequest');
 const LoginEvent = require('../models/LoginEvent');
@@ -130,7 +131,8 @@ const updateProfile = asyncHandler(async (req, res) => {
     await user.save();
     res.status(200).json({ message: 'Profile updated', user });
   } catch (error) {
-    res.status(500).json({ message: 'Error updating profile', error });
+    const { status, message } = handleMongoError(error);
+    res.status(status).json({ message });
   }
 });
 
@@ -328,7 +330,8 @@ const getAllUsers = asyncHandler(async (req, res) => {
     const users = await Seeker.find();
     res.status(200).json({ users });
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching users', error: err });
+    const { status, message } = handleMongoError(err);
+    res.status(status).json({ message });
   }
 });
 
@@ -346,9 +349,10 @@ const deleteUser = asyncHandler(async (req, res) => {
     const user = await Seeker.findByIdAndDelete(userId);
     if(!user) return res.status(404).json({ message: 'User not found' });
     res.status(200).json({ message: 'User deleted successfully' });
-  }catch(err){
-    console.log("Error",err)
-    res.status(500).json({ message: 'Error deleting user', error: err });
+  } catch(err) {
+    console.log("Error", err);
+    const { status, message } = handleMongoError(err);
+    res.status(status).json({ message });
   }
 });
 
@@ -455,7 +459,8 @@ const sendVerificationEmail = async (req, res) => {
 
     res.status(200).json({ message: "Verification email sent" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    const { status, message } = handleMongoError(err);
+    res.status(status).json({ message });
   }
 };
 
@@ -478,7 +483,8 @@ const verifyEmail = async (req, res) => {
 
     res.status(200).json({ message: "Email verified successfully" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    const { status, message } = handleMongoError(err);
+    res.status(status).json({ message });
   }
 };
 
@@ -570,7 +576,8 @@ const getSeekersByRefCode = asyncHandler(async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    const { status, message } = handleMongoError(error);
+    res.status(status).json({ message });
   }
 });
 

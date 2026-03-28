@@ -19,6 +19,7 @@ const sendMail = require('../middlewares/sendMail.js');
 const crypto = require('crypto');
 const ServiceRequest = require('../models/ServiceRequest.js');
 const LoginEvent = require('../models/LoginEvent.js');
+const { handleMongoError } = require('../utils/handleMongoError.js');
 // Create new Geek
  const verifyOtpAndCreateGeek = asyncHandler(async (req, res) => {
 
@@ -422,7 +423,8 @@ const updateGeekAssignments = asyncHandler(async (req, res) => {
 
     res.status(200).json({ message: 'Certificate uploaded.', fileUrl });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    const { status, message } = handleMongoError(error);
+    res.status(status).json({ message });
   }
 };
 
@@ -436,7 +438,8 @@ const updateGeekAssignments = asyncHandler(async (req, res) => {
     });
     res.status(200).json({ message: 'Certificate removed.' });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    const { status, message } = handleMongoError(error);
+    res.status(status).json({ message });
   }
 };
 
@@ -474,8 +477,9 @@ const updateProfileImage = asyncHandler(async (req, res) => {
   await geek.save();
 
   res.status(200).json({ message: 'Profile image updated.', imageUrl });
- }catch(error){
-   res.status(500).json({ message: error.message });
+ } catch(error) {
+   const { status, message } = handleMongoError(error);
+   res.status(status).json({ message });
  }
 });
 
@@ -1265,7 +1269,8 @@ const sendVerificationEmail = async (req, res) => {
 
     res.status(200).json({ message: "Verification email sent" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    const { status, message } = handleMongoError(err);
+    res.status(status).json({ message });
   }
 };
 
@@ -1288,7 +1293,8 @@ const verifyEmail = async (req, res) => {
 
     res.status(200).json({ message: "Email verified successfully" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    const { status, message } = handleMongoError(err);
+    res.status(status).json({ message });
   }
 };
 
@@ -1312,8 +1318,9 @@ const getGeeksByBrand = asyncHandler(async (req, res) => {
         return res.status(404).json({ message: 'No geeks found for this brand' });
       }
       res.status(200).json(geeks);
-    }catch(error){
-      res.status(500).json({ message: error.message });
+    } catch(error) {
+      const { status, message } = handleMongoError(error);
+      res.status(status).json({ message });
     }
 });
 
@@ -1365,7 +1372,8 @@ const getGeeksByRefCode = asyncHandler(async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    const { status, message } = handleMongoError(error);
+    res.status(status).json({ message });
   }
 });
 

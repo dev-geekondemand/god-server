@@ -7,6 +7,7 @@ const fs = require("fs");
 const path = require("path");
 const { uploadToAzure } = require('../middlewares/azureUploads');
 const { generateSasUrl, deleteFromAzure } = require('../utils/azureBlob');
+const { handleMongoError } = require('../utils/handleMongoError');
 
 
 // Create blog
@@ -197,8 +198,9 @@ const updateBlogImage = asyncHandler(async (req, res) => {
   await blog.save();
 
   res.status(200).json({ message: 'Profile image updated.', imageUrl });
- }catch(error){
-   res.status(500).json({ message: error.message });
+ } catch(error) {
+   const { status, message } = handleMongoError(error);
+   res.status(status).json({ message });
  }
 });
 

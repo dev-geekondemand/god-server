@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const Ad = require('../models/adModel').default;
 const { uploadToAzure } = require('../middlewares/azureUploads');
 const { generateSasUrl } = require('../utils/azureBlob');
+const { handleMongoError } = require('../utils/handleMongoError');
 
 const createAd = asyncHandler(async (req, res) => {
   const file = req.file;
@@ -30,7 +31,8 @@ const getAllAds = asyncHandler(async (req, res) => {
         
         res.status(200).json(ads);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        const { status, message } = handleMongoError(error);
+        res.status(status).json({ message });
     }
 });
 
@@ -56,7 +58,8 @@ const updateAd = asyncHandler(async (req, res) => {
         const ad = await Ad.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.status(200).json(ad);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        const { status, message } = handleMongoError(error);
+        res.status(status).json({ message });
     }
 });
 
@@ -65,7 +68,8 @@ const deleteAd = asyncHandler(async (req, res) => {
         const ad = await Ad.findByIdAndDelete(req.params.id);
         res.status(200).json(ad);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        const { status, message } = handleMongoError(error);
+        res.status(status).json({ message });
     }
 });
 

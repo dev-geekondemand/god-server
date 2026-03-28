@@ -10,6 +10,7 @@ const unzipper = require('unzipper');
 const sharp = require('sharp');
 const {uploadToAzure} = require('../middlewares/azureUploads.js');
 const {generateSasUrl,deleteFromAzure} = require('../utils/azureBlob.js');
+const { handleMongoError } = require('../utils/handleMongoError.js');
 
 // const uploadBrandsExcel = asyncHandler(async (req, res) => {
 //   const filePath = path.join(__dirname, "../uploads/brands.xlsx");
@@ -125,7 +126,8 @@ const getBrands = asyncHandler(async (req, res) => {
 
     res.status(200).json(brandsWithSas);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    const { status, message } = handleMongoError(error);
+    res.status(status).json({ message });
   }
 });
 
@@ -155,6 +157,18 @@ const updateBrand = asyncHandler(async (req, res) => {
 
 const deleteBrand = asyncHandler(async (req, res) => {
     validateMongodbId(req.params.id);
+    const brand = await Brand.findById(req.params.id);
+    if (!brand) {
+      return res.status(404).json({ message: "Brand not found" });
+    }
+    // Delete associated image from Azure
+    if (brand.image?.public_id) {
+      try {
+        await deleteFromAzure(brand.image.public_id);
+      } catch (error) {
+        console.error("Failed to delete image from Azure:", error.message);
+      }
+    }
     const deletedBrand = await Brand.findByIdAndDelete(req.params.id);
     res.status(200).json(deletedBrand);
 });

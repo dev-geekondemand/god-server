@@ -18,6 +18,7 @@ const apiKeyRoute = require('./routes/apiKey.js')
 const enquiryRoutes = require('./routes/enquiryRoutes.js')
 const adRoutes = require('./routes/adRoutes.js')
 const adminRoutes = require('./routes/adminRoutes.js')
+const { handleMongoError } = require('./utils/handleMongoError.js')
 const passport = require('passport');
 require('./config/passport');
 
@@ -100,6 +101,12 @@ app.use('/api/enquiry', enquiryRoutes);
 app.use('/api/admin', adminRoutes);
 
 
+
+app.use((err, _req, res, _next) => {
+  const { status, message } = handleMongoError(err);
+  const httpStatus = res.statusCode && res.statusCode !== 200 ? res.statusCode : status;
+  res.status(httpStatus).json({ message });
+});
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT || 4001, () => {
