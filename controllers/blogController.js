@@ -1,28 +1,27 @@
 const Blog = require('../models/blogModel');
 const asyncHandler = require('express-async-handler');
 const slugify = require('slugify');
-// const XLSX = require("xlsx");
-// const slugify = require("slugify");
-const fs = require("fs");
-const path = require("path");
 const { uploadToAzure } = require('../middlewares/azureUploads');
-const { generateSasUrl, deleteFromAzure } = require('../utils/azureBlob');
+const { generateSasUrl } = require('../utils/azureBlob');
 const { handleMongoError } = require('../utils/handleMongoError');
-
 
 // Create blog
 const createBlog = asyncHandler(async (req, res) => {
-  const { title, content, tags, isPublished } = req.body;
-  if (!title || !content) {
-    return res.status(400).json({ message: 'Title and content are required' });
+  const { title, description, summary, author, tags, categories, seo, isPublished } = req.body;
+  if (!title || !description || !summary) {
+    return res.status(400).json({ message: 'Title, description and summary are required' });
   }
 
   const slug = slugify(title, { lower: true, strict: true });
   const blog = await Blog.create({
     title,
     slug,
-    content,
+    description,
+    summary,
+    author,
     tags,
+    categories,
+    seo,
     isPublished,
     publishedAt: isPublished ? new Date() : null,
   });
@@ -33,186 +32,100 @@ const createBlog = asyncHandler(async (req, res) => {
 // Update blog
 const updateBlog = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { title, content, tags, isPublished } = req.body;
+  const { title, description, summary, author, tags, categories, seo, isPublished } = req.body;
 
   const update = {
     ...(title && { title, slug: slugify(title, { lower: true, strict: true }) }),
-    ...(content && { content }),
-    ...(tags && { tags }),
+    ...(description !== undefined && { description }),
+    ...(summary !== undefined && { summary }),
+    ...(author !== undefined && { author }),
+    ...(tags !== undefined && { tags }),
+    ...(categories !== undefined && { categories }),
+    ...(seo !== undefined && { seo }),
     ...(isPublished !== undefined && {
       isPublished,
       publishedAt: isPublished ? new Date() : null,
     }),
   };
 
-  const updated = await Blog.findByIdAndUpdate(id, update, { new: true });
+  const updated = await Blog.findByIdAndUpdate(id, update, { new: true })
+    .populate('tags')
+    .populate('categories');
   res.status(200).json(updated);
 });
-
-
 
 // Delete blog
 const deleteBlog = asyncHandler(async (req, res) => {
   const { id } = req.params;
-
   await Blog.findByIdAndDelete(id);
   res.status(200).json({ message: 'Blog deleted' });
 });
 
-// Get all published blogs
+// Get all blogs (admin)
 const getAllBlogs = asyncHandler(async (req, res) => {
-  const blogs = await Blog.find();
-  for(let i = 0; i < blogs.length; i++){
+  const blogs = await Blog.find().populate('tags').populate('categories');
+  for (let i = 0; i < blogs.length; i++) {
     if (blogs[i].coverImage?.public_id) {
-      const blobName = blogs[i].coverImage?.public_id;
-      const sasUrl = await generateSasUrl(blobName);
+      const sasUrl = await generateSasUrl(blogs[i].coverImage.public_id);
       blogs[i].coverImage.url = sasUrl;
     }
   }
   res.status(200).json(blogs);
 });
 
-// Get blog by slug
-const getBlogBySlug = asyncHandler(async (req, res) => {
-  const { slug } = req.params;
-  const blog = await Blog.findOne({ slug, isPublished: true })
+// Get blog by ID (admin)
+const getBlogById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const blog = await Blog.findById(id).populate('tags').populate('categories');
   if (!blog) return res.status(404).json({ message: 'Blog not found' });
-    if (blog.coverImage?.public_id) {
-        const blobName = blog.coverImage?.public_id;
-        const sasUrl = await generateSasUrl(blobName);
-        blog.coverImage.url = sasUrl;
-    }
+  if (blog.coverImage?.public_id) {
+    const sasUrl = await generateSasUrl(blog.coverImage.public_id);
+    blog.coverImage.url = sasUrl;
+  }
   res.status(200).json(blog);
 });
 
-const addComment = asyncHandler(async (req, res) => {
-  const { blogId } = req.params;
-  const { text } = req.body;
-  const { _id, role, idProof } = req.user;
-
-  if (role === 'Geek' && !idProof?.isAdhaarVerified) {
-    return res.status(403).json({ message: 'Only verified geeks can comment' });
-  }
-
-  const blog = await Blog.findById(blogId);
+// Get blog by slug (public)
+const getBlogBySlug = asyncHandler(async (req, res) => {
+  const { slug } = req.params;
+  const blog = await Blog.findOne({ slug, isPublished: true })
+    .populate('tags')
+    .populate('categories');
   if (!blog) return res.status(404).json({ message: 'Blog not found' });
-
-  blog.comments.push({
-    text,
-    postedBy: _id,
-    userType: role,
-  });
-
-  await blog.save();
-  res.status(200).json({ message: 'Comment added', comments: blog.comments });
+  if (blog.coverImage?.public_id) {
+    const sasUrl = await generateSasUrl(blog.coverImage.public_id);
+    blog.coverImage.url = sasUrl;
+  }
+  res.status(200).json(blog);
 });
-
-const replyToComment = asyncHandler(async (req, res) => {
-  const { blogId, commentId } = req.params;
-  const { text } = req.body;
-  const { _id, role } = req.user;
-
-  const blog = await Blog.findById(blogId);
-  const comment = blog.comments.id(commentId);
-  if (!comment) return res.status(404).json({ message: 'Comment not found' });
-
-  comment.replies.push({
-    text,
-    postedBy: _id,
-    userType: role,
-  });
-
-  await blog.save();
-  res.status(200).json({ message: 'Reply added', replies: comment.replies });
-});
-
-
-// const importBlogs = asyncHandler(async (req, res) => {
-//   const filePath = path.join(__dirname, "../uploads/blogs.xlsx");
-
-//   if (!fs.existsSync(filePath)) {
-//     return res.status(400).json({ message: "Excel file not found." });
-//   }
-
-//   const workbook = XLSX.readFile(filePath);
-//   const sheet = workbook.Sheets[workbook.SheetNames[0]];
-//   const rows = XLSX.utils.sheet_to_json(sheet);
-
-//   const results = [];
-
-//   for (let row of rows) {
-//     try {
-//       const title = row["Title"]?.trim();
-//       const slug = slugify(title, { lower: true, strict: true });
-//       const description = row["Description"]?.trim();
-//       const summary = row["Summary"]?.trim();
-
-//       const existingBlog = await Blog.findOne({ title });
-//       if (existingBlog) {
-//         results.push({ title, status: "skipped", reason: "Already exists" });
-//         continue;
-//       }
-
-//       const newBlog = await Blog.create({
-//         title,
-//         slug,
-//         description,
-//         summary,
-//       });
-
-//       results.push({ title, status: "created", id: newBlog._id });
-
-//     } catch (err) {
-//       results.push({
-//         title: row["Title"]?.toString() || "unknown",
-//         status: "error",
-//         reason: err.message,
-//       });
-//     }
-//   }
-
-//   res.status(200).json({
-//     message: "Upload completed",
-//     summary: results,
-//   });
-// });
 
 const updateBlogImage = asyncHandler(async (req, res) => {
- try{
+  try {
+    const file = req.file;
+    const blogId = req.params.id;
 
-  const file = req.file;
-  const blogId = req.params.id;
+    if (!file) return res.status(400).json({ message: 'No image uploaded.' });
 
-  if (!file) return res.status(400).json({ message: 'No image uploaded.' });
+    const blog = await Blog.findById(blogId);
+    if (!blog) return res.status(404).json({ message: 'Blog not found.' });
 
-  // Fetch existing Geek data
-  const blog = await Blog.findById(blogId);
-  if (!blog) return res.status(404).json({ message: 'Blog not found.' });
+    const imageUrl = await uploadToAzure(file);
+    blog.coverImage = imageUrl;
+    await blog.save();
 
-
-  // Upload the new image
-  const imageUrl = await uploadToAzure(file);
-
-  // Update the Geek's profile image
-  blog.coverImage = imageUrl;
-  await blog.save();
-
-  res.status(200).json({ message: 'Profile image updated.', imageUrl });
- } catch(error) {
-   const { status, message } = handleMongoError(error);
-   res.status(status).json({ message });
- }
+    res.status(200).json({ message: 'Blog image updated.', imageUrl });
+  } catch (error) {
+    const { status, message } = handleMongoError(error);
+    res.status(status).json({ message });
+  }
 });
-
 
 module.exports = {
   createBlog,
   updateBlog,
   deleteBlog,
   getAllBlogs,
+  getBlogById,
   getBlogBySlug,
-  addComment,
-  replyToComment,
-  // importBlogs,
-  updateBlogImage
+  updateBlogImage,
 };

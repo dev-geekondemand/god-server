@@ -107,7 +107,7 @@ const GeekSchema = new mongoose.Schema({
   primarySkill: { type:mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
   secondarySkills: [{ type:mongoose.Schema.Types.ObjectId, ref: 'Category' }],
   description: String,
-  modeOfService: { type: String, enum: ['Online', 'Offline', 'Carry In', 'All', 'None'], default: 'None' },
+  modeOfService: { type: String, enum: ['Online', 'Offline', 'Carry In', 'All', 'None'], default: 'Online' },
   availability: AvailabilitySchema,
   rateCard: [RateCardSchema],
   brandsServiced: [{ type:mongoose.Schema.Types.ObjectId, ref: 'Brand'}],
