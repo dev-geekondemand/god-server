@@ -81,9 +81,6 @@ const { handleMongoError } = require('../utils/handleMongoError.js');
 
 
 const createBrand = asyncHandler(async (req, res) => {
-    if (req.body.name) {
-        req.body.slug = slugify(req.body.name);
-    }
     console.log("Request Body:", req.body);
     if(!req.body.categoryId){
       return res.status(400).json({message:"Category is required"});
@@ -93,12 +90,24 @@ const createBrand = asyncHandler(async (req, res) => {
     if(!category){
       return res.status(404).json({message:"Category not found"});
     }
-   const newBrand = await Brand.create({
-      name: req.body.name,
-      slug: req.body.slug,
-      category: category._id,
-   });
-    res.status(201).json(newBrand);
+    if (req.body.name) {
+      const baseSlug = slugify(req.body.name, { lower: true });
+      const exists = await Brand.findOne({ slug: baseSlug, category: { $ne: category._id } });
+      req.body.slug = exists
+        ? slugify(`${req.body.name}-${category.name}`, { lower: true })
+        : baseSlug;
+    }
+    try {
+      const newBrand = await Brand.create({
+        name: req.body.name,
+        slug: req.body.slug,
+        category: category._id,
+      });
+      res.status(201).json(newBrand);
+    } catch (err) {
+      const { status, message } = handleMongoError(err);
+      return res.status(status).json({ message });
+    }
 });
 
 const getBrands = asyncHandler(async (req, res) => {
@@ -140,16 +149,28 @@ const getBrandById = asyncHandler(async (req, res) => {
 
 const updateBrand = asyncHandler(async (req, res) => {
     validateMongodbId(req.params.id);
-    if (req.body.name) {
-        req.body.slug = slugify(req.body.name);
-    }
-    if(req.body.categoryId){
-      validateMongodbId(req.body.categoryId);
-      const category = await Category.findById(req.body.categoryId);
-      if(!category){
-        return res.status(404).json({message:"Category not found"});
+    let categoryId = req.body.categoryId;
+    let categoryName;
+    if (categoryId) {
+      validateMongodbId(categoryId);
+      const category = await Category.findById(categoryId);
+      if (!category) {
+        return res.status(404).json({ message: "Category not found" });
       }
       req.body.category = category._id;
+      categoryName = category.name;
+    }
+    if (req.body.name) {
+      if (!categoryId || !categoryName) {
+        const existing = await Brand.findById(req.params.id).populate('category');
+        categoryId = categoryId || existing?.category?._id;
+        categoryName = categoryName || existing?.category?.name;
+      }
+      const baseSlug = slugify(req.body.name, { lower: true });
+      const conflict = await Brand.findOne({ slug: baseSlug, _id: { $ne: req.params.id }, category: { $ne: categoryId } });
+      req.body.slug = conflict
+        ? slugify(`${req.body.name}-${categoryName || ''}`, { lower: true })
+        : baseSlug;
     }
     const updatedBrand = await Brand.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.status(200).json(updatedBrand);

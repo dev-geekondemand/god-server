@@ -27,10 +27,11 @@ const registerCustomUser = asyncHandler(async (req, res) => {
   }
 
   phone = phone.replace(/\D/g, ''); // Remove non-digits
-  if (!phone.startsWith("91")) {
-    phone = "91" + phone;
+  if (phone.length === 12) {
+    phone = "+" + phone; // already has country code e.g. "918788091946"
+  } else {
+    phone = "+91" + phone; // 10-digit number, add country code
   }
-  phone = "+" + phone;
 
   const isVerified = await  verifyOtp(phone, otp);
   if (!isVerified) return res.status(401).json({ message: 'Invalid or expired OTP' });
@@ -236,8 +237,9 @@ const loginWithMS = asyncHandler(async(req,res)=>{
 const sendOtpToPhone = asyncHandler(async (req, res) => {
   
     let { phone } = req.body;
-    phone = "+91" + phone
     if (!phone) return res.status(400).json({ message: 'Phone number is required' });
+    phone = phone.replace(/\D/g, '');
+    phone = phone.length === 12 ? "+" + phone : "+91" + phone;
   
     const result = await sendOtp(phone);
   
@@ -254,8 +256,8 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
 
       if (!phone || !otp) return res.status(400).json({ message: 'Phone and OTP are required' });
 
-
-      phone="+91" + phone;
+      phone = phone.replace(/\D/g, '');
+      phone = phone.length === 12 ? "+" + phone : "+91" + phone;
   
     
       

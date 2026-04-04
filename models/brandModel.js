@@ -5,8 +5,6 @@ const brandSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        // unique: true,
-        index: true,
     },
     category: {
         type:mongoose.Schema.Types.ObjectId,
@@ -26,7 +24,9 @@ const brandSchema = new mongoose.Schema({
         public_id: { type: String },
         url: { type: String }
     }
-}, { timestamps: true });   
+}, { timestamps: true });
+
+brandSchema.index({ name: 1, category: 1 }, { unique: true });
 
 //Export the model
 module.exports = mongoose.model('Brand', brandSchema);

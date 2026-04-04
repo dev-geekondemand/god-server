@@ -30,10 +30,7 @@ const { handleMongoError } = require('../utils/handleMongoError.js');
   }
 
   mobile = mobile.replace(/\D/g, ''); // Remove non-digits
-  if (!mobile.startsWith("91")) {
-    mobile = "91" + mobile;
-  }
-  mobile = "+" + mobile;
+  mobile = mobile.length === 12 ? "+" + mobile : "+91" + mobile;
   
 
   const isVerified = await verifyOtp(mobile, otp);
@@ -92,11 +89,12 @@ const { handleMongoError } = require('../utils/handleMongoError.js');
 });
 
 const sendOtpToPhone = asyncHandler(async (req, res) => {
-  
+
     let { phone } = req.body;
-    phone = "+91" + phone
     if (!phone) return res.status(400).json({ message: 'Phone number is required' });
-  
+    phone = phone.replace(/\D/g, '');
+    phone = phone.length === 12 ? "+" + phone : "+91" + phone;
+
     const result = await sendOtp(phone);
   
     if (result.success) {
@@ -110,13 +108,10 @@ const sendOtpToPhone = asyncHandler(async (req, res) => {
 const verifyOtpAndLogin = asyncHandler(async (req, res) => {
     let {phone, otp } = req.body;
 
-      phone = phone.replace(/\D/g, ''); // Remove non-digits
-      if (!phone.startsWith("+91")) {
-        phone = "+91" + phone;
-      }
-
-    
     if (!phone || !otp) return res.status(400).json({ message: 'Phone and OTP are required' });
+
+    phone = phone.replace(/\D/g, ''); // Remove non-digits
+    phone = phone.length === 12 ? "+" + phone : "+91" + phone;
 
 
         let user = await Geek.findOne({ mobile:phone });
