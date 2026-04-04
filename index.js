@@ -31,7 +31,7 @@ const PORT = process.env.PORT || 4000;
 const corsOptions = {
     origin:["http://localhost:3001","https://geekondemand.in","http://localhost:3000","https://god-web-avangweyfef2ddec.southindia-01.azurewebsites.net","https://god-admin-5l63.vercel.app","https://god-admin-5l63.vercel.app"], 
     credentials:true,
-    optionSuccessStatus:200,
+    optionsSuccessStatus:200,
   } 
   
   app.use(cors(corsOptions));
@@ -108,10 +108,8 @@ app.use((err, _req, res, _next) => {
   res.status(httpStatus).json({ message });
 });
 
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT || 4001, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
+app.listen(PORT || 4001, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 module.exports = app;
