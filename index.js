@@ -53,7 +53,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 app.use(cookieParser());
 
-app.use("/api/apiKey",apiKeyRoute)
+app.use("/api/apikey",apiKeyRoute)
 
 
 app.use((req, res, next) => {
@@ -62,7 +62,7 @@ app.use((req, res, next) => {
     "/api/seeker/google/callback",
     "/api/seeker/microsoft",  
     "/api/seeker/microsoft/callback",
-    "/api/apiKey/generate"
+    "/api/apikey/generate"
   ];
 
   if (openPaths.some(path => req.path.startsWith(path))) {
