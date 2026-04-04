@@ -60,7 +60,7 @@ app.use((req, res, next) => {
   const openPaths = [
     "/api/seeker/google",
     "/api/seeker/google/callback",
-    "/api/seeker/microsoft",
+    "/api/seeker/microsoft",  
     "/api/seeker/microsoft/callback",
     "/api/apiKey/generate"
   ];
