@@ -33,7 +33,7 @@ const corsOptions = {
     credentials:true,
     optionsSuccessStatus:200,
   } 
-  
+   
   app.use(cors(corsOptions));
  
 dbConnect();
