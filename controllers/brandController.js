@@ -91,10 +91,14 @@ const createBrand = asyncHandler(async (req, res) => {
       return res.status(404).json({message:"Category not found"});
     }
     if (req.body.name) {
+      const duplicate = await Brand.findOne({ name: req.body.name, category: category._id });
+      if (duplicate) {
+        return res.status(409).json({ message: "Brand already exists in this category" });
+      }
       const baseSlug = slugify(req.body.name, { lower: true });
-      const exists = await Brand.findOne({ slug: baseSlug, category: { $ne: category._id } });
-      req.body.slug = exists
-        ? slugify(`${req.body.name}-${category.name}`, { lower: true })
+      const slugConflict = await Brand.findOne({ slug: baseSlug, category: { $ne: category._id } });
+      req.body.slug = slugConflict
+        ? slugify(`${req.body.name}-${category.title}`, { lower: true })
         : baseSlug;
     }
     try {
@@ -158,13 +162,13 @@ const updateBrand = asyncHandler(async (req, res) => {
         return res.status(404).json({ message: "Category not found" });
       }
       req.body.category = category._id;
-      categoryName = category.name;
+      categoryName = category.title;
     }
     if (req.body.name) {
       if (!categoryId || !categoryName) {
         const existing = await Brand.findById(req.params.id).populate('category');
         categoryId = categoryId || existing?.category?._id;
-        categoryName = categoryName || existing?.category?.name;
+        categoryName = categoryName || existing?.category?.title;
       }
       const baseSlug = slugify(req.body.name, { lower: true });
       const conflict = await Brand.findOne({ slug: baseSlug, _id: { $ne: req.params.id }, category: { $ne: categoryId } });
