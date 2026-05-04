@@ -11,6 +11,7 @@
 !.yarn/versions
 .github
 /.github
+master_god-backend.yml
 
 # testing
 /coverage
