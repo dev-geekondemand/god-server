@@ -26,30 +26,34 @@ const createAd = asyncHandler(async (req, res) => {
 
 
 const getAllAds = asyncHandler(async (req, res) => {
-    try {
-        const ads = await Ad.find();
-        
-        res.status(200).json(ads);
-    } catch (error) {
-        const { status, message } = handleMongoError(error);
-        res.status(status).json({ message });
+  const ads = await Ad.find().sort({ createdAt: -1 });
+
+  for (let i = 0; i < ads.length; i++) {
+    if (ads[i].image?.public_id) {
+      const sasUrl = await generateSasUrl(ads[i].image.public_id);
+      ads[i].image.url = sasUrl;
     }
+  }
+
+  res.status(200).json(ads);
 });
 
 const getInnerAd = asyncHandler(async (req, res) => {
   const { placement } = req.query;
 
-  const ad = await Ad.findOne({
-    type: "inner",
-    placement,
-    ...activeFilter,
-  }).sort({ createdAt: -1 });
+  const query = { type: "inner" };
+  if (placement) query.placement = placement;
 
-  if (!ad) {
-    return res.status(404).json({ message: "No inner ad found" });
+  const ads = await Ad.find(query).sort({ createdAt: -1 });
+
+  for (let i = 0; i < ads.length; i++) {
+    if (ads[i].image?.public_id) {
+      const sasUrl = await generateSasUrl(ads[i].image.public_id);
+      ads[i].image.url = sasUrl;
+    }
   }
 
-  res.status(200).json(ad);
+  res.status(200).json(ads);
 });
 
 

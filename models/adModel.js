@@ -21,6 +21,11 @@ const AdSchema = new mongoose.Schema(
       url: { type: String }
     },
 
+    link: { type: String },
+
+    width: { type: Number },
+    height: { type: Number },
+
     startDate: Date,
     endDate: Date,
 

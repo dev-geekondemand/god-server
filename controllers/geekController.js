@@ -562,6 +562,8 @@ const searchGeeks = asyncHandler(async (req, res) => {
     chargeType,
     minRate,
     maxRate,
+    lat,
+    lng,
     page = 1,
     limit = 10,
   } = req.query;
@@ -613,10 +615,169 @@ const searchGeeks = asyncHandler(async (req, res) => {
   // Initial match filters (city/state/mode/etc.)
   pipeline.push({ $match: matchQuery });
 
+  // ── Location-based ranking ──────────────────────────────────────────────────
+  // Tiers (only applied when lat/lng are provided):
+  //   Tier 3 → within 10 km  AND subscribed (Advance/Professional)  — sorted by plan rank then distance
+  //   Tier 2 → within 10 km  AND NOT subscribed                     — sorted by distance
+  //   Tier 1 → outside 10 km (or no coordinates)                    — sorted by distance; subscription plan irrelevant here
+  // Without lat/lng: rank by subscription plan tier, then skill match relevance.
+  const hasLocation = lat && lng && !isNaN(parseFloat(lat)) && !isNaN(parseFloat(lng));
+
+  if (hasLocation) {
+    const userLat = parseFloat(lat);
+    const userLng = parseFloat(lng);
+    const latRad = userLat * (Math.PI / 180);
+    const lngRad = userLng * (Math.PI / 180);
+
+    pipeline.push({
+      $addFields: {
+        distanceKm: {
+          $cond: {
+            if: {
+              $and: [
+                { $isArray: '$address.location.coordinates' },
+                { $eq: [{ $size: { $ifNull: ['$address.location.coordinates', []] } }, 2] },
+              ],
+            },
+            then: {
+              // Haversine formula — returns distance in km
+              $multiply: [
+                6371,
+                {
+                  $multiply: [
+                    2,
+                    {
+                      $asin: {
+                        $min: [
+                          1,
+                          {
+                            $sqrt: {
+                              $add: [
+                                {
+                                  $pow: [
+                                    {
+                                      $sin: {
+                                        $divide: [
+                                          {
+                                            $subtract: [
+                                              { $multiply: [{ $arrayElemAt: ['$address.location.coordinates', 1] }, Math.PI / 180] },
+                                              { $literal: latRad },
+                                            ],
+                                          },
+                                          2,
+                                        ],
+                                      },
+                                    },
+                                    2,
+                                  ],
+                                },
+                                {
+                                  $multiply: [
+                                    { $cos: { $literal: latRad } },
+                                    { $cos: { $multiply: [{ $arrayElemAt: ['$address.location.coordinates', 1] }, Math.PI / 180] } },
+                                    {
+                                      $pow: [
+                                        {
+                                          $sin: {
+                                            $divide: [
+                                              {
+                                                $subtract: [
+                                                  { $multiply: [{ $arrayElemAt: ['$address.location.coordinates', 0] }, Math.PI / 180] },
+                                                  { $literal: lngRad },
+                                                ],
+                                              },
+                                              2,
+                                            ],
+                                          },
+                                        },
+                                        2,
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+            else: 99999, // no coordinates → treat as very far
+          },
+        },
+      },
+    });
+
+    pipeline.push({
+      $addFields: {
+        searchTier: {
+          $switch: {
+            branches: [
+              {
+                // Subscribed geeks within 10 km — priority tier
+                case: {
+                  $and: [
+                    { $lte: ['$distanceKm', 10] },
+                    { $in: ['$subscriptionPlan', ['Advance', 'Professional']] },
+                  ],
+                },
+                then: 3,
+              },
+              {
+                // Non-subscribed geeks within 10 km
+                case: { $lte: ['$distanceKm', 10] },
+                then: 2,
+              },
+            ],
+            default: 1,
+          },
+        },
+        // planRank only applies within tier 3 so it doesn't affect outside-10km ordering
+        tier3PlanRank: {
+          $cond: {
+            if: {
+              $and: [
+                { $lte: ['$distanceKm', 10] },
+                { $in: ['$subscriptionPlan', ['Advance', 'Professional']] },
+              ],
+            },
+            then: {
+              $switch: {
+                branches: [
+                  { case: { $eq: ['$subscriptionPlan', 'Professional'] }, then: 2 },
+                  { case: { $eq: ['$subscriptionPlan', 'Advance'] }, then: 1 },
+                ],
+                default: 0,
+              },
+            },
+            else: 0,
+          },
+        },
+      },
+    });
+  } else {
+    // No location — add plan priority for global ranking
+    pipeline.push({
+      $addFields: {
+        planPriority: {
+          $switch: {
+            branches: [
+              { case: { $eq: ['$subscriptionPlan', 'Professional'] }, then: 2 },
+              { case: { $eq: ['$subscriptionPlan', 'Advance'] }, then: 1 },
+            ],
+            default: 0,
+          },
+        },
+      },
+    });
+  }
+
   if (skill && mongoose.Types.ObjectId.isValid(skill)) {
     const skillId = new mongoose.Types.ObjectId(skill);
 
-    // Add computed priority
     pipeline.push({
       $addFields: {
         matchPriority: {
@@ -635,7 +796,7 @@ const searchGeeks = asyncHandler(async (req, res) => {
       },
     });
 
-    // Ensure skill matches somewhere
+    // Only return geeks that actually match the skill
     pipeline.push({
       $match: {
         $or: [
@@ -648,8 +809,14 @@ const searchGeeks = asyncHandler(async (req, res) => {
     });
   }
 
-  // Sort by matchPriority, then _id
-  pipeline.push({ $sort: { matchPriority: -1, _id: 1 } });
+  // Sort:
+  //   With location  → tier DESC, plan rank within tier 3 DESC, distance ASC
+  //   Without location → plan priority DESC, skill match priority DESC, stable id ASC
+  if (hasLocation) {
+    pipeline.push({ $sort: { searchTier: -1, tier3PlanRank: -1, distanceKm: 1 } });
+  } else {
+    pipeline.push({ $sort: { planPriority: -1, matchPriority: -1, _id: 1 } });
+  }
 
   // Pagination
   pipeline.push({ $skip: skip });
@@ -1332,7 +1499,7 @@ const getGeeksByRefCode = asyncHandler(async (req, res) => {
 
     // ✅ CASE 1: No filters at all → return all geeks
     if (!refCode && !startDate && !endDate) {
-      const allGeeks = await Geek.find().sort({ createdAt: -1 });
+      const allGeeks = await Geek.find().sort({ createdAt: -1 }).populate('primarySkill secondarySkills brandsServiced').select('-authToken');
 
       return res.status(200).json({
         count: allGeeks.length,
@@ -1354,7 +1521,7 @@ const getGeeksByRefCode = asyncHandler(async (req, res) => {
       if (endDate) query.createdAt.$lte = endDate;
     }
 
-    const geeks = await Geek.find(query).sort({ createdAt: -1 });
+    const geeks = await Geek.find(query).sort({ createdAt: -1 }).populate('primarySkill secondarySkills brandsServiced').select('-authToken');
 
     return res.status(200).json({
       count: geeks.length,
@@ -1375,6 +1542,104 @@ const getGeeksByRefCode = asyncHandler(async (req, res) => {
 
 
 
+// ─── Corporate Geek ───────────────────────────────────────────────────────────
+
+const verifyOtpAndCreateCorporateGeek = asyncHandler(async (req, res) => {
+  let { mobile, otp, fullName, companyName, primarySkill, yoe, refCode, brandsServiced } = req.body;
+
+  if (!mobile || !otp || !fullName?.first || !fullName?.last || !companyName || !primarySkill || !yoe) {
+    return res.status(400).json({
+      message: 'mobile, OTP, fullName, companyName, primarySkill and yoe are required',
+    });
+  }
+
+  mobile = mobile.replace(/\D/g, '');
+  mobile = mobile.length === 12 ? '+' + mobile : '+91' + mobile;
+
+  const isVerified = await verifyOtp(mobile, otp);
+  if (!isVerified) return res.status(401).json({ message: 'Invalid or expired OTP' });
+
+  const existing = await Geek.findOne({ mobile });
+  if (existing) return res.status(409).json({ message: 'User already exists. Please login instead.' });
+
+  const cat = await Category.findById(primarySkill);
+  if (cat) { cat.totalGeeks += 1; await cat.save(); }
+
+  const geek = await CorporateGeek.create({
+    mobile,
+    refCode,
+    brandsServiced,
+    yoe,
+    isPhoneVerified: true,
+    fullName,
+    primarySkill,
+    companyName,
+    profileCompleted: false,
+    profileCompletedPercentage: 30,
+  });
+
+  const tokenPayload = { id: geek._id, mobile: geek.mobile };
+  const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '7d' });
+  geek.authToken = await bcrypt.hash(token, 10);
+  await geek.save();
+
+  res.cookie('geek_auth_token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+
+  res.status(201).json({
+    message: 'Corporate geek registered successfully',
+    token,
+    geek: { id: geek._id, mobile: geek.mobile, fullName: geek.fullName, companyName: geek.companyName },
+  });
+});
+
+// Admin creates a corporate geek directly (no OTP) — used from the admin panel
+const adminCreateCorporateGeek = asyncHandler(async (req, res) => {
+  let {
+    mobile, fullName, companyName, primarySkill, yoe,
+    refCode, brandsServiced, secondarySkills,
+    GSTIN, CIN, teamSize, email,
+  } = req.body;
+
+  if (!mobile || !fullName?.first || !fullName?.last || !companyName || !primarySkill || !yoe) {
+    return res.status(400).json({
+      message: 'mobile, fullName, companyName, primarySkill and yoe are required',
+    });
+  }
+
+  mobile = mobile.replace(/\D/g, '');
+  mobile = mobile.length === 12 ? '+' + mobile : '+91' + mobile;
+
+  const existing = await Geek.findOne({ mobile });
+  if (existing) return res.status(409).json({ message: 'A geek with this mobile already exists.' });
+
+  const cat = await Category.findById(primarySkill);
+  if (cat) { cat.totalGeeks += 1; await cat.save(); }
+
+  const geek = await CorporateGeek.create({
+    mobile,
+    email,
+    refCode,
+    brandsServiced,
+    secondarySkills,
+    yoe,
+    fullName,
+    primarySkill,
+    companyName,
+    GSTIN,
+    CIN,
+    teamSize,
+    profileCompleted: false,
+    profileCompletedPercentage: 30,
+  });
+
+  res.status(201).json({ message: 'Corporate geek created successfully', geek });
+});
+
 module.exports = {
   searchGeeks,
   updateGeekDetails,
@@ -1387,6 +1652,8 @@ module.exports = {
   sendOtpToPhone,
   verifyOtpAndLogin,
   verifyOtpAndCreateGeek,
+  verifyOtpAndCreateCorporateGeek,
+  adminCreateCorporateGeek,
   updateProfileImage,
   deleteCertificate,
   uploadCertificate,

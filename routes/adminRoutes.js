@@ -13,6 +13,7 @@ const {
   getLoginSummary,
   getSeekerLoginsOverTime,
   getGeekLoginsOverTime,
+  getUserLoginsList,
 } = require('../controllers/loginanalyticsController.js');
 const {
   getAllRequestsAdmin,
@@ -41,6 +42,7 @@ router.get('/dashboard/geeks/secondary-skills', protectAdmin, getGeeksSecondaryS
 router.get('/loginanalytics/summary', protectAdmin, getLoginSummary);
 router.get('/loginanalytics/seekers', protectAdmin, getSeekerLoginsOverTime);
 router.get('/loginanalytics/geeks',   protectAdmin, getGeekLoginsOverTime);
+router.get('/loginanalytics/list',    protectAdmin, getUserLoginsList);
 
 // Request reports (admin)
 router.get('/requests',          protectAdmin, getAllRequestsAdmin);

@@ -1,6 +1,7 @@
 const express = require('express');
 const {
   createAd,
+  getAllAds,
   getInnerAd,
   getTopAds,
   updateAd,
@@ -24,6 +25,7 @@ router.post(
   createAd
 );
 
+router.get('/', getAllAds);
 router.get('/top', getTopAds);
 router.get('/inner', getInnerAd);
 

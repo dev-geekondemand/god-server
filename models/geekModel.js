@@ -138,8 +138,17 @@ const GeekSchema = new mongoose.Schema({
   expoPushToken: {
     type: String,
     default: null
-  }
-  
+  },
+  subscriptionPlan: {
+    type: String,
+    enum: ['Startup', 'Advance', 'Professional'],
+    default: 'Startup',
+  },
+  subscription: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Subscription',
+  },
+
 }, baseOptions);
 
 GeekSchema.plugin(leanVirtuals);

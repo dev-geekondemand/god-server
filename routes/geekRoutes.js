@@ -16,6 +16,8 @@ const {
   sendOtpToPhone,
   verifyOtpAndLogin,
   verifyOtpAndCreateGeek,
+  verifyOtpAndCreateCorporateGeek,
+  adminCreateCorporateGeek,
   getGeekById,
   findGeekById,
   logoutGeek,
@@ -104,6 +106,12 @@ router.delete('/:id/rate-card/:rateId', deleteRateCardItem);
 
 // Availability
 router.put('/:id/availability', protectGeek, updateAvailability);
+
+// ─── Corporate Geek Routes ────────────────────────────────────────────────────
+// Self-register a corporate geek via OTP (same flow as individual)
+router.post('/corporate/register', verifyOtpAndCreateCorporateGeek);
+// Admin creates a corporate geek directly without OTP (from admin panel)
+router.post('/corporate/admin-create', protectAdmin, adminCreateCorporateGeek);
 
 // Search & Filter
 router.post('/geeks-by-refCode',protectAdmin, getGeeksByRefCode);

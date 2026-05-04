@@ -18,6 +18,8 @@ const apiKeyRoute = require('./routes/apiKey.js')
 const enquiryRoutes = require('./routes/enquiryRoutes.js')
 const adRoutes = require('./routes/adRoutes.js')
 const adminRoutes = require('./routes/adminRoutes.js')
+const subscriptionRoutes = require('./routes/subscriptionRoutes.js')
+const { handleWebhook } = require('./controllers/subscriptionController.js')
 const { handleMongoError } = require('./utils/handleMongoError.js')
 const passport = require('passport');
 require('./config/passport');
@@ -47,6 +49,10 @@ app.use(morgan("dev"))
 
  
   app.use(passport.initialize());
+
+// Razorpay webhook must receive the raw body for signature verification,
+// so register it before bodyParser.json() parses everything into objects.
+app.post('/api/subscription/webhook', express.raw({ type: 'application/json' }), handleWebhook);
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
@@ -99,6 +105,7 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/issue', issueRoutes);
 app.use('/api/enquiry', enquiryRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/subscription', subscriptionRoutes);
 
 
 
