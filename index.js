@@ -31,12 +31,12 @@ const app = express();
 const PORT = process.env.PORT || 4002;
  
 const corsOptions = {
-    origin:["http://localhost:3001","https://geekondemand.in","http://localhost:3000","https://god-web-avangweyfef2ddec.southindia-01.azurewebsites.net","https://god-ui.vercel.app","https://god-admin-5l63.vercel.app"], 
+    origin:["https://god-admin-5l63.vercel.app","http://localhost:3001","https://geekondemand.in","http://localhost:3000","https://god-web-avangweyfef2ddec.southindia-01.azurewebsites.net","https://god-ui.vercel.app"], 
     credentials:true,
     optionsSuccessStatus:200,
   } 
   app.use(cors(corsOptions));
-  // app.options('*', cors(corsOptions));
+  app.options('*', cors(corsOptions));
 
 dbConnect();
 
