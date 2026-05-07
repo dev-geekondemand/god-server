@@ -1,23 +1,22 @@
-const nodemailer = require("nodemailer");
-const sendMail = async (options) => {
-    
-    let transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: process.env.SMTP_PORT,
-        secure: false, // true for 465, false for other ports
-        auth: {
-            user: process.env.SMTP_EMAIL, // generated ethereal user
-            pass: process.env.SMTP_PASSWORD, // generated ethereal password
+const { EmailClient } = require("@azure/communication-email");
+
+const sendMail = async ({ to, subject, text, html }) => {
+    const client = new EmailClient(process.env.AZURE_COMMUNICATION_CONNECTION_STRING);
+    const message = {
+        senderAddress: process.env.AZURE_SENDER_ADDRESS,
+        recipients: {
+            to: [{ address: to }],
         },
-        
-    });
+        content: {
+            subject,
+            plainText: text,
+            ...(html && { html }),
+        },
+    };
 
-    console.log(options)
-
-    const info = await transporter.sendMail(options); 
-
-    console.log("Message sent: %s", info.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    const poller = await client.beginSend(message);
+    const result = await poller.pollUntilDone();
+    console.log("Email sent, messageId:", result.id);
 };
 
 module.exports = sendMail;

@@ -4,6 +4,7 @@ const asyncHandler = require('express-async-handler');
 const { Geek } = require('../models/geekModel.js');
 const Subscription = require('../models/subscriptionModel.js');
 const AuditLog = require('../models/auditLogModel.js');
+const { sendSubscriptionSMS } = require('../utils/subscriptionNotifications.js');
 
 const PLANS = {
   Advance: { amount: 49900, razorpayPlanId: () => process.env.RAZORPAY_PLAN_ADVANCE_ID },
@@ -80,13 +81,20 @@ const createSubscription = asyncHandler(async (req, res) => {
     await existing.save();
   }
 
-  const rzpSub = await getRazorpay().subscriptions.create({
-    plan_id: planId,
-    total_count: 120, // up to 10 years; effectively indefinite
-    quantity: 1,
-    customer_notify: 1,
-    notes: { geekId: geekId.toString(), plan },
-  });
+  let rzpSub;
+  try {
+    rzpSub = await getRazorpay().subscriptions.create({
+      plan_id: planId,
+      total_count: 120,
+      quantity: 1,
+      customer_notify: 1,
+      notes: { geekId: geekId.toString(), plan },
+    });
+  } catch (rzpErr) {
+    const description = rzpErr?.error?.description || rzpErr?.message || 'Razorpay error';
+    console.error('[Razorpay] subscriptions.create failed:', JSON.stringify(rzpErr));
+    return res.status(502).json({ message: `Payment gateway error: ${description}` });
+  }
 
   await Subscription.create({
     geek: geekId,
@@ -137,7 +145,17 @@ const verifyPaymentAndActivate = asyncHandler(async (req, res) => {
     await log(geekId, 'badge_added', false, true, { plan: 'Professional' }, 'system');
   }
 
-  res.status(200).json({ message: 'Subscription activated', plan: sub.plan, status: sub.status });
+  // Fire-and-forget SMS — don't block the response
+  sendSubscriptionSMS(geek, sub.plan, false)
+    .then(() => log(geekId, 'sms_sent', null, geek.mobile, { plan: sub.plan, trigger: 'activation' }, 'system'))
+    .catch(() => {});
+
+  res.status(200).json({
+    message: 'Subscription activated',
+    plan: sub.plan,
+    status: sub.status,
+    currentPeriodEnd: sub.currentPeriodEnd,
+  });
 });
 
 // ─── Cancel ───────────────────────────────────────────────────────────────────
@@ -357,6 +375,10 @@ const handleWebhook = asyncHandler(async (req, res) => {
       const { oldPlan } = await activatePlan(geek, sub, sub.plan, rzpPayment?.id);
       await log(sub.geek, 'payment_success', null, null, { razorpay_payment_id: rzpPayment?.id, renewal: true }, 'razorpay');
       await log(sub.geek, 'subscription_renewed', oldPlan, sub.plan, {}, 'razorpay');
+
+      sendSubscriptionSMS(geek, sub.plan, true)
+        .then(() => log(sub.geek, 'sms_sent', null, geek.mobile, { plan: sub.plan, trigger: 'renewal' }, 'system'))
+        .catch(() => {});
       break;
     }
 

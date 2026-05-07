@@ -31,7 +31,7 @@ const app = express();
 const PORT = process.env.PORT || 4002;
  
 const corsOptions = {
-    origin:["https://geekondemand.in","https://god-ui.vercel.app","https://god-admin-5l63.vercel.app"], 
+    origin:["http://localhost:3000","http://localhost:3001","https://geekondemand.in","https://god-ui.vercel.app","https://god-admin-5l63.vercel.app"], 
     credentials:true,
     optionsSuccessStatus:200,
   } 
