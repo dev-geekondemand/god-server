@@ -24,20 +24,32 @@ const { handleMongoError } = require('./utils/handleMongoError.js')
 const passport = require('passport');
 require('./config/passport');
 
-const cors = require('cors')
- const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const morgan = require('morgan')
 const app = express();
 const PORT = process.env.PORT || 4002;
- 
-const corsOptions = {
-    origin:["https://geekondemand.in","https://god-ui.vercel.app","https://god-admin-5l63.vercel.app"], 
-    credentials:true,
-    optionsSuccessStatus:200,
-  } 
-   
-  app.use(cors(corsOptions));
-  app.options('*', cors(corsOptions));
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://geekondemand.in",
+  "https://god-ui.vercel.app",
+  "https://god-admin-5l63.vercel.app",
+];
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-api-key, X-Requested-With');
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  next();
+});
 
 dbConnect();
 
