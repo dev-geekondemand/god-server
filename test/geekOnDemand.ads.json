@@ -1,0 +1,114 @@
+[{
+  "_id": {
+    "$oid": "69786fa211a074c26824fc16"
+  },
+  "type": "top",
+  "placement": "home",
+  "image": {
+    "public_id": "91c32b48-e024-44c8-94ae-96d4ce37410b.jpeg",
+    "url": "https://godstore.blob.core.windows.net/uploads/91c32b48-e024-44c8-94ae-96d4ce37410b.jpeg"
+  },
+  "stats": {
+    "impressions": 0,
+    "clicks": 0
+  },
+  "createdAt": {
+    "$date": "2026-01-27T07:56:18.492Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-27T07:56:18.492Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6978723311a074c26824fc2c"
+  },
+  "type": "top",
+  "placement": "home",
+  "image": {
+    "public_id": "626b4c4f-ac6a-455c-9460-0899ff477e4f.jpeg",
+    "url": "https://godstore.blob.core.windows.net/uploads/626b4c4f-ac6a-455c-9460-0899ff477e4f.jpeg"
+  },
+  "stats": {
+    "impressions": 0,
+    "clicks": 0
+  },
+  "createdAt": {
+    "$date": "2026-01-27T08:07:15.598Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-27T08:07:15.598Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6978723d11a074c26824fc30"
+  },
+  "type": "top",
+  "placement": "home",
+  "image": {
+    "public_id": "f62fa3a3-1725-4e00-9394-3752a035ee91.jpeg",
+    "url": "https://godstore.blob.core.windows.net/uploads/f62fa3a3-1725-4e00-9394-3752a035ee91.jpeg"
+  },
+  "stats": {
+    "impressions": 0,
+    "clicks": 0
+  },
+  "createdAt": {
+    "$date": "2026-01-27T08:07:25.876Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-27T08:07:25.876Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fc8215bc816551362406a2"
+  },
+  "type": "inner",
+  "placement": "home",
+  "image": {
+    "public_id": "65e74cce-374e-4edc-bc93-4558c58443b4.jpeg",
+    "url": "https://godstore.blob.core.windows.net/uploads/65e74cce-374e-4edc-bc93-4558c58443b4.jpeg"
+  },
+  "width": 900,
+  "height": 1200,
+  "stats": {
+    "impressions": 0,
+    "clicks": 0
+  },
+  "createdAt": {
+    "$date": "2026-05-07T12:14:13.688Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-07T12:14:13.688Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fc825c7a2c2c923664b3e1"
+  },
+  "type": "inner",
+  "placement": "home",
+  "image": {
+    "public_id": "04db1d3e-77a0-463a-89a6-17636f425641.jpeg",
+    "url": "https://godstore.blob.core.windows.net/uploads/04db1d3e-77a0-463a-89a6-17636f425641.jpeg"
+  },
+  "width": 2000,
+  "height": 400,
+  "stats": {
+    "impressions": 0,
+    "clicks": 0
+  },
+  "createdAt": {
+    "$date": "2026-05-07T12:15:24.012Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-07T12:15:24.012Z"
+  },
+  "__v": 0
+}]

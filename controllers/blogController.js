@@ -7,12 +7,12 @@ const { handleMongoError } = require('../utils/handleMongoError');
 
 // Create blog
 const createBlog = asyncHandler(async (req, res) => {
-  const { title, description, summary, author, tags, categories, seo, isPublished } = req.body;
+  const { title, description, summary, author, slug: customSlug, tags, categories, seo, isPublished, scheduledAt } = req.body;
   if (!title || !description || !summary) {
     return res.status(400).json({ message: 'Title, description and summary are required' });
   }
 
-  const slug = slugify(title, { lower: true, strict: true });
+  const slug = customSlug || slugify(title, { lower: true, strict: true });
   const blog = await Blog.create({
     title,
     slug,
@@ -24,6 +24,7 @@ const createBlog = asyncHandler(async (req, res) => {
     seo,
     isPublished,
     publishedAt: isPublished ? new Date() : null,
+    scheduledAt: scheduledAt ? new Date(scheduledAt) : null,
   });
 
   res.status(201).json(blog);
@@ -32,10 +33,11 @@ const createBlog = asyncHandler(async (req, res) => {
 // Update blog
 const updateBlog = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { title, description, summary, author, tags, categories, seo, isPublished } = req.body;
+  const { title, description, summary, author, slug: customSlug, tags, categories, seo, isPublished, scheduledAt } = req.body;
 
   const update = {
-    ...(title && { title, slug: slugify(title, { lower: true, strict: true }) }),
+    ...(title && { title, slug: customSlug || slugify(title, { lower: true, strict: true }) }),
+    ...(customSlug && !title && { slug: customSlug }),
     ...(description !== undefined && { description }),
     ...(summary !== undefined && { summary }),
     ...(author !== undefined && { author }),
@@ -45,6 +47,9 @@ const updateBlog = asyncHandler(async (req, res) => {
     ...(isPublished !== undefined && {
       isPublished,
       publishedAt: isPublished ? new Date() : null,
+    }),
+    ...(scheduledAt !== undefined && {
+      scheduledAt: scheduledAt ? new Date(scheduledAt) : null,
     }),
   };
 

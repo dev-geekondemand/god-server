@@ -8,6 +8,7 @@ const {
   getRequestsByCategory,
   getRequestsCategorySummary,
   getGeeksSecondarySkills,
+  getGeeksPrimarySkills,
 } = require('../controllers/dashboardController.js');
 const {
   getLoginSummary,
@@ -37,6 +38,7 @@ router.get('/dashboard/geeks',               protectAdmin, getGeeksOverTime);
 router.get('/dashboard/requests',            protectAdmin, getRequestsByCategory);
 router.get('/dashboard/requests/summary',    protectAdmin, getRequestsCategorySummary);
 router.get('/dashboard/geeks/secondary-skills', protectAdmin, getGeeksSecondarySkills);
+router.get('/dashboard/geeks/primary-skills',   protectAdmin, getGeeksPrimarySkills);
 
 // Login analytics (all protected)
 router.get('/loginanalytics/summary', protectAdmin, getLoginSummary);

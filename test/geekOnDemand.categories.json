@@ -1,0 +1,2268 @@
+[{
+  "_id": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "title": "DLP - Data Loss Prevention",
+  "slug": "dlp-data-loss-prevention",
+  "subCategories": [
+    {
+      "$oid": "686cede849508cfcf76f6752"
+    },
+    {
+      "$oid": "686cedea49508cfcf76f6757"
+    },
+    {
+      "$oid": "686cedec49508cfcf76f675c"
+    },
+    {
+      "$oid": "686cedee49508cfcf76f6761"
+    },
+    {
+      "$oid": "686cedee49508cfcf76f6766"
+    },
+    {
+      "$oid": "686cedef49508cfcf76f676b"
+    },
+    {
+      "$oid": "686cedf149508cfcf76f6770"
+    },
+    {
+      "$oid": "686cedf349508cfcf76f6775"
+    },
+    {
+      "$oid": "686cedf449508cfcf76f677a"
+    },
+    {
+      "$oid": "686cedf649508cfcf76f677f"
+    },
+    {
+      "$oid": "686cedf749508cfcf76f6784"
+    },
+    {
+      "$oid": "686cedf849508cfcf76f6789"
+    },
+    {
+      "$oid": "686cedf849508cfcf76f678e"
+    },
+    {
+      "$oid": "686cedf949508cfcf76f6793"
+    },
+    {
+      "$oid": "686cedfa49508cfcf76f6798"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:00:17.806Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-26T09:32:07.845Z"
+  },
+  "__v": 9,
+  "image": {
+    "public_id": "95242466-4f39-41f6-8fad-049272322b81.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/95242466-4f39-41f6-8fad-049272322b81.png"
+  },
+  "smallBanner": {
+    "public_id": "1b32b24b-3049-482c-a61c-63b556f105c7.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/1b32b24b-3049-482c-a61c-63b556f105c7.png"
+  },
+  "totalGeeks": 167,
+  "priority": 8,
+  "requests": [
+    {
+      "$oid": "6997e291a209137e0c35347a"
+    },
+    {
+      "$oid": "6997e90ba209137e0c3537bc"
+    },
+    {
+      "$oid": "69a11348b31f5603365bb7ae"
+    },
+    {
+      "$oid": "69a116dcb31f5603365bbaae"
+    },
+    {
+      "$oid": "69a56d96b31f5603365bcc69"
+    },
+    {
+      "$oid": "69ae9983d2365fc8edab5442"
+    },
+    {
+      "$oid": "69afb48bd2365fc8edab65e6"
+    },
+    {
+      "$oid": "69b957fa45ff0df32821308b"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "title": "Virtualization",
+  "slug": "virtualization",
+  "subCategories": [
+    {
+      "$oid": "686cebdd49508cfcf76f6391"
+    },
+    {
+      "$oid": "686cebdd49508cfcf76f6396"
+    },
+    {
+      "$oid": "686cecfb49508cfcf76f652f"
+    },
+    {
+      "$oid": "686cecfd49508cfcf76f6534"
+    },
+    {
+      "$oid": "686cecff49508cfcf76f6539"
+    },
+    {
+      "$oid": "686cedcc49508cfcf76f66d5"
+    },
+    {
+      "$oid": "686cedcd49508cfcf76f66da"
+    },
+    {
+      "$oid": "686cedce49508cfcf76f66df"
+    },
+    {
+      "$oid": "686cedcf49508cfcf76f66e4"
+    },
+    {
+      "$oid": "686cedd049508cfcf76f66e9"
+    },
+    {
+      "$oid": "686cedd149508cfcf76f66ee"
+    },
+    {
+      "$oid": "686cedd249508cfcf76f66f3"
+    },
+    {
+      "$oid": "686cedd349508cfcf76f66f8"
+    },
+    {
+      "$oid": "686cedd449508cfcf76f66fd"
+    },
+    {
+      "$oid": "686cedd549508cfcf76f6702"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:03:24.322Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-31T11:00:08.694Z"
+  },
+  "__v": 16,
+  "image": {
+    "public_id": "bfa8ee12-a615-4134-a0b9-7e13de5d28ae.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/bfa8ee12-a615-4134-a0b9-7e13de5d28ae.png"
+  },
+  "smallBanner": {
+    "public_id": "97e780f9-8034-4ef9-b1e5-7ae529d4b3d5.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/97e780f9-8034-4ef9-b1e5-7ae529d4b3d5.png"
+  },
+  "totalGeeks": 98,
+  "requests": [
+    {
+      "$oid": "68f0995114fde3d10c927f6f"
+    },
+    {
+      "$oid": "68f09c77e79c52b6d56d4cb9"
+    },
+    {
+      "$oid": "690dc6f2a7bf15a027eb6714"
+    },
+    {
+      "$oid": "690dc6f2a7bf15a027eb671f"
+    },
+    {
+      "$oid": "690dc6f2a7bf15a027eb6721"
+    },
+    {
+      "$oid": "690dc6f3a7bf15a027eb6724"
+    },
+    {
+      "$oid": "690dc6f3a7bf15a027eb673e"
+    },
+    {
+      "$oid": "690dc6f3a7bf15a027eb6740"
+    },
+    {
+      "$oid": "690dc6f3a7bf15a027eb6749"
+    },
+    {
+      "$oid": "690dc6f4a7bf15a027eb674d"
+    },
+    {
+      "$oid": "690dc6f4a7bf15a027eb6756"
+    },
+    {
+      "$oid": "690dc6f4a7bf15a027eb675c"
+    },
+    {
+      "$oid": "690dc6f4a7bf15a027eb6770"
+    },
+    {
+      "$oid": "690dc6f4a7bf15a027eb6772"
+    },
+    {
+      "$oid": "690dc6f4a7bf15a027eb677a"
+    }
+  ],
+  "priority": 14
+},
+{
+  "_id": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "title": "CCTV - Service & Repair",
+  "slug": "cctv-service-and-repair",
+  "subCategories": [
+    {
+      "$oid": "686cedfb49508cfcf76f679d"
+    },
+    {
+      "$oid": "686cedfc49508cfcf76f67a2"
+    },
+    {
+      "$oid": "686cedfd49508cfcf76f67a7"
+    },
+    {
+      "$oid": "686cedfe49508cfcf76f67ac"
+    },
+    {
+      "$oid": "686cedff49508cfcf76f67b1"
+    },
+    {
+      "$oid": "686cee0049508cfcf76f67b6"
+    },
+    {
+      "$oid": "686cee0149508cfcf76f67bb"
+    },
+    {
+      "$oid": "686cee0249508cfcf76f67c0"
+    },
+    {
+      "$oid": "686cee0249508cfcf76f67c5"
+    },
+    {
+      "$oid": "686cee0349508cfcf76f67ca"
+    },
+    {
+      "$oid": "686cee0449508cfcf76f67cf"
+    },
+    {
+      "$oid": "686cee0549508cfcf76f67d4"
+    },
+    {
+      "$oid": "686cee0649508cfcf76f67d9"
+    },
+    {
+      "$oid": "686cee0649508cfcf76f67de"
+    },
+    {
+      "$oid": "686cee0749508cfcf76f67e3"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T08:59:39.281Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-17T11:35:49.293Z"
+  },
+  "__v": 30,
+  "image": {
+    "public_id": "3a8ef19a-7ee3-444f-b87f-4b30336982b0.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/3a8ef19a-7ee3-444f-b87f-4b30336982b0.png"
+  },
+  "smallBanner": {
+    "public_id": "df870158-a33f-45a7-af05-897a3f9aa4c7.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/df870158-a33f-45a7-af05-897a3f9aa4c7.png"
+  },
+  "totalGeeks": 294,
+  "requests": [
+    {
+      "$oid": "68ca4ed4ddea73a6e4836aa6"
+    },
+    {
+      "$oid": "68cc02d3e99bccd5aca3a323"
+    },
+    {
+      "$oid": "68cc02d4e99bccd5aca3a32f"
+    },
+    {
+      "$oid": "68f20490fcbc809a9069f2bc"
+    },
+    {
+      "$oid": "68f207d62b63ef6d178b8e80"
+    },
+    {
+      "$oid": "6916fbbe698575a838f0c2cc"
+    },
+    {
+      "$oid": "69171af8c61ea893602ffb9d"
+    },
+    {
+      "$oid": "69184b5d2460df46fada98ae"
+    },
+    {
+      "$oid": "691ae658476695af66d2bf25"
+    },
+    {
+      "$oid": "691ee99b847b5790030fb0e3"
+    },
+    {
+      "$oid": "691eea77847b5790030fb13a"
+    },
+    {
+      "$oid": "691eea99847b5790030fb142"
+    },
+    {
+      "$oid": "69202da19f5bc0e717cf435f"
+    },
+    {
+      "$oid": "692315c753f22ea67b96515a"
+    },
+    {
+      "$oid": "69255dcf3d6e104dcba3650b"
+    },
+    {
+      "$oid": "69255ddde9fca6699ee16e51"
+    },
+    {
+      "$oid": "69255e153d6e104dcba36534"
+    },
+    {
+      "$oid": "69396ba80638e52252955979"
+    },
+    {
+      "$oid": "69396c0299278789b555aac5"
+    },
+    {
+      "$oid": "69396c9999278789b555ab36"
+    },
+    {
+      "$oid": "69396cee077e95325b29cc3f"
+    },
+    {
+      "$oid": "69413f4da2c2aaad6ecbab7c"
+    },
+    {
+      "$oid": "6943a71a34bf1d887ef38c20"
+    },
+    {
+      "$oid": "6943a7ad030632c95e215b0a"
+    },
+    {
+      "$oid": "69468cfc49be21058ed10c02"
+    },
+    {
+      "$oid": "694be25d657cefbc5bbefe41"
+    },
+    {
+      "$oid": "69cbae020ba8185c300dfe51"
+    },
+    {
+      "$oid": "69e20a28f34a246892bd8c2c"
+    },
+    {
+      "$oid": "69e21b14f34a246892bd8d67"
+    }
+  ],
+  "priority": 11
+},
+{
+  "_id": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "title": "Router - Service & Repair",
+  "slug": "router-service-and-repair",
+  "subCategories": [
+    {
+      "$oid": "686ce73449508cfcf76f5f33"
+    },
+    {
+      "$oid": "686ce73549508cfcf76f5f38"
+    },
+    {
+      "$oid": "686ce73649508cfcf76f5f3d"
+    },
+    {
+      "$oid": "686ce73649508cfcf76f5f42"
+    },
+    {
+      "$oid": "686ce73749508cfcf76f5f47"
+    },
+    {
+      "$oid": "686ce73849508cfcf76f5f4c"
+    },
+    {
+      "$oid": "686ce73949508cfcf76f5f51"
+    },
+    {
+      "$oid": "686ce73949508cfcf76f5f56"
+    },
+    {
+      "$oid": "686ce73a49508cfcf76f5f5b"
+    },
+    {
+      "$oid": "686ce73b49508cfcf76f5f60"
+    },
+    {
+      "$oid": "686ce73c49508cfcf76f5f65"
+    },
+    {
+      "$oid": "686ce73c49508cfcf76f5f6a"
+    },
+    {
+      "$oid": "686ce73d49508cfcf76f5f6f"
+    },
+    {
+      "$oid": "686ce73e49508cfcf76f5f74"
+    },
+    {
+      "$oid": "686ce73e49508cfcf76f5f79"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:01:35.833Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-08T09:27:39.252Z"
+  },
+  "__v": 3,
+  "image": {
+    "public_id": "7afa7b51-b183-4fb4-9403-b8f876db4d13.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/7afa7b51-b183-4fb4-9403-b8f876db4d13.png"
+  },
+  "smallBanner": {
+    "public_id": "a8532325-9a90-4d3b-9b49-c20b5bbe04d9.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/a8532325-9a90-4d3b-9b49-c20b5bbe04d9.png"
+  },
+  "totalGeeks": 238,
+  "requests": [
+    {
+      "$oid": "68947373c412be45eed92e15"
+    },
+    {
+      "$oid": "695790c472f9f8ab6e019790"
+    },
+    {
+      "$oid": "6957a3f1c42fc534bc6939c5"
+    }
+  ],
+  "priority": 3
+},
+{
+  "_id": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "title": "Scanner - Service & Repair",
+  "slug": "scanner-service-and-repair",
+  "subCategories": [
+    {
+      "$oid": "686ce72949508cfcf76f5ee8"
+    },
+    {
+      "$oid": "686ce72949508cfcf76f5eed"
+    },
+    {
+      "$oid": "686ce72a49508cfcf76f5ef2"
+    },
+    {
+      "$oid": "686ce72b49508cfcf76f5ef7"
+    },
+    {
+      "$oid": "686ce72c49508cfcf76f5efc"
+    },
+    {
+      "$oid": "686ce72c49508cfcf76f5f01"
+    },
+    {
+      "$oid": "686ce72d49508cfcf76f5f06"
+    },
+    {
+      "$oid": "686ce72e49508cfcf76f5f0b"
+    },
+    {
+      "$oid": "686ce72f49508cfcf76f5f10"
+    },
+    {
+      "$oid": "686ce73049508cfcf76f5f15"
+    },
+    {
+      "$oid": "686ce73049508cfcf76f5f1a"
+    },
+    {
+      "$oid": "686ce73149508cfcf76f5f1f"
+    },
+    {
+      "$oid": "686ce73249508cfcf76f5f24"
+    },
+    {
+      "$oid": "686ce73349508cfcf76f5f29"
+    },
+    {
+      "$oid": "686ce73349508cfcf76f5f2e"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:01:52.984Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-17T13:24:53.677Z"
+  },
+  "__v": 18,
+  "image": {
+    "public_id": "29e89c3d-21c5-46b3-abf0-70fdbb2fc0b4.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/29e89c3d-21c5-46b3-abf0-70fdbb2fc0b4.png"
+  },
+  "smallBanner": {
+    "public_id": "1f56aedb-109c-47c1-9c5c-d4e84e515699.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/1f56aedb-109c-47c1-9c5c-d4e84e515699.png"
+  },
+  "totalGeeks": 186,
+  "requests": [
+    {
+      "$oid": "68a46c6c26b7d6be3a569d53"
+    },
+    {
+      "$oid": "68a6f0b6735b892c2e5632e3"
+    },
+    {
+      "$oid": "68ca4f06ddea73a6e4836acd"
+    },
+    {
+      "$oid": "68e372186653c2ec9689067f"
+    },
+    {
+      "$oid": "68e626054507eecaa62d35f9"
+    },
+    {
+      "$oid": "68e626635c2fe932f6f9e1eb"
+    },
+    {
+      "$oid": "68e6267de9eb132d7d9a08d7"
+    },
+    {
+      "$oid": "68e626a67bc9b021da986a0a"
+    },
+    {
+      "$oid": "68e626ba00b71950cf1a54a1"
+    },
+    {
+      "$oid": "68e6272b148089cd8f0833a7"
+    },
+    {
+      "$oid": "68efc1301d59f814a1b32a24"
+    },
+    {
+      "$oid": "691aac73e4402e95ae9ea7b3"
+    },
+    {
+      "$oid": "69a5677eb31f5603365bcb57"
+    },
+    {
+      "$oid": "69a970861e4206edd62b3996"
+    },
+    {
+      "$oid": "69afe73cd2365fc8edab6895"
+    },
+    {
+      "$oid": "69b149fad2365fc8edab6d08"
+    },
+    {
+      "$oid": "69b952ab45ff0df328212c72"
+    },
+    {
+      "$oid": "69b9562545ff0df328212e59"
+    }
+  ],
+  "priority": 7
+},
+{
+  "_id": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "title": "Video Collaboration - Service & Repair",
+  "slug": "video-collaboration-service-and-repair",
+  "subCategories": [
+    {
+      "$oid": "686cee0849508cfcf76f67e8"
+    },
+    {
+      "$oid": "686cee0949508cfcf76f67ed"
+    },
+    {
+      "$oid": "686cee0a49508cfcf76f67f2"
+    },
+    {
+      "$oid": "686cee0a49508cfcf76f67f7"
+    },
+    {
+      "$oid": "686cee0b49508cfcf76f67fc"
+    },
+    {
+      "$oid": "686cee0d49508cfcf76f6801"
+    },
+    {
+      "$oid": "686cee0f49508cfcf76f6806"
+    },
+    {
+      "$oid": "686cee1049508cfcf76f680b"
+    },
+    {
+      "$oid": "686cee1149508cfcf76f6810"
+    },
+    {
+      "$oid": "686cee1249508cfcf76f6815"
+    },
+    {
+      "$oid": "686cee1349508cfcf76f681a"
+    },
+    {
+      "$oid": "686cee1449508cfcf76f681f"
+    },
+    {
+      "$oid": "686cee1449508cfcf76f6824"
+    },
+    {
+      "$oid": "686cee1649508cfcf76f6829"
+    },
+    {
+      "$oid": "686cee1649508cfcf76f682e"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:03:11.523Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-09T11:49:34.293Z"
+  },
+  "__v": 13,
+  "image": {
+    "public_id": "7f607893-0cab-452e-9d33-fd138887fc83.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/7f607893-0cab-452e-9d33-fd138887fc83.png"
+  },
+  "smallBanner": {
+    "public_id": "cf1a16aa-d5c9-4bb3-9c13-f302426324b0.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/cf1a16aa-d5c9-4bb3-9c13-f302426324b0.png"
+  },
+  "totalGeeks": 79,
+  "requests": [
+    {
+      "$oid": "68a6f0c0735b892c2e5632f9"
+    },
+    {
+      "$oid": "68ef8a5b6838acd6962f61b7"
+    },
+    {
+      "$oid": "68f20209c16e335e0c196611"
+    },
+    {
+      "$oid": "68f2028808b24eea51cf0ea4"
+    },
+    {
+      "$oid": "68f202bffcbc809a9069f21c"
+    },
+    {
+      "$oid": "6915acb61b358d472e4432e2"
+    },
+    {
+      "$oid": "69182cfdf7bfa353d30040e9"
+    },
+    {
+      "$oid": "69182da0baae1a611f69eb17"
+    },
+    {
+      "$oid": "6918338e614192a89353dcde"
+    },
+    {
+      "$oid": "69a114bbb31f5603365bb944"
+    },
+    {
+      "$oid": "69a56512b31f5603365bc9ae"
+    },
+    {
+      "$oid": "69aea3e2d2365fc8edab5a49"
+    },
+    {
+      "$oid": "69aeb3cdd2365fc8edab5ece"
+    }
+  ],
+  "priority": 15
+},
+{
+  "_id": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "title": "Professional Display",
+  "slug": "professional-display",
+  "totalGeeks": 174,
+  "subCategories": [
+    {
+      "$oid": "686cee1749508cfcf76f6833"
+    },
+    {
+      "$oid": "686cee1849508cfcf76f6838"
+    },
+    {
+      "$oid": "686cee1949508cfcf76f683d"
+    },
+    {
+      "$oid": "686cee1a49508cfcf76f6842"
+    },
+    {
+      "$oid": "686cee1b49508cfcf76f6847"
+    },
+    {
+      "$oid": "686cee1c49508cfcf76f684c"
+    },
+    {
+      "$oid": "686cee1d49508cfcf76f6851"
+    },
+    {
+      "$oid": "686cee1d49508cfcf76f6856"
+    },
+    {
+      "$oid": "686cee1e49508cfcf76f685b"
+    },
+    {
+      "$oid": "686cee1f49508cfcf76f6860"
+    },
+    {
+      "$oid": "686cee2049508cfcf76f6865"
+    },
+    {
+      "$oid": "686cee2149508cfcf76f686a"
+    },
+    {
+      "$oid": "686cee2149508cfcf76f686f"
+    },
+    {
+      "$oid": "686cee2249508cfcf76f6874"
+    },
+    {
+      "$oid": "686cee2349508cfcf76f6879"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-07-08T08:45:51.949Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-10T03:18:58.552Z"
+  },
+  "__v": 3,
+  "image": {
+    "public_id": "f9d2100b-b269-476a-9a14-d955ca37f0c1.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/f9d2100b-b269-476a-9a14-d955ca37f0c1.png"
+  },
+  "smallBanner": {
+    "public_id": "13b8e03a-2840-42e5-9357-cef382ab8a46.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/13b8e03a-2840-42e5-9357-cef382ab8a46.png"
+  },
+  "priority": 19,
+  "requests": [
+    {
+      "$oid": "695b4892f9154e7459609d56"
+    },
+    {
+      "$oid": "69af8d9ed2365fc8edab6229"
+    },
+    {
+      "$oid": "69af8da2d2365fc8edab6231"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "title": "Laptops - Desktop Service and Repair",
+  "slug": "laptops-desktop-service-and-repair",
+  "subCategories": [
+    {
+      "$oid": "686ce70449508cfcf76f5e07"
+    },
+    {
+      "$oid": "686ce70549508cfcf76f5e0c"
+    },
+    {
+      "$oid": "686ce70649508cfcf76f5e11"
+    },
+    {
+      "$oid": "686ce70649508cfcf76f5e16"
+    },
+    {
+      "$oid": "686ce70749508cfcf76f5e1b"
+    },
+    {
+      "$oid": "686ce70849508cfcf76f5e20"
+    },
+    {
+      "$oid": "686ce70849508cfcf76f5e25"
+    },
+    {
+      "$oid": "686ce70949508cfcf76f5e2a"
+    },
+    {
+      "$oid": "686ce70a49508cfcf76f5e2f"
+    },
+    {
+      "$oid": "686ce70b49508cfcf76f5e34"
+    },
+    {
+      "$oid": "686ce70c49508cfcf76f5e39"
+    },
+    {
+      "$oid": "686ce70c49508cfcf76f5e3e"
+    },
+    {
+      "$oid": "686ce70d49508cfcf76f5e43"
+    },
+    {
+      "$oid": "686ce70e49508cfcf76f5e48"
+    },
+    {
+      "$oid": "686ce70f49508cfcf76f5e4d"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T08:53:48.872Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-12T13:26:57.990Z"
+  },
+  "__v": 66,
+  "image": {
+    "public_id": "84aca5f1-c838-45cd-a0ef-280f9b04775d.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/84aca5f1-c838-45cd-a0ef-280f9b04775d.png"
+  },
+  "smallBanner": {
+    "public_id": "1a198bb5-92a5-4559-9db9-cd9fa9285c2e.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/1a198bb5-92a5-4559-9db9-cd9fa9285c2e.png"
+  },
+  "totalGeeks": 973,
+  "requests": [
+    {
+      "$oid": "6894770fc451d5c6a785e7e5"
+    },
+    {
+      "$oid": "68f09a06e79c52b6d56d4bf6"
+    },
+    {
+      "$oid": "68f1cf8e5f00ff7e2ddb7f96"
+    },
+    {
+      "$oid": "69132dbe19732e9af76cb0e2"
+    },
+    {
+      "$oid": "694e4a37051998594f2c3733"
+    },
+    {
+      "$oid": "695793b31786f12bacffe4f0"
+    },
+    {
+      "$oid": "6957a573c42fc534bc693a7e"
+    },
+    {
+      "$oid": "6964c4adcb3a8900d0c4971e"
+    },
+    {
+      "$oid": "6964c580009c4238a0a237be"
+    },
+    {
+      "$oid": "6969ff9374fa6ff8e328d99d"
+    },
+    {
+      "$oid": "6969ff9474fa6ff8e328d9a5"
+    },
+    {
+      "$oid": "6969ff9574fa6ff8e328d9ad"
+    },
+    {
+      "$oid": "69735820394aab2a5e9131f7"
+    },
+    {
+      "$oid": "69735831394aab2a5e9131ff"
+    },
+    {
+      "$oid": "6974b305817351ad6da1c7f0"
+    },
+    {
+      "$oid": "69775cc60966e5599371cbd1"
+    },
+    {
+      "$oid": "697858760966e5599371cd71"
+    },
+    {
+      "$oid": "69785bc80966e5599371cec2"
+    },
+    {
+      "$oid": "69785ee00966e5599371d147"
+    },
+    {
+      "$oid": "6978843808b85b063aeed84d"
+    },
+    {
+      "$oid": "6978862708b85b063aeeda21"
+    },
+    {
+      "$oid": "697b1f258423603594694745"
+    },
+    {
+      "$oid": "697b1f6e8423603594694779"
+    },
+    {
+      "$oid": "697b202784236035946947d4"
+    },
+    {
+      "$oid": "697b223184236035946948d8"
+    },
+    {
+      "$oid": "697b26f18423603594694a52"
+    },
+    {
+      "$oid": "697b273d8423603594694aea"
+    },
+    {
+      "$oid": "697b2ab18423603594694c56"
+    },
+    {
+      "$oid": "697b2b2e8423603594694ca7"
+    },
+    {
+      "$oid": "697b31218423603594694f86"
+    },
+    {
+      "$oid": "697b39d3842360359469557e"
+    },
+    {
+      "$oid": "697c78194736d56e83df5558"
+    },
+    {
+      "$oid": "697c8cf706ea3bb150300777"
+    },
+    {
+      "$oid": "697c8e4006ea3bb15030092a"
+    },
+    {
+      "$oid": "697c8f1306ea3bb150300a9d"
+    },
+    {
+      "$oid": "697ca3cfca11249fb18542f5"
+    },
+    {
+      "$oid": "697d9c8541bad5ba7906be9d"
+    },
+    {
+      "$oid": "6981c0e8ac1e6d7dab2b26ea"
+    },
+    {
+      "$oid": "6981c689f6e8f78353078b32"
+    },
+    {
+      "$oid": "698318b36988d9518ef48ba2"
+    },
+    {
+      "$oid": "698c62919e4f39ada2b7ba89"
+    },
+    {
+      "$oid": "698c62959e4f39ada2b7ba91"
+    },
+    {
+      "$oid": "698c62979e4f39ada2b7ba99"
+    },
+    {
+      "$oid": "698c62989e4f39ada2b7baa4"
+    },
+    {
+      "$oid": "698c62989e4f39ada2b7baa6"
+    },
+    {
+      "$oid": "698c62b59e4f39ada2b7bab8"
+    },
+    {
+      "$oid": "69970532a209137e0c3530ba"
+    },
+    {
+      "$oid": "69971a32a209137e0c3531f6"
+    },
+    {
+      "$oid": "699ecd73600a95ba213ada50"
+    },
+    {
+      "$oid": "699eea1c600a95ba213adbcc"
+    },
+    {
+      "$oid": "69a81d64d212a3f1a6eff2dd"
+    },
+    {
+      "$oid": "69ae6a251e4206edd62b41ec"
+    },
+    {
+      "$oid": "69ae9c64d2365fc8edab56d8"
+    },
+    {
+      "$oid": "69bb9c533916a6211c69c45a"
+    },
+    {
+      "$oid": "69bfba04968c94ae0e930da9"
+    },
+    {
+      "$oid": "69bfbb20968c94ae0e930dc4"
+    },
+    {
+      "$oid": "69c0c40dd82cdf50fbabf3fb"
+    },
+    {
+      "$oid": "69c0d5c2d82cdf50fbabf504"
+    },
+    {
+      "$oid": "69c4ec320ba8185c300df14e"
+    },
+    {
+      "$oid": "69ccaffe0ba8185c300e012a"
+    },
+    {
+      "$oid": "69dca25af34a246892bd7d38"
+    },
+    {
+      "$oid": "69dca27df34a246892bd7d4a"
+    },
+    {
+      "$oid": "69de1231f34a246892bd827b"
+    },
+    {
+      "$oid": "69f891cf7c08bd4d71a87f5e"
+    }
+  ],
+  "priority": 1
+},
+{
+  "_id": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "title": "Software - Install & Update",
+  "slug": "software-install-and-update",
+  "subCategories": [
+    {
+      "$oid": "686ce75549508cfcf76f600c"
+    },
+    {
+      "$oid": "686ce75649508cfcf76f6011"
+    },
+    {
+      "$oid": "686ce75749508cfcf76f6016"
+    },
+    {
+      "$oid": "686ce75749508cfcf76f601b"
+    },
+    {
+      "$oid": "686ce75849508cfcf76f6020"
+    },
+    {
+      "$oid": "686ce75949508cfcf76f6025"
+    },
+    {
+      "$oid": "686ce75a49508cfcf76f602a"
+    },
+    {
+      "$oid": "686ce75b49508cfcf76f602f"
+    },
+    {
+      "$oid": "686ce75c49508cfcf76f6034"
+    },
+    {
+      "$oid": "686ce75d49508cfcf76f6039"
+    },
+    {
+      "$oid": "686ce75e49508cfcf76f603e"
+    },
+    {
+      "$oid": "686ce75f49508cfcf76f6043"
+    },
+    {
+      "$oid": "686ce75f49508cfcf76f6048"
+    },
+    {
+      "$oid": "686ce76049508cfcf76f604d"
+    },
+    {
+      "$oid": "686ce76149508cfcf76f6052"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:02:21.030Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-28T10:35:15.386Z"
+  },
+  "__v": 41,
+  "image": {
+    "public_id": "ff403080-f8f4-4fca-a8b4-3322ede8073a.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/ff403080-f8f4-4fca-a8b4-3322ede8073a.png"
+  },
+  "smallBanner": {
+    "public_id": "5c44f25a-5e52-4d25-a2b0-21dd8107f03d.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/5c44f25a-5e52-4d25-a2b0-21dd8107f03d.png"
+  },
+  "totalGeeks": 532,
+  "requests": [
+    {
+      "$oid": "687ee71fabd4e29013b6af15"
+    },
+    {
+      "$oid": "6884963de26ae5ee9d6db4b3"
+    },
+    {
+      "$oid": "68887539db244a309f859dd3"
+    },
+    {
+      "$oid": "68a4a662d1a1860e9743a64f"
+    },
+    {
+      "$oid": "68a6f0ad735b892c2e5632cd"
+    },
+    {
+      "$oid": "68a6f0b1735b892c2e5632d8"
+    },
+    {
+      "$oid": "68a810cfc66761e3e3cc5b56"
+    },
+    {
+      "$oid": "68a810d1c66761e3e3cc5b6e"
+    },
+    {
+      "$oid": "68a81183c66761e3e3cc6229"
+    },
+    {
+      "$oid": "68a811b9c66761e3e3cc624f"
+    },
+    {
+      "$oid": "68a811cfc66761e3e3cc6261"
+    },
+    {
+      "$oid": "68a8138cc66761e3e3cc6364"
+    },
+    {
+      "$oid": "68a82a709c03d1e63c8a0313"
+    },
+    {
+      "$oid": "68a82b549c03d1e63c8a0334"
+    },
+    {
+      "$oid": "68a82b599c03d1e63c8a033c"
+    },
+    {
+      "$oid": "68a82ba39c03d1e63c8a0344"
+    },
+    {
+      "$oid": "68a82bcd9c03d1e63c8a034c"
+    },
+    {
+      "$oid": "68a82d229c03d1e63c8a0372"
+    },
+    {
+      "$oid": "68a832c7300e14ccf00d9515"
+    },
+    {
+      "$oid": "68a833b0209449a7e1adeda7"
+    },
+    {
+      "$oid": "68a8363067945d67c42d975a"
+    },
+    {
+      "$oid": "68a8363267945d67c42d9763"
+    },
+    {
+      "$oid": "68ac4fae3ffe9625122ac362"
+    },
+    {
+      "$oid": "68ac4fb63ffe9625122ac36b"
+    },
+    {
+      "$oid": "68b6ca420f93182b2a3dc264"
+    },
+    {
+      "$oid": "6975a8562c65e5345ba26729"
+    },
+    {
+      "$oid": "6975a9eb2c65e5345ba2679a"
+    },
+    {
+      "$oid": "6975aa6d56c59ee9b075098e"
+    },
+    {
+      "$oid": "6975ab2a56c59ee9b07509bc"
+    },
+    {
+      "$oid": "6975ad10a3b20e9f97b498ab"
+    },
+    {
+      "$oid": "6975ad9bb29de81e489940ef"
+    },
+    {
+      "$oid": "6975aeadd84231ad9c7b5693"
+    },
+    {
+      "$oid": "6975b1160e776044de5dcc9f"
+    },
+    {
+      "$oid": "6975b1200e776044de5dcca7"
+    },
+    {
+      "$oid": "6975d4adbc708481f3ee03d7"
+    },
+    {
+      "$oid": "6975d6104952290833e218cf"
+    },
+    {
+      "$oid": "69a11377b31f5603365bb84b"
+    },
+    {
+      "$oid": "69a565e9b31f5603365bca87"
+    },
+    {
+      "$oid": "69a9681b1e4206edd62b37c2"
+    },
+    {
+      "$oid": "69a9681d1e4206edd62b37ca"
+    },
+    {
+      "$oid": "69ccb7700ba8185c300e0208"
+    }
+  ],
+  "priority": 4
+},
+{
+  "_id": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "title": "Email - Service & Repair",
+  "slug": "email-service-and-repair",
+  "subCategories": [
+    {
+      "$oid": "686ce76249508cfcf76f6057"
+    },
+    {
+      "$oid": "686ce76249508cfcf76f605c"
+    },
+    {
+      "$oid": "686ce76349508cfcf76f6061"
+    },
+    {
+      "$oid": "686ce76449508cfcf76f6066"
+    },
+    {
+      "$oid": "686ce76549508cfcf76f606b"
+    },
+    {
+      "$oid": "686ce76549508cfcf76f6070"
+    },
+    {
+      "$oid": "686ce76649508cfcf76f6075"
+    },
+    {
+      "$oid": "686ce76749508cfcf76f607a"
+    },
+    {
+      "$oid": "686ce76849508cfcf76f607f"
+    },
+    {
+      "$oid": "686ce76949508cfcf76f6084"
+    },
+    {
+      "$oid": "686ce76a49508cfcf76f6089"
+    },
+    {
+      "$oid": "686ce76a49508cfcf76f608e"
+    },
+    {
+      "$oid": "686ce76b49508cfcf76f6093"
+    },
+    {
+      "$oid": "686ce76c49508cfcf76f6098"
+    },
+    {
+      "$oid": "686ce76d49508cfcf76f609d"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:00:31.574Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-08T09:27:39.250Z"
+  },
+  "__v": 22,
+  "image": {
+    "public_id": "379cb7be-1674-41eb-9029-54eadcae9127.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/379cb7be-1674-41eb-9029-54eadcae9127.png"
+  },
+  "smallBanner": {
+    "public_id": "e9d48770-31d7-462d-92a7-f372c19120ea.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/e9d48770-31d7-462d-92a7-f372c19120ea.png"
+  },
+  "totalGeeks": 159,
+  "requests": [
+    {
+      "$oid": "68f203befcbc809a9069f298"
+    },
+    {
+      "$oid": "69231da1b8ff69c822926e35"
+    },
+    {
+      "$oid": "695793f29ba7f2b25c23da35"
+    },
+    {
+      "$oid": "69785e870966e5599371d055"
+    },
+    {
+      "$oid": "6997e913a209137e0c3537d7"
+    },
+    {
+      "$oid": "69a1128eb31f5603365bb756"
+    },
+    {
+      "$oid": "69a11745b31f5603365bbbd4"
+    },
+    {
+      "$oid": "69a140eeb31f5603365bc380"
+    },
+    {
+      "$oid": "69a573a8b31f5603365bcdb4"
+    },
+    {
+      "$oid": "69a573b7b31f5603365bcdc0"
+    },
+    {
+      "$oid": "69ae984dd2365fc8edab5129"
+    },
+    {
+      "$oid": "69b957c845ff0df328213020"
+    },
+    {
+      "$oid": "69b9592845ff0df3282133d1"
+    },
+    {
+      "$oid": "69b95a5a45ff0df3282135d6"
+    },
+    {
+      "$oid": "69c4f9e30ba8185c300df2f4"
+    },
+    {
+      "$oid": "69c4fba60ba8185c300df3e4"
+    },
+    {
+      "$oid": "69c4fd7c0ba8185c300df5f1"
+    },
+    {
+      "$oid": "69c633030ba8185c300df7ea"
+    },
+    {
+      "$oid": "69c6361a0ba8185c300df849"
+    },
+    {
+      "$oid": "69ccae430ba8185c300e005b"
+    },
+    {
+      "$oid": "69dc7e1ff34a246892bd7c70"
+    }
+  ],
+  "priority": 5
+},
+{
+  "_id": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "title": "Cybersecurity - Service & Maintain",
+  "slug": "cybersecurity-service-and-maintain",
+  "subCategories": [
+    {
+      "$oid": "686cedd649508cfcf76f6707"
+    },
+    {
+      "$oid": "686cedd749508cfcf76f670c"
+    },
+    {
+      "$oid": "686cedd849508cfcf76f6711"
+    },
+    {
+      "$oid": "686cedd949508cfcf76f6716"
+    },
+    {
+      "$oid": "686cedda49508cfcf76f671b"
+    },
+    {
+      "$oid": "686ceddb49508cfcf76f6720"
+    },
+    {
+      "$oid": "686ceddd49508cfcf76f6725"
+    },
+    {
+      "$oid": "686cedde49508cfcf76f672a"
+    },
+    {
+      "$oid": "686ceddf49508cfcf76f672f"
+    },
+    {
+      "$oid": "686cede049508cfcf76f6734"
+    },
+    {
+      "$oid": "686cede149508cfcf76f6739"
+    },
+    {
+      "$oid": "686cede249508cfcf76f673e"
+    },
+    {
+      "$oid": "686cede349508cfcf76f6743"
+    },
+    {
+      "$oid": "686cede449508cfcf76f6748"
+    },
+    {
+      "$oid": "686cede649508cfcf76f674d"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:00:03.898Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-19T07:09:38.317Z"
+  },
+  "__v": 2,
+  "image": {
+    "public_id": "352b91e3-279e-4519-92f6-e1c6dc38a4b3.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/352b91e3-279e-4519-92f6-e1c6dc38a4b3.png"
+  },
+  "smallBanner": {
+    "public_id": "3b87fb3c-8faa-4110-9a96-f0f5a75b1bc3.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/3b87fb3c-8faa-4110-9a96-f0f5a75b1bc3.png"
+  },
+  "totalGeeks": 90,
+  "priority": 12,
+  "requests": [
+    {
+      "$oid": "69942f7ed5e5de740cacb732"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "title": "Antivirus -  Install & Update",
+  "slug": "antivirus-install-and-update",
+  "subCategories": [
+    {
+      "$oid": "686ce76d49508cfcf76f60a2"
+    },
+    {
+      "$oid": "686ce76e49508cfcf76f60a7"
+    },
+    {
+      "$oid": "686ce76f49508cfcf76f60ac"
+    },
+    {
+      "$oid": "686ce77049508cfcf76f60b1"
+    },
+    {
+      "$oid": "686ce77049508cfcf76f60b6"
+    },
+    {
+      "$oid": "686ce77149508cfcf76f60bb"
+    },
+    {
+      "$oid": "686ce77249508cfcf76f60c2"
+    },
+    {
+      "$oid": "686ce77349508cfcf76f60c7"
+    },
+    {
+      "$oid": "686ce77449508cfcf76f60cc"
+    },
+    {
+      "$oid": "686ce77549508cfcf76f60d1"
+    },
+    {
+      "$oid": "686ce77549508cfcf76f60d6"
+    },
+    {
+      "$oid": "686ce77649508cfcf76f60db"
+    },
+    {
+      "$oid": "686ce77749508cfcf76f60e0"
+    },
+    {
+      "$oid": "686ce77849508cfcf76f60e5"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T08:59:04.905Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-28T10:37:17.369Z"
+  },
+  "__v": 1,
+  "image": {
+    "public_id": "1cc563c1-a209-4389-aa8b-0fad0f579e6c.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/1cc563c1-a209-4389-aa8b-0fad0f579e6c.png"
+  },
+  "smallBanner": {
+    "public_id": "a51cb638-b5b3-4910-ba9a-f3fc8246eecb.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/a51cb638-b5b3-4910-ba9a-f3fc8246eecb.png"
+  },
+  "requests": [
+    {
+      "$oid": "68a4084127ecb2148c88901e"
+    }
+  ],
+  "totalGeeks": 365,
+  "priority": 6
+},
+{
+  "_id": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "title": "Firewall - Service & Repair",
+  "slug": "firewall-service-and-repair",
+  "subCategories": [
+    {
+      "$oid": "686ce74a49508cfcf76f5fc4"
+    },
+    {
+      "$oid": "686ce74b49508cfcf76f5fc9"
+    },
+    {
+      "$oid": "686ce74b49508cfcf76f5fce"
+    },
+    {
+      "$oid": "686ce74c49508cfcf76f5fd3"
+    },
+    {
+      "$oid": "686ce74d49508cfcf76f5fd8"
+    },
+    {
+      "$oid": "686ce74e49508cfcf76f5fdd"
+    },
+    {
+      "$oid": "686ce74e49508cfcf76f5fe2"
+    },
+    {
+      "$oid": "686ce74f49508cfcf76f5fe9"
+    },
+    {
+      "$oid": "686ce75049508cfcf76f5fee"
+    },
+    {
+      "$oid": "686ce75149508cfcf76f5ff3"
+    },
+    {
+      "$oid": "686ce75149508cfcf76f5ff8"
+    },
+    {
+      "$oid": "686ce75249508cfcf76f5ffd"
+    },
+    {
+      "$oid": "686ce75349508cfcf76f6002"
+    },
+    {
+      "$oid": "686ce75449508cfcf76f6007"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:00:48.779Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-11T10:48:54.755Z"
+  },
+  "__v": 1,
+  "image": {
+    "public_id": "0a72fd3d-57ae-429d-a724-b4f77a07041b.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/0a72fd3d-57ae-429d-a724-b4f77a07041b.png"
+  },
+  "smallBanner": {
+    "public_id": "520373aa-47b7-49a3-812f-2294b5773fe6.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/520373aa-47b7-49a3-812f-2294b5773fe6.png"
+  },
+  "totalGeeks": 99,
+  "priority": 17,
+  "requests": []
+},
+{
+  "_id": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "title": "Backup And Restore",
+  "slug": "backup-and-restore",
+  "subCategories": [
+    {
+      "$oid": "686ce78449508cfcf76f6135"
+    },
+    {
+      "$oid": "686ce78549508cfcf76f613a"
+    },
+    {
+      "$oid": "686ce78549508cfcf76f613f"
+    },
+    {
+      "$oid": "686ce78749508cfcf76f6144"
+    },
+    {
+      "$oid": "686ce78749508cfcf76f6149"
+    },
+    {
+      "$oid": "686ce78849508cfcf76f614e"
+    },
+    {
+      "$oid": "686ce78949508cfcf76f6153"
+    },
+    {
+      "$oid": "686ce78a49508cfcf76f6158"
+    },
+    {
+      "$oid": "686ce78a49508cfcf76f615d"
+    },
+    {
+      "$oid": "686ce78b49508cfcf76f6162"
+    },
+    {
+      "$oid": "686ce78c49508cfcf76f6167"
+    },
+    {
+      "$oid": "686ce78c49508cfcf76f616c"
+    },
+    {
+      "$oid": "686ce78d49508cfcf76f6171"
+    },
+    {
+      "$oid": "686ce78e49508cfcf76f6176"
+    },
+    {
+      "$oid": "686ce78f49508cfcf76f617b"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T08:59:22.739Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T02:55:25.994Z"
+  },
+  "__v": 6,
+  "image": {
+    "public_id": "92b66d96-a654-44af-b5e6-b40de64b2415.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/92b66d96-a654-44af-b5e6-b40de64b2415.png"
+  },
+  "smallBanner": {
+    "public_id": "9b0e961f-661c-4d36-bd65-a85ecc51f925.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/9b0e961f-661c-4d36-bd65-a85ecc51f925.png"
+  },
+  "totalGeeks": 169,
+  "requests": [
+    {
+      "$oid": "69255bd8437a964cabf5cb4b"
+    },
+    {
+      "$oid": "69468ae0153316aa05a02987"
+    },
+    {
+      "$oid": "69468be3ac198d8edced28bd"
+    },
+    {
+      "$oid": "6957b07d326b79bce55b66d8"
+    },
+    {
+      "$oid": "6964c484d7585caca5cdf3c7"
+    }
+  ],
+  "priority": 9
+},
+{
+  "_id": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "title": "Switches - Service & Repair",
+  "slug": "switches-service-and-repair",
+  "subCategories": [
+    {
+      "$oid": "686ce73f49508cfcf76f5f7e"
+    },
+    {
+      "$oid": "686ce74049508cfcf76f5f83"
+    },
+    {
+      "$oid": "686ce74149508cfcf76f5f88"
+    },
+    {
+      "$oid": "686ce74249508cfcf76f5f8d"
+    },
+    {
+      "$oid": "686ce74249508cfcf76f5f92"
+    },
+    {
+      "$oid": "686ce74349508cfcf76f5f97"
+    },
+    {
+      "$oid": "686ce74449508cfcf76f5f9c"
+    },
+    {
+      "$oid": "686ce74549508cfcf76f5fa1"
+    },
+    {
+      "$oid": "686ce74549508cfcf76f5fa6"
+    },
+    {
+      "$oid": "686ce74649508cfcf76f5fab"
+    },
+    {
+      "$oid": "686ce74749508cfcf76f5fb0"
+    },
+    {
+      "$oid": "686ce74849508cfcf76f5fb5"
+    },
+    {
+      "$oid": "686ce74849508cfcf76f5fba"
+    },
+    {
+      "$oid": "686ce74949508cfcf76f5fbf"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:03:00.070Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-07T04:05:54.582Z"
+  },
+  "__v": 4,
+  "image": {
+    "public_id": "ef41e41c-116a-49ee-a730-1fc4c011c8f0.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/ef41e41c-116a-49ee-a730-1fc4c011c8f0.png"
+  },
+  "smallBanner": {
+    "public_id": "a0f7d3a7-5213-4894-bac4-138a1f1a3708.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/a0f7d3a7-5213-4894-bac4-138a1f1a3708.png"
+  },
+  "totalGeeks": 124,
+  "priority": 18,
+  "requests": [
+    {
+      "$oid": "69788cee08b85b063aeedd97"
+    },
+    {
+      "$oid": "69cfb2970ba8185c300e12fe"
+    },
+    {
+      "$oid": "69fc0fa23203bd656b32ca5a"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "title": "Cloud - Service & Maintain",
+  "slug": "cloud-service-and-maintain",
+  "subCategories": [
+    {
+      "$oid": "686ce79049508cfcf76f6180"
+    },
+    {
+      "$oid": "686ce79049508cfcf76f6185"
+    },
+    {
+      "$oid": "686ce79249508cfcf76f618a"
+    },
+    {
+      "$oid": "686ce79349508cfcf76f6191"
+    },
+    {
+      "$oid": "686ce79449508cfcf76f6196"
+    },
+    {
+      "$oid": "686ce79449508cfcf76f619b"
+    },
+    {
+      "$oid": "686ce79549508cfcf76f61a0"
+    },
+    {
+      "$oid": "686ce79649508cfcf76f61a5"
+    },
+    {
+      "$oid": "686ce79649508cfcf76f61aa"
+    },
+    {
+      "$oid": "686ce79749508cfcf76f61af"
+    },
+    {
+      "$oid": "686ce79849508cfcf76f61b4"
+    },
+    {
+      "$oid": "686ce79949508cfcf76f61b9"
+    },
+    {
+      "$oid": "686ce79a49508cfcf76f61be"
+    },
+    {
+      "$oid": "686ce79b49508cfcf76f61c3"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T08:59:51.795Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-05T13:25:06.957Z"
+  },
+  "__v": 19,
+  "image": {
+    "public_id": "def0699b-6596-4fbb-9bda-16efd319f455.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/def0699b-6596-4fbb-9bda-16efd319f455.png"
+  },
+  "smallBanner": {
+    "public_id": "95982b46-25c5-461d-9b4a-406f7e17db47.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/95982b46-25c5-461d-9b4a-406f7e17db47.png"
+  },
+  "totalGeeks": 49,
+  "requests": [
+    {
+      "$oid": "68849891e26ae5ee9d6db69a"
+    },
+    {
+      "$oid": "68a3131cbb9631bca53547e3"
+    },
+    {
+      "$oid": "68a31324bb9631bca53547eb"
+    },
+    {
+      "$oid": "68a46c4326b7d6be3a569d2f"
+    },
+    {
+      "$oid": "68a46c4b26b7d6be3a569d3d"
+    },
+    {
+      "$oid": "68a46c4f26b7d6be3a569d48"
+    },
+    {
+      "$oid": "68a6f0bb735b892c2e5632ee"
+    },
+    {
+      "$oid": "68f0986b14fde3d10c927ebe"
+    },
+    {
+      "$oid": "68f0986d14fde3d10c927ec7"
+    },
+    {
+      "$oid": "68f0986e14fde3d10c927ed0"
+    },
+    {
+      "$oid": "68f1d1c6a674cc8f85f44592"
+    },
+    {
+      "$oid": "68f1d1cca674cc8f85f4459d"
+    },
+    {
+      "$oid": "68f1d1dd5f00ff7e2ddb8039"
+    },
+    {
+      "$oid": "68f1e537bcf71c8771ad6c2d"
+    },
+    {
+      "$oid": "68f1f082014f15f23ee2b508"
+    },
+    {
+      "$oid": "68f1f0fd9cd05bbc7ebab246"
+    },
+    {
+      "$oid": "68f20330fcbc809a9069f25c"
+    },
+    {
+      "$oid": "68f20ecbc16a640f7ea2b73a"
+    },
+    {
+      "$oid": "69a11584b31f5603365bb9f4"
+    }
+  ],
+  "priority": 13
+},
+{
+  "_id": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "title": "Printer - Service & Repair",
+  "slug": "printer-service-and-repair",
+  "subCategories": [
+    {
+      "$oid": "686ce71049508cfcf76f5e52"
+    },
+    {
+      "$oid": "686ce71149508cfcf76f5e57"
+    },
+    {
+      "$oid": "686ce71149508cfcf76f5e5c"
+    },
+    {
+      "$oid": "686ce71249508cfcf76f5e61"
+    },
+    {
+      "$oid": "686ce71349508cfcf76f5e66"
+    },
+    {
+      "$oid": "686ce71349508cfcf76f5e6b"
+    },
+    {
+      "$oid": "686ce71449508cfcf76f5e70"
+    },
+    {
+      "$oid": "686ce71649508cfcf76f5e75"
+    },
+    {
+      "$oid": "686ce71649508cfcf76f5e7a"
+    },
+    {
+      "$oid": "686ce71849508cfcf76f5e7f"
+    },
+    {
+      "$oid": "686ce71949508cfcf76f5e84"
+    },
+    {
+      "$oid": "686ce71a49508cfcf76f5e89"
+    },
+    {
+      "$oid": "686ce71b49508cfcf76f5e8e"
+    },
+    {
+      "$oid": "686ce71c49508cfcf76f5e93"
+    },
+    {
+      "$oid": "686ce71c49508cfcf76f5e98"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:01:22.393Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-12T13:26:50.185Z"
+  },
+  "__v": 30,
+  "image": {
+    "public_id": "80e8939e-24d9-4eb1-a4dd-c55939ac30a4.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/80e8939e-24d9-4eb1-a4dd-c55939ac30a4.png"
+  },
+  "smallBanner": {
+    "public_id": "5d968d69-a155-4fbf-bad2-c76f07655f2e.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/5d968d69-a155-4fbf-bad2-c76f07655f2e.png"
+  },
+  "totalGeeks": 435,
+  "requests": [
+    {
+      "$oid": "6965dd098df2000c9b1e03cf"
+    },
+    {
+      "$oid": "6974bd6b8f3eebca2caa8f99"
+    },
+    {
+      "$oid": "69775cdb0966e5599371cbd9"
+    },
+    {
+      "$oid": "697885e708b85b063aeed9e9"
+    },
+    {
+      "$oid": "697c86f206ea3bb150300551"
+    },
+    {
+      "$oid": "697c87b306ea3bb1503005ad"
+    },
+    {
+      "$oid": "697c87b906ea3bb1503005cb"
+    },
+    {
+      "$oid": "697c8bfd06ea3bb15030064e"
+    },
+    {
+      "$oid": "697c8dfe06ea3bb15030089d"
+    },
+    {
+      "$oid": "697c8e9706ea3bb1503009c8"
+    },
+    {
+      "$oid": "697c8f9906ea3bb150300bbe"
+    },
+    {
+      "$oid": "697c90bb06ea3bb150300cfe"
+    },
+    {
+      "$oid": "697cb97006ea3bb1503014a3"
+    },
+    {
+      "$oid": "697da30641bad5ba7906bfbf"
+    },
+    {
+      "$oid": "697da36d63ac56f3eb1a3f4d"
+    },
+    {
+      "$oid": "697da3ae63ac56f3eb1a3f56"
+    },
+    {
+      "$oid": "697da3da63ac56f3eb1a3f5f"
+    },
+    {
+      "$oid": "697da40606ea3bb150301507"
+    },
+    {
+      "$oid": "698ad80c9e4f39ada2b7b96a"
+    },
+    {
+      "$oid": "698ad8119e4f39ada2b7b973"
+    },
+    {
+      "$oid": "698d84459e4f39ada2b7bd5b"
+    },
+    {
+      "$oid": "698ec92db6cfdd35fecdfcd4"
+    },
+    {
+      "$oid": "6992a4b7425200aa0657a2c2"
+    },
+    {
+      "$oid": "69a56587b31f5603365bca22"
+    },
+    {
+      "$oid": "69a9848f1e4206edd62b3bf1"
+    },
+    {
+      "$oid": "69c257b80ba8185c300dedb0"
+    },
+    {
+      "$oid": "69ccb6fc0ba8185c300e0194"
+    },
+    {
+      "$oid": "69dcba64f34a246892bd7e10"
+    },
+    {
+      "$oid": "69dcbfa4f34a246892bd7e68"
+    }
+  ],
+  "priority": 2
+},
+{
+  "_id": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "title": "Servers - Service & Repair",
+  "slug": "servers-service-and-repair",
+  "subCategories": [
+    {
+      "$oid": "686ce71d49508cfcf76f5e9d"
+    },
+    {
+      "$oid": "686ce71e49508cfcf76f5ea2"
+    },
+    {
+      "$oid": "686ce71f49508cfcf76f5ea7"
+    },
+    {
+      "$oid": "686ce72049508cfcf76f5eac"
+    },
+    {
+      "$oid": "686ce72149508cfcf76f5eb1"
+    },
+    {
+      "$oid": "686ce72249508cfcf76f5eb6"
+    },
+    {
+      "$oid": "686ce72249508cfcf76f5ebb"
+    },
+    {
+      "$oid": "686ce72349508cfcf76f5ec0"
+    },
+    {
+      "$oid": "686ce72449508cfcf76f5ec5"
+    },
+    {
+      "$oid": "686ce72449508cfcf76f5eca"
+    },
+    {
+      "$oid": "686ce72549508cfcf76f5ecf"
+    },
+    {
+      "$oid": "686ce72649508cfcf76f5ed4"
+    },
+    {
+      "$oid": "686ce72749508cfcf76f5ed9"
+    },
+    {
+      "$oid": "686ce72749508cfcf76f5ede"
+    },
+    {
+      "$oid": "686ce72849508cfcf76f5ee3"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:02:08.532Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-04T10:07:55.079Z"
+  },
+  "__v": 2,
+  "image": {
+    "public_id": "6f6cf813-3c40-413c-b4bb-ca03f9efcef6.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/6f6cf813-3c40-413c-b4bb-ca03f9efcef6.png"
+  },
+  "smallBanner": {
+    "public_id": "b4f5c380-8d58-4734-bcf9-3f739f576a29.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/b4f5c380-8d58-4734-bcf9-3f739f576a29.png"
+  },
+  "totalGeeks": 268,
+  "priority": 16,
+  "requests": [
+    {
+      "$oid": "697c963806ea3bb150301001"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "title": "Storage - Service & Repair",
+  "slug": "storage-service-and-repair",
+  "subCategories": [
+    {
+      "$oid": "686ce77849508cfcf76f60ea"
+    },
+    {
+      "$oid": "686ce77949508cfcf76f60ef"
+    },
+    {
+      "$oid": "686ce77a49508cfcf76f60f4"
+    },
+    {
+      "$oid": "686ce77b49508cfcf76f60f9"
+    },
+    {
+      "$oid": "686ce77b49508cfcf76f60fe"
+    },
+    {
+      "$oid": "686ce77c49508cfcf76f6103"
+    },
+    {
+      "$oid": "686ce77d49508cfcf76f6108"
+    },
+    {
+      "$oid": "686ce77e49508cfcf76f610d"
+    },
+    {
+      "$oid": "686ce77e49508cfcf76f6112"
+    },
+    {
+      "$oid": "686ce77f49508cfcf76f6117"
+    },
+    {
+      "$oid": "686ce78049508cfcf76f611c"
+    },
+    {
+      "$oid": "686ce78149508cfcf76f6121"
+    },
+    {
+      "$oid": "686ce78149508cfcf76f6126"
+    },
+    {
+      "$oid": "686ce78249508cfcf76f612b"
+    },
+    {
+      "$oid": "686ce78349508cfcf76f6130"
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-05-19T09:02:36.941Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-12T13:26:58.190Z"
+  },
+  "__v": 24,
+  "image": {
+    "public_id": "881c5129-4d2a-480e-894e-1742282c6bcd.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/881c5129-4d2a-480e-894e-1742282c6bcd.png"
+  },
+  "smallBanner": {
+    "public_id": "8e0a87a6-9e11-481a-b1ed-601906cf451e.png",
+    "url": "https://godstore.blob.core.windows.net/uploads/8e0a87a6-9e11-481a-b1ed-601906cf451e.png"
+  },
+  "totalGeeks": 224,
+  "requests": [
+    {
+      "$oid": "68f1f37fd129d38e8173607a"
+    },
+    {
+      "$oid": "68f207af2b63ef6d178b8e76"
+    },
+    {
+      "$oid": "6915ab4b1b358d472e443247"
+    },
+    {
+      "$oid": "691ecb6058baefbd45a2744b"
+    },
+    {
+      "$oid": "691ed1a24347f9a108badbfa"
+    },
+    {
+      "$oid": "691ed1b44347f9a108badc02"
+    },
+    {
+      "$oid": "691ed1c14347f9a108badc0a"
+    },
+    {
+      "$oid": "691ed27912ae472464fe9b1f"
+    },
+    {
+      "$oid": "691ed28512ae472464fe9b27"
+    },
+    {
+      "$oid": "692557d9cd6c4452819343b8"
+    },
+    {
+      "$oid": "692557f2cd6c4452819343cd"
+    },
+    {
+      "$oid": "69255ab189ee7144107c0e64"
+    },
+    {
+      "$oid": "69468bfeac198d8edced28cf"
+    },
+    {
+      "$oid": "694f4ac5f1c29987fabcfc85"
+    },
+    {
+      "$oid": "694f4ac6f1c29987fabcfc8d"
+    },
+    {
+      "$oid": "694fd7fbc63d7b1b0c706975"
+    },
+    {
+      "$oid": "694fd7fbc63d7b1b0c70697d"
+    },
+    {
+      "$oid": "694fd7fbc63d7b1b0c70697f"
+    },
+    {
+      "$oid": "694fd7fcc63d7b1b0c70698c"
+    },
+    {
+      "$oid": "694fd7fdc63d7b1b0c706994"
+    },
+    {
+      "$oid": "69a1156fb31f5603365bb9aa"
+    },
+    {
+      "$oid": "69a1414db31f5603365bc39b"
+    },
+    {
+      "$oid": "69a563beb31f5603365bc916"
+    },
+    {
+      "$oid": "69aeb568d2365fc8edab605c"
+    }
+  ],
+  "priority": 10
+}]

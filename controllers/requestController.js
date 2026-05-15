@@ -268,28 +268,34 @@ const getGeekPendingRequests = asyncHandler(async (req, res) => {
 
 
 const autoRejectRequest = asyncHandler(async (req, res) => {
-  const requests = await ServiceRequest.find({ status: 'Matched' }).populate('seeker');
-  
+  const requests = await ServiceRequest.find({
+    geekResponseStatus: 'Pending',
+    status: { $in: ['Pending', 'Matched'] },
+  }).populate('seeker').populate('category');
+
   const now = new Date();
   const oneDay = 24 * 60 * 60 * 1000;
+
   for (const request of requests) {
     const timeDiff = now - request.createdAt;
     if (timeDiff > oneDay) {
       request.status = 'Rejected';
       request.geekResponseStatus = 'Expired';
       await request.save();
-    }
-    
-        if(request?.seeker?._id && request?.seeker?.phone){
+
+      if (request?.seeker?.phone) {
+        try {
           await client.messages.create({
-              body: `Your request for ${request.category.title || "your Service"} has expired due to no response from the selected Geek. Please create a new request with a different Geek.`,
-              from: process.env.TWILIO_PHONE_NUMBER,
-              to: request?.seeker?.phone
-            });
+            body: `Your request for ${request.category?.title || 'your service'} has expired due to no response from the selected Geek. Please create a new request with a different Geek.`,
+            from: process.env.TWILIO_PHONE_NUMBER,
+            to: request.seeker.phone,
+          });
+        } catch (err) {
+          console.error(`[autoReject] SMS failed for request ${request._id}:`, err.message);
+        }
       }
     }
- 
-
+  }
 
   res.status(200).json({ message: 'Requests updated successfully' });
 });

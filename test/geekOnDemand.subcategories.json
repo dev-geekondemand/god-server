@@ -1,0 +1,4777 @@
+[{
+  "_id": {
+    "$oid": "686ce70449508cfcf76f5e07"
+  },
+  "title": "Screen flickering or black display",
+  "slug": "screen-flickering-or-black-display",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:12.909Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:12.909Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70549508cfcf76f5e0c"
+  },
+  "title": "System not turning on (no power)",
+  "slug": "system-not-turning-on-(no-power)",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:13.570Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:13.570Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70649508cfcf76f5e11"
+  },
+  "title": "Battery not charging or draining fast (Laptop only)",
+  "slug": "battery-not-charging-or-draining-fast-(laptop-only)",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:14.218Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:14.218Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70649508cfcf76f5e16"
+  },
+  "title": "Slow performance or frequent system hanging",
+  "slug": "slow-performance-or-frequent-system-hanging",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:14.858Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:14.858Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70749508cfcf76f5e1b"
+  },
+  "title": "Keyboard not working or unresponsive keys",
+  "slug": "keyboard-not-working-or-unresponsive-keys",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:15.513Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:15.513Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70849508cfcf76f5e20"
+  },
+  "title": "Overheating or fan making unusual noise",
+  "slug": "overheating-or-fan-making-unusual-noise",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:16.162Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:16.162Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70849508cfcf76f5e25"
+  },
+  "title": "Wi-Fi not connecting or frequently disconnects",
+  "slug": "wi-fi-not-connecting-or-frequently-disconnects",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:16.943Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:16.943Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70949508cfcf76f5e2a"
+  },
+  "title": "No sound or distorted audio output",
+  "slug": "no-sound-or-distorted-audio-output",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:17.708Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:17.708Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70a49508cfcf76f5e2f"
+  },
+  "title": "USB ports not functioning",
+  "slug": "usb-ports-not-functioning",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:18.509Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:18.509Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70b49508cfcf76f5e34"
+  },
+  "title": "Touchpad or external mouse not responding",
+  "slug": "touchpad-or-external-mouse-not-responding",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:19.376Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:19.376Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70c49508cfcf76f5e39"
+  },
+  "title": "Frequent blue screen or automatic restarts",
+  "slug": "frequent-blue-screen-or-automatic-restarts",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:20.165Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:20.165Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70c49508cfcf76f5e3e"
+  },
+  "title": "Hard disk or SSD not detected",
+  "slug": "hard-disk-or-ssd-not-detected",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:20.892Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:20.892Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70d49508cfcf76f5e43"
+  },
+  "title": "Operating system not booting or stuck on logo",
+  "slug": "operating-system-not-booting-or-stuck-on-logo",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:21.778Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:21.778Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70e49508cfcf76f5e48"
+  },
+  "title": "Display or graphic card issues",
+  "slug": "display-or-graphic-card-issues",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:22.818Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:22.818Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce70f49508cfcf76f5e4d"
+  },
+  "title": "Hinge broken / cabinet damage / loose screen (Mostly Laptop)",
+  "slug": "hinge-broken-cabinet-damage-loose-screen-(mostly-laptop)",
+  "parentCategory": {
+    "$oid": "682af19ccd7ba362b7afbb02"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:23.652Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:23.652Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71049508cfcf76f5e52"
+  },
+  "title": "Printer not turning on",
+  "slug": "printer-not-turning-on",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:24.292Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:24.292Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71149508cfcf76f5e57"
+  },
+  "title": "Paper jam inside printer",
+  "slug": "paper-jam-inside-printer",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:25.054Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:25.054Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71149508cfcf76f5e5c"
+  },
+  "title": "Printer not detected by computer",
+  "slug": "printer-not-detected-by-computer",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:25.730Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:25.730Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71249508cfcf76f5e61"
+  },
+  "title": "Print command given but nothing prints",
+  "slug": "print-command-given-but-nothing-prints",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:26.510Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:26.510Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71349508cfcf76f5e66"
+  },
+  "title": "Low or no ink/toner warning",
+  "slug": "low-or-no-inktoner-warning",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:27.208Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:27.208Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71349508cfcf76f5e6b"
+  },
+  "title": "Blurred, faded, or patchy printouts",
+  "slug": "blurred-faded-or-patchy-printouts",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:27.897Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:27.897Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71449508cfcf76f5e70"
+  },
+  "title": "Printer printing very slowly",
+  "slug": "printer-printing-very-slowly",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:28.592Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:28.592Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71649508cfcf76f5e75"
+  },
+  "title": "Wireless printer not connecting to network",
+  "slug": "wireless-printer-not-connecting-to-network",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:30.318Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:30.318Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71649508cfcf76f5e7a"
+  },
+  "title": "USB connection issue or loose cable",
+  "slug": "usb-connection-issue-or-loose-cable",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:30.984Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:30.984Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71849508cfcf76f5e7f"
+  },
+  "title": "Scanner not working (for all-in-one printers)",
+  "slug": "scanner-not-working-(for-all-in-one-printers)",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:32.076Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:32.076Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71949508cfcf76f5e84"
+  },
+  "title": "\"Offline\" status even when printer is on",
+  "slug": "\"offline\"-status-even-when-printer-is-on",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:33.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:33.483Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71a49508cfcf76f5e89"
+  },
+  "title": "Repeated paper feeding without printing",
+  "slug": "repeated-paper-feeding-without-printing",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:34.283Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:34.283Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71b49508cfcf76f5e8e"
+  },
+  "title": "Smudged or ink-leaking printouts",
+  "slug": "smudged-or-ink-leaking-printouts",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:35.309Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:35.309Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71c49508cfcf76f5e93"
+  },
+  "title": "Error codes or blinking lights on printer panel",
+  "slug": "error-codes-or-blinking-lights-on-printer-panel",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:36.117Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:36.117Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71c49508cfcf76f5e98"
+  },
+  "title": "Printer driver not installed or corrupted",
+  "slug": "printer-driver-not-installed-or-corrupted",
+  "parentCategory": {
+    "$oid": "682af362cd7ba362b7afbb28"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:36.961Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:36.961Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71d49508cfcf76f5e9d"
+  },
+  "title": "Server not powering on or booting",
+  "slug": "server-not-powering-on-or-booting",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:37.787Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:37.787Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72249508cfcf76f5ebb"
+  },
+  "title": "Server inaccessible via Remote Desktop/SSH",
+  "slug": "server-inaccessible-via-remote-desktopssh",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:42.793Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:42.793Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72449508cfcf76f5eca"
+  },
+  "title": "Backup failures or backup service not running",
+  "slug": "backup-failures-or-backup-service-not-running",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:44.936Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:44.936Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73e49508cfcf76f5f74"
+  },
+  "title": "Unable to connect new devices to Wi-Fi",
+  "slug": "unable-to-connect-new-devices-to-wi-fi",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:10.360Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:10.360Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73f49508cfcf76f5f7e"
+  },
+  "title": "Switch not powering on",
+  "slug": "switch-not-powering-on",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:11.776Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:11.776Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74149508cfcf76f5f88"
+  },
+  "title": "LED indicators not lighting up",
+  "slug": "led-indicators-not-lighting-up",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:13.285Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:13.285Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74249508cfcf76f5f92"
+  },
+  "title": "Switch overheating",
+  "slug": "switch-overheating",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:14.678Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:14.678Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74449508cfcf76f5f9c"
+  },
+  "title": "Network loop causing broadcast storms",
+  "slug": "network-loop-causing-broadcast-storms",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:16.261Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:16.261Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75049508cfcf76f5fee"
+  },
+  "title": "Intrusion prevention system (IPS) causing false positives",
+  "slug": "intrusion-prevention-system-(ips)-causing-false-positives",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:28.466Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:28.466Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71e49508cfcf76f5ea2"
+  },
+  "title": "Frequent server reboots or crashes",
+  "slug": "frequent-server-reboots-or-crashes",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:38.763Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:38.763Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72349508cfcf76f5ec0"
+  },
+  "title": "Operating system not loading or corrupted",
+  "slug": "operating-system-not-loading-or-corrupted",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:43.611Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:43.611Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72549508cfcf76f5ecf"
+  },
+  "title": "Storage space full or critical warning",
+  "slug": "storage-space-full-or-critical-warning",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:45.738Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:45.738Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce71f49508cfcf76f5ea7"
+  },
+  "title": "High CPU or memory usage",
+  "slug": "high-cpu-or-memory-usage",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:39.626Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:39.626Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72049508cfcf76f5eac"
+  },
+  "title": "Server overheating or fan failure",
+  "slug": "server-overheating-or-fan-failure",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:40.447Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:40.447Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72749508cfcf76f5ed9"
+  },
+  "title": "Unauthorized login attempts or security alerts",
+  "slug": "unauthorized-login-attempts-or-security-alerts",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:47.168Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:47.168Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72849508cfcf76f5ee3"
+  },
+  "title": "Hardware alert from server management tool (e.g., iDRAC, iLO)",
+  "slug": "hardware-alert-from-server-management-tool-(e.g.-idrac-ilo)",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:48.528Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:48.528Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72949508cfcf76f5eed"
+  },
+  "title": "Scanner not detected by the computer",
+  "slug": "scanner-not-detected-by-the-computer",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:49.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:49.960Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72b49508cfcf76f5ef7"
+  },
+  "title": "Scanner showing \"device busy\" error",
+  "slug": "scanner-showing-\"device-busy\"-error",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:51.487Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:51.487Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72c49508cfcf76f5f01"
+  },
+  "title": "Scanner lid not closing properly",
+  "slug": "scanner-lid-not-closing-properly",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:52.995Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:52.995Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72e49508cfcf76f5f0b"
+  },
+  "title": "Scanned files are too large",
+  "slug": "scanned-files-are-too-large",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:54.575Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:54.575Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73d49508cfcf76f5f6f"
+  },
+  "title": "Configuration settings lost after power cut",
+  "slug": "configuration-settings-lost-after-power-cut",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:09.524Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:09.524Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73e49508cfcf76f5f79"
+  },
+  "title": "Firmware update failed or router stuck in loop",
+  "slug": "firmware-update-failed-or-router-stuck-in-loop",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:10.997Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:10.997Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74049508cfcf76f5f83"
+  },
+  "title": "No connectivity on certain ports",
+  "slug": "no-connectivity-on-certain-ports",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:12.605Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:12.605Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74249508cfcf76f5f8d"
+  },
+  "title": "Intermittent network disconnection",
+  "slug": "intermittent-network-disconnection",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:14.017Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:14.017Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74349508cfcf76f5f97"
+  },
+  "title": "Port speed mismatch (10/100/1000 Mbps issues)",
+  "slug": "port-speed-mismatch-(101001000-mbps-issues)",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:15.522Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:15.522Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74549508cfcf76f5fa1"
+  },
+  "title": "Unable to access managed switch via IP",
+  "slug": "unable-to-access-managed-switch-via-ip",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:17.011Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:17.011Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74549508cfcf76f5fa6"
+  },
+  "title": "VLAN not functioning as expected",
+  "slug": "vlan-not-functioning-as-expected",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:17.989Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:17.989Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74f49508cfcf76f5fe9"
+  },
+  "title": "Configuration changes not saving",
+  "slug": "configuration-changes-not-saving",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:27.803Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:27.803Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75149508cfcf76f5ff3"
+  },
+  "title": "SSL inspection causing web access issues",
+  "slug": "ssl-inspection-causing-web-access-issues",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:29.185Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:29.185Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72149508cfcf76f5eb1"
+  },
+  "title": "Disk failure or RAID issues",
+  "slug": "disk-failure-or-raid-issues",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:41.155Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:41.155Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72749508cfcf76f5ede"
+  },
+  "title": "Application or database service not running",
+  "slug": "application-or-database-service-not-running",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:47.812Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:47.812Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72949508cfcf76f5ee8"
+  },
+  "title": "Scanner not turning on",
+  "slug": "scanner-not-turning-on",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:49.247Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:49.247Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72a49508cfcf76f5ef2"
+  },
+  "title": "Scanning produces blank pages",
+  "slug": "scanning-produces-blank-pages",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:50.717Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:50.717Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72c49508cfcf76f5efc"
+  },
+  "title": "Lines or streaks on scanned images",
+  "slug": "lines-or-streaks-on-scanned-images",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:52.318Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:52.318Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72d49508cfcf76f5f06"
+  },
+  "title": "Slow scanning speed",
+  "slug": "slow-scanning-speed",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:53.806Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:53.806Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72f49508cfcf76f5f10"
+  },
+  "title": "Scanner buttons not responding",
+  "slug": "scanner-buttons-not-responding",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:55.390Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:55.390Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73049508cfcf76f5f1a"
+  },
+  "title": "Low-resolution or blurry scans",
+  "slug": "low-resolution-or-blurry-scans",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:56.935Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:56.935Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73249508cfcf76f5f24"
+  },
+  "title": "USB or network connection issues",
+  "slug": "usb-or-network-connection-issues",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:58.396Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:58.396Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73349508cfcf76f5f2e"
+  },
+  "title": "Unable to scan multiple pages (ADF not working)",
+  "slug": "unable-to-scan-multiple-pages-(adf-not-working)",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:59.847Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:59.847Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73549508cfcf76f5f38"
+  },
+  "title": "No internet access despite router being on",
+  "slug": "no-internet-access-despite-router-being-on",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:01.227Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:01.227Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73649508cfcf76f5f42"
+  },
+  "title": "Slow internet speed through router",
+  "slug": "slow-internet-speed-through-router",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:02.864Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:02.864Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74649508cfcf76f5fab"
+  },
+  "title": "Faulty uplink port",
+  "slug": "faulty-uplink-port",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:18.648Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:18.648Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74849508cfcf76f5fb5"
+  },
+  "title": "Configuration lost after reboot",
+  "slug": "configuration-lost-after-reboot",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:20.120Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:20.120Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74949508cfcf76f5fbf"
+  },
+  "title": "High packet loss or latency through switch",
+  "slug": "high-packet-loss-or-latency-through-switch",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:21.604Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:21.604Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74b49508cfcf76f5fc9"
+  },
+  "title": "No internet access through firewall",
+  "slug": "no-internet-access-through-firewall",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:23.243Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:23.243Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74c49508cfcf76f5fd3"
+  },
+  "title": "Incorrect firewall rules blocking traffic",
+  "slug": "incorrect-firewall-rules-blocking-traffic",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:24.676Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:24.676Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74e49508cfcf76f5fdd"
+  },
+  "title": "VPN not connecting through firewall",
+  "slug": "vpn-not-connecting-through-firewall",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:26.177Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:26.177Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72249508cfcf76f5eb6"
+  },
+  "title": "Network connectivity issues",
+  "slug": "network-connectivity-issues",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:42.107Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:42.107Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72449508cfcf76f5ec5"
+  },
+  "title": "Active Directory or DNS service failures",
+  "slug": "active-directory-or-dns-service-failures",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:44.294Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:44.294Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce72649508cfcf76f5ed4"
+  },
+  "title": "Patch/update failure or outdated OS/software",
+  "slug": "patchupdate-failure-or-outdated-ossoftware",
+  "parentCategory": {
+    "$oid": "682af390cd7ba362b7afbb34"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:46.459Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:46.459Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73049508cfcf76f5f15"
+  },
+  "title": "Unable to save scanned document",
+  "slug": "unable-to-save-scanned-document",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:56.210Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:56.210Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73149508cfcf76f5f1f"
+  },
+  "title": "Scanner software not opening or crashing",
+  "slug": "scanner-software-not-opening-or-crashing",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:57.745Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:57.745Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73349508cfcf76f5f29"
+  },
+  "title": "Drivers not installed or corrupted",
+  "slug": "drivers-not-installed-or-corrupted",
+  "parentCategory": {
+    "$oid": "682af380cd7ba362b7afbb30"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:38:59.176Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:38:59.176Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73449508cfcf76f5f33"
+  },
+  "title": "Router not powering on",
+  "slug": "router-not-powering-on",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:00.558Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:00.558Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73649508cfcf76f5f3d"
+  },
+  "title": "Frequent disconnection of Wi-Fi",
+  "slug": "frequent-disconnection-of-wi-fi",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:02.044Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:02.044Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73749508cfcf76f5f47"
+  },
+  "title": "Devices not detecting Wi-Fi signal",
+  "slug": "devices-not-detecting-wi-fi-signal",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:03.684Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:03.684Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73849508cfcf76f5f4c"
+  },
+  "title": "Router overheating",
+  "slug": "router-overheating",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:04.504Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:04.504Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73949508cfcf76f5f51"
+  },
+  "title": "Red/orange light blinking on router",
+  "slug": "redorange-light-blinking-on-router",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:05.276Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:05.276Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73949508cfcf76f5f56"
+  },
+  "title": "Unable to access router admin panel",
+  "slug": "unable-to-access-router-admin-panel",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:05.945Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:05.945Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73a49508cfcf76f5f5b"
+  },
+  "title": "Forgotten router login credentials",
+  "slug": "forgotten-router-login-credentials",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:06.624Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:06.624Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73b49508cfcf76f5f60"
+  },
+  "title": "Wi-Fi signal weak in certain areas",
+  "slug": "wi-fi-signal-weak-in-certain-areas",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:07.369Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:07.369Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73c49508cfcf76f5f65"
+  },
+  "title": "LAN ports not working",
+  "slug": "lan-ports-not-working",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:08.087Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:08.087Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce73c49508cfcf76f5f6a"
+  },
+  "title": "Router rebooting on its own",
+  "slug": "router-rebooting-on-its-own",
+  "parentCategory": {
+    "$oid": "682af36fcd7ba362b7afbb2c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:08.805Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:08.805Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74749508cfcf76f5fb0"
+  },
+  "title": "MAC address table not updating",
+  "slug": "mac-address-table-not-updating",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:19.408Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:19.408Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74849508cfcf76f5fba"
+  },
+  "title": "Firmware upgrade failure",
+  "slug": "firmware-upgrade-failure",
+  "parentCategory": {
+    "$oid": "682af3c4cd7ba362b7afbb40"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:20.851Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:20.851Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74a49508cfcf76f5fc4"
+  },
+  "title": "Firewall not powering on",
+  "slug": "firewall-not-powering-on",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:22.321Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:22.321Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74b49508cfcf76f5fce"
+  },
+  "title": "Unable to access firewall admin console",
+  "slug": "unable-to-access-firewall-admin-console",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:23.974Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:23.974Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74d49508cfcf76f5fd8"
+  },
+  "title": "High CPU or memory usage on firewall device",
+  "slug": "high-cpu-or-memory-usage-on-firewall-device",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:25.451Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:25.451Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce74e49508cfcf76f5fe2"
+  },
+  "title": "Ports not opening despite configuration",
+  "slug": "ports-not-opening-despite-configuration",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:26.834Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:26.834Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75149508cfcf76f5ff8"
+  },
+  "title": "Firewall logging not working or logs full",
+  "slug": "firewall-logging-not-working-or-logs-full",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:29.861Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:29.861Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75249508cfcf76f5ffd"
+  },
+  "title": "Internet speed slow due to firewall filtering",
+  "slug": "internet-speed-slow-due-to-firewall-filtering",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:30.684Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:30.684Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75349508cfcf76f6002"
+  },
+  "title": "Device restarting or freezing randomly",
+  "slug": "device-restarting-or-freezing-randomly",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:31.574Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:31.574Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75449508cfcf76f6007"
+  },
+  "title": "Security certificate errors or expired licenses",
+  "slug": "security-certificate-errors-or-expired-licenses",
+  "parentCategory": {
+    "$oid": "682af340cd7ba362b7afbb22"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:32.534Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:32.534Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75549508cfcf76f600c"
+  },
+  "title": "Software not opening or crashing on launch",
+  "slug": "software-not-opening-or-crashing-on-launch",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:33.386Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:33.386Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75649508cfcf76f6011"
+  },
+  "title": "Installation failed or stuck during setup",
+  "slug": "installation-failed-or-stuck-during-setup",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:34.149Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:34.149Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75749508cfcf76f6016"
+  },
+  "title": "Application running very slowly",
+  "slug": "application-running-very-slowly",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:35.029Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:35.029Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75749508cfcf76f601b"
+  },
+  "title": "Login errors or invalid credentials",
+  "slug": "login-errors-or-invalid-credentials",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:35.738Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:35.738Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75849508cfcf76f6020"
+  },
+  "title": "License expired or activation failed",
+  "slug": "license-expired-or-activation-failed",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:36.462Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:36.462Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75949508cfcf76f6025"
+  },
+  "title": "Frequent error pop-ups during use",
+  "slug": "frequent-error-pop-ups-during-use",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:37.286Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:37.286Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75b49508cfcf76f602f"
+  },
+  "title": "Compatibility issues with OS version",
+  "slug": "compatibility-issues-with-os-version",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:39.628Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:39.628Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75d49508cfcf76f6039"
+  },
+  "title": "Missing files or DLL errors",
+  "slug": "missing-files-or-dll-errors",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:41.754Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:41.754Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75f49508cfcf76f6043"
+  },
+  "title": "Unable to connect to server or database",
+  "slug": "unable-to-connect-to-server-or-database",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:43.297Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:43.297Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76049508cfcf76f604d"
+  },
+  "title": "Software automatically closes after start",
+  "slug": "software-automatically-closes-after-start",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:44.697Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:44.697Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77549508cfcf76f60d1"
+  },
+  "title": "Scan stuck or taking too long to complete",
+  "slug": "scan-stuck-or-taking-too-long-to-complete",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:05.230Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:05.230Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77649508cfcf76f60db"
+  },
+  "title": "Unable to quarantine or delete threats",
+  "slug": "unable-to-quarantine-or-delete-threats",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:06.746Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:06.746Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77849508cfcf76f60e5"
+  },
+  "title": "Firewall inside antivirus blocking internet access",
+  "slug": "firewall-inside-antivirus-blocking-internet-access",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:08.109Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:08.109Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77949508cfcf76f60ef"
+  },
+  "title": "Drive showing as unallocated or raw",
+  "slug": "drive-showing-as-unallocated-or-raw",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:09.590Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:09.590Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77b49508cfcf76f60f9"
+  },
+  "title": "Slow data read/write speed",
+  "slug": "slow-data-readwrite-speed",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:11.233Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:11.233Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77c49508cfcf76f6103"
+  },
+  "title": "Unable to format storage device",
+  "slug": "unable-to-format-storage-device",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:12.701Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:12.701Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77e49508cfcf76f610d"
+  },
+  "title": "Drive making clicking or unusual noise",
+  "slug": "drive-making-clicking-or-unusual-noise",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:14.158Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:14.158Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77f49508cfcf76f6117"
+  },
+  "title": "Access denied or permission errors",
+  "slug": "access-denied-or-permission-errors",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:15.671Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:15.671Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78149508cfcf76f6121"
+  },
+  "title": "Files or folders missing or inaccessible",
+  "slug": "files-or-folders-missing-or-inaccessible",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:17.266Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:17.266Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78249508cfcf76f612b"
+  },
+  "title": "Backup to storage device failing",
+  "slug": "backup-to-storage-device-failing",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:18.725Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:18.725Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78449508cfcf76f6135"
+  },
+  "title": "Backup not starting or stuck in progress",
+  "slug": "backup-not-starting-or-stuck-in-progress",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:20.424Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:20.424Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78549508cfcf76f613f"
+  },
+  "title": "Backup files missing or incomplete",
+  "slug": "backup-files-missing-or-incomplete",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:21.874Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:21.874Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78749508cfcf76f6149"
+  },
+  "title": "External drive not detected during backup",
+  "slug": "external-drive-not-detected-during-backup",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:23.873Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:23.873Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78949508cfcf76f6153"
+  },
+  "title": "Backup software crashing or freezing",
+  "slug": "backup-software-crashing-or-freezing",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:25.400Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:25.400Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78a49508cfcf76f615d"
+  },
+  "title": "File version conflicts in backup",
+  "slug": "file-version-conflicts-in-backup",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:26.766Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:26.766Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78c49508cfcf76f6167"
+  },
+  "title": "Backup data corrupted or unreadable",
+  "slug": "backup-data-corrupted-or-unreadable",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:28.069Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:28.069Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78d49508cfcf76f6171"
+  },
+  "title": "Cloud backup not syncing or connecting",
+  "slug": "cloud-backup-not-syncing-or-connecting",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:29.669Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:29.669Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75a49508cfcf76f602a"
+  },
+  "title": "Features or menus not responding",
+  "slug": "features-or-menus-not-responding",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:38.833Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:38.833Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75c49508cfcf76f6034"
+  },
+  "title": "Unable to update software",
+  "slug": "unable-to-update-software",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:40.836Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:40.836Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75e49508cfcf76f603e"
+  },
+  "title": "High CPU or RAM usage due to software",
+  "slug": "high-cpu-or-ram-usage-due-to-software",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:42.661Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:42.661Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce75f49508cfcf76f6048"
+  },
+  "title": "Plugin/add-on not working or crashing",
+  "slug": "pluginadd-on-not-working-or-crashing",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:43.946Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:43.946Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76149508cfcf76f6052"
+  },
+  "title": "File corruption or unreadable data",
+  "slug": "file-corruption-or-unreadable-data",
+  "parentCategory": {
+    "$oid": "682af39dcd7ba362b7afbb38"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:45.489Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:45.489Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76249508cfcf76f6057"
+  },
+  "title": "Unable to send emails",
+  "slug": "unable-to-send-emails",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:46.181Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:46.181Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76249508cfcf76f605c"
+  },
+  "title": "Unable to receive emails",
+  "slug": "unable-to-receive-emails",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:46.829Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:46.829Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76349508cfcf76f6061"
+  },
+  "title": "Email stuck in Outbox",
+  "slug": "email-stuck-in-outbox",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:47.571Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:47.571Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76449508cfcf76f6066"
+  },
+  "title": "Login issues with email account",
+  "slug": "login-issues-with-email-account",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:48.208Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:48.208Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76549508cfcf76f606b"
+  },
+  "title": "Forgotten email password",
+  "slug": "forgotten-email-password",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:49.015Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:49.015Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76549508cfcf76f6070"
+  },
+  "title": "Email configuration issues in Outlook/Thunderbird",
+  "slug": "email-configuration-issues-in-outlookthunderbird",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:49.868Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:49.868Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76649508cfcf76f6075"
+  },
+  "title": "Delayed email delivery",
+  "slug": "delayed-email-delivery",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:50.560Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:50.560Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76749508cfcf76f607a"
+  },
+  "title": "Mailbox full or storage limit exceeded",
+  "slug": "mailbox-full-or-storage-limit-exceeded",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:51.266Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:51.266Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76849508cfcf76f607f"
+  },
+  "title": "Spam/junk filtering not working correctly",
+  "slug": "spamjunk-filtering-not-working-correctly",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:52.156Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:52.156Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76949508cfcf76f6084"
+  },
+  "title": "Emails going to spam folder incorrectly",
+  "slug": "emails-going-to-spam-folder-incorrectly",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:53.172Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:53.172Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76a49508cfcf76f6089"
+  },
+  "title": "Synchronization issues across devices",
+  "slug": "synchronization-issues-across-devices",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:54.169Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:54.169Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76a49508cfcf76f608e"
+  },
+  "title": "Unable to attach files to email",
+  "slug": "unable-to-attach-files-to-email",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:54.986Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:54.986Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76b49508cfcf76f6093"
+  },
+  "title": "SSL/TLS certificate errors",
+  "slug": "ssltls-certificate-errors",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:55.805Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:55.805Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76c49508cfcf76f6098"
+  },
+  "title": "Blocked IP/domain preventing email delivery",
+  "slug": "blocked-ipdomain-preventing-email-delivery",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:56.537Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:56.537Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76d49508cfcf76f609d"
+  },
+  "title": "Auto-reply or forwarding not working",
+  "slug": "auto-reply-or-forwarding-not-working",
+  "parentCategory": {
+    "$oid": "682af32fcd7ba362b7afbb1e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:57.239Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:57.239Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76d49508cfcf76f60a2"
+  },
+  "title": "Antivirus not opening or loading properly",
+  "slug": "antivirus-not-opening-or-loading-properly",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:57.896Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:57.896Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76e49508cfcf76f60a7"
+  },
+  "title": "Unable to install antivirus software",
+  "slug": "unable-to-install-antivirus-software",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:58.571Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:58.571Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce76f49508cfcf76f60ac"
+  },
+  "title": "System running slow after antivirus installation",
+  "slug": "system-running-slow-after-antivirus-installation",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:39:59.224Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:39:59.224Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77049508cfcf76f60b1"
+  },
+  "title": "Antivirus not updating virus definitions",
+  "slug": "antivirus-not-updating-virus-definitions",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:00.089Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:00.089Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77049508cfcf76f60b6"
+  },
+  "title": "Real-time protection is turned off or disabled",
+  "slug": "real-time-protection-is-turned-off-or-disabled",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:00.835Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:00.835Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77149508cfcf76f60bb"
+  },
+  "title": "Antivirus blocking legitimate websites or apps",
+  "slug": "antivirus-blocking-legitimate-websites-or-apps",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:01.644Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:01.644Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77249508cfcf76f60c2"
+  },
+  "title": "Antivirus not detecting or removing threats",
+  "slug": "antivirus-not-detecting-or-removing-threats",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:02.781Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:02.781Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77349508cfcf76f60c7"
+  },
+  "title": "Frequent pop-ups or warning messages",
+  "slug": "frequent-pop-ups-or-warning-messages",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:03.594Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:03.594Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77449508cfcf76f60cc"
+  },
+  "title": "Conflicts with other security software",
+  "slug": "conflicts-with-other-security-software",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:04.411Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:04.411Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77549508cfcf76f60d6"
+  },
+  "title": "Scheduled scans not running",
+  "slug": "scheduled-scans-not-running",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:05.998Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:05.998Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77749508cfcf76f60e0"
+  },
+  "title": "Corrupted antivirus installation or files",
+  "slug": "corrupted-antivirus-installation-or-files",
+  "parentCategory": {
+    "$oid": "682af2d8cd7ba362b7afbb06"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:07.388Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:07.388Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77849508cfcf76f60ea"
+  },
+  "title": "Storage device not detected (HDD/SSD/External)",
+  "slug": "storage-device-not-detected-(hddssdexternal)",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:08.881Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:08.881Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77a49508cfcf76f60f4"
+  },
+  "title": "Insufficient storage space or full drive",
+  "slug": "insufficient-storage-space-or-full-drive",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:10.450Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:10.450Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77b49508cfcf76f60fe"
+  },
+  "title": "File system corrupted (e.g., NTFS, FAT32)",
+  "slug": "file-system-corrupted-(e.g.-ntfs-fat32)",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:11.985Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:11.985Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77d49508cfcf76f6108"
+  },
+  "title": "Bad sectors found on disk",
+  "slug": "bad-sectors-found-on-disk",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:13.521Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:13.521Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce77e49508cfcf76f6112"
+  },
+  "title": "External drive not recognized by system",
+  "slug": "external-drive-not-recognized-by-system",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:14.853Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:14.853Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78049508cfcf76f611c"
+  },
+  "title": "RAID volume failure or degraded state",
+  "slug": "raid-volume-failure-or-degraded-state",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:16.491Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:16.491Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78149508cfcf76f6126"
+  },
+  "title": "Cloud storage not syncing properly",
+  "slug": "cloud-storage-not-syncing-properly",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:17.929Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:17.929Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78349508cfcf76f6130"
+  },
+  "title": "Error copying/moving files to storage",
+  "slug": "error-copyingmoving-files-to-storage",
+  "parentCategory": {
+    "$oid": "682af3accd7ba362b7afbb3c"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:19.565Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:19.565Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78549508cfcf76f613a"
+  },
+  "title": "Scheduled backups not running",
+  "slug": "scheduled-backups-not-running",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:21.105Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:21.105Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78749508cfcf76f6144"
+  },
+  "title": "Insufficient storage space for backup",
+  "slug": "insufficient-storage-space-for-backup",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:23.148Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:23.148Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78849508cfcf76f614e"
+  },
+  "title": "Slow backup process",
+  "slug": "slow-backup-process",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:24.600Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:24.600Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78a49508cfcf76f6158"
+  },
+  "title": "Permissions denied during backup",
+  "slug": "permissions-denied-during-backup",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:26.117Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:26.117Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78b49508cfcf76f6162"
+  },
+  "title": "Restore process failing or incomplete",
+  "slug": "restore-process-failing-or-incomplete",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:27.405Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:27.405Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78c49508cfcf76f616c"
+  },
+  "title": "Unable to access encrypted backup files",
+  "slug": "unable-to-access-encrypted-backup-files",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:28.904Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:28.904Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78e49508cfcf76f6176"
+  },
+  "title": "Logs or reports not generating for backup",
+  "slug": "logs-or-reports-not-generating-for-backup",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:30.415Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:30.415Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce78f49508cfcf76f617b"
+  },
+  "title": "Backup schedule resets after reboot/update",
+  "slug": "backup-schedule-resets-after-rebootupdate",
+  "parentCategory": {
+    "$oid": "682af2eacd7ba362b7afbb0a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:31.065Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:31.065Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79049508cfcf76f6180"
+  },
+  "title": "Unable to connect to cloud services",
+  "slug": "unable-to-connect-to-cloud-services",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:32.160Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:32.160Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79049508cfcf76f6185"
+  },
+  "title": "Cloud storage sync issues",
+  "slug": "cloud-storage-sync-issues",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:32.942Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:32.942Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79249508cfcf76f618a"
+  },
+  "title": "Slow upload or download speed",
+  "slug": "slow-upload-or-download-speed",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:34.051Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:34.051Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79349508cfcf76f6191"
+  },
+  "title": "Files missing from cloud drive",
+  "slug": "files-missing-from-cloud-drive",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:35.333Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:35.333Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79449508cfcf76f6196"
+  },
+  "title": "Version conflicts between cloud and local files",
+  "slug": "version-conflicts-between-cloud-and-local-files",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:36.021Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:36.021Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79449508cfcf76f619b"
+  },
+  "title": "Authentication or login failures",
+  "slug": "authentication-or-login-failures",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:36.732Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:36.732Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79549508cfcf76f61a0"
+  },
+  "title": "Cloud application not opening or crashing",
+  "slug": "cloud-application-not-opening-or-crashing",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:37.492Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:37.492Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79649508cfcf76f61a5"
+  },
+  "title": "Insufficient cloud storage space",
+  "slug": "insufficient-cloud-storage-space",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:38.198Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:38.198Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79649508cfcf76f61aa"
+  },
+  "title": "Shared folder or link not accessible",
+  "slug": "shared-folder-or-link-not-accessible",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:38.965Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:38.965Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79749508cfcf76f61af"
+  },
+  "title": "Data corruption during cloud sync",
+  "slug": "data-corruption-during-cloud-sync",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:39.732Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:39.732Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79849508cfcf76f61b4"
+  },
+  "title": "Delay in real-time syncing across devices",
+  "slug": "delay-in-real-time-syncing-across-devices",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:40.818Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:40.818Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79949508cfcf76f61b9"
+  },
+  "title": "Cloud services not available in region",
+  "slug": "cloud-services-not-available-in-region",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:41.679Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:41.679Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79a49508cfcf76f61be"
+  },
+  "title": "Problems with cloud backup/restore",
+  "slug": "problems-with-cloud-backuprestore",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:42.421Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:42.421Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ce79b49508cfcf76f61c3"
+  },
+  "title": "Subscription expired or billing issue blocking access",
+  "slug": "subscription-expired-or-billing-issue-blocking-access",
+  "parentCategory": {
+    "$oid": "682af307cd7ba362b7afbb12"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:40:43.217Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:40:43.217Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cebdd49508cfcf76f6391"
+  },
+  "title": "Virtual machine (VM) not starting",
+  "slug": "virtual-machine-(vm)-not-starting",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:58:53.060Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:58:53.060Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cebdd49508cfcf76f6396"
+  },
+  "title": "Host system running slow due to VM load",
+  "slug": "host-system-running-slow-due-to-vm-load",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T09:58:53.981Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T09:58:53.981Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cecfb49508cfcf76f652f"
+  },
+  "title": "Network not working inside VM",
+  "slug": "network-not-working-inside-vm",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:03:39.543Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:03:39.543Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cecfd49508cfcf76f6534"
+  },
+  "title": "VM freezing or crashing unexpectedly",
+  "slug": "vm-freezing-or-crashing-unexpectedly",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:03:41.591Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:03:41.591Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cecff49508cfcf76f6539"
+  },
+  "title": "Snapshot creation or restoration failed",
+  "slug": "snapshot-creation-or-restoration-failed",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:03:43.941Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:03:43.941Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedcc49508cfcf76f66d5"
+  },
+  "title": "VM consuming excessive CPU or RAM",
+  "slug": "vm-consuming-excessive-cpu-or-ram",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:08.996Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:08.996Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedcd49508cfcf76f66da"
+  },
+  "title": "Disk space issues with VM storage",
+  "slug": "disk-space-issues-with-vm-storage",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:09.844Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:09.844Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedce49508cfcf76f66df"
+  },
+  "title": "Tools or guest additions not installed or outdated",
+  "slug": "tools-or-guest-additions-not-installed-or-outdated",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:10.802Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:10.802Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedcf49508cfcf76f66e4"
+  },
+  "title": "USB or device passthrough not working",
+  "slug": "usb-or-device-passthrough-not-working",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:11.696Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:11.696Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedd049508cfcf76f66e9"
+  },
+  "title": "VM template deployment failing",
+  "slug": "vm-template-deployment-failing",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:12.559Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:12.559Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedd149508cfcf76f66ee"
+  },
+  "title": "Time sync issues between host and VM",
+  "slug": "time-sync-issues-between-host-and-vm",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:13.694Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:13.694Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedd249508cfcf76f66f3"
+  },
+  "title": "License or activation problem in virtualized OS",
+  "slug": "license-or-activation-problem-in-virtualized-os",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:14.756Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:14.756Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedd349508cfcf76f66f8"
+  },
+  "title": "VM migration between hosts failing (vMotion/Live Migration)",
+  "slug": "vm-migration-between-hosts-failing-(vmotionlive-migration)",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:15.553Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:15.553Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedd449508cfcf76f66fd"
+  },
+  "title": "Errors while cloning or exporting VMs",
+  "slug": "errors-while-cloning-or-exporting-vms",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:16.591Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:16.591Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedd549508cfcf76f6702"
+  },
+  "title": "Incompatible hypervisor or unsupported OS version",
+  "slug": "incompatible-hypervisor-or-unsupported-os-version",
+  "parentCategory": {
+    "$oid": "682af3dccd7ba362b7afbb48"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:17.490Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:17.490Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedd649508cfcf76f6707"
+  },
+  "title": "Unauthorized access or login attempts",
+  "slug": "unauthorized-access-or-login-attempts",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:18.303Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:18.303Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedd749508cfcf76f670c"
+  },
+  "title": "Phishing emails or suspicious links received",
+  "slug": "phishing-emails-or-suspicious-links-received",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:19.307Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:19.307Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedd849508cfcf76f6711"
+  },
+  "title": "Malware or ransomware infection",
+  "slug": "malware-or-ransomware-infection",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:20.489Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:20.489Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedd949508cfcf76f6716"
+  },
+  "title": "Weak or reused passwords",
+  "slug": "weak-or-reused-passwords",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:21.506Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:21.506Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedda49508cfcf76f671b"
+  },
+  "title": "Antivirus not detecting threats",
+  "slug": "antivirus-not-detecting-threats",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:22.868Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:22.868Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ceddb49508cfcf76f6720"
+  },
+  "title": "Firewall misconfiguration exposing network",
+  "slug": "firewall-misconfiguration-exposing-network",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:23.755Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:23.755Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ceddd49508cfcf76f6725"
+  },
+  "title": "Suspicious network activity or traffic spikes",
+  "slug": "suspicious-network-activity-or-traffic-spikes",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:25.087Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:25.087Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedde49508cfcf76f672a"
+  },
+  "title": "Data breach or information leakage",
+  "slug": "data-breach-or-information-leakage",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:26.120Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:26.120Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686ceddf49508cfcf76f672f"
+  },
+  "title": "User account compromised or hijacked",
+  "slug": "user-account-compromised-or-hijacked",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:27.458Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:27.458Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cede049508cfcf76f6734"
+  },
+  "title": "Security patches not applied or outdated software",
+  "slug": "security-patches-not-applied-or-outdated-software",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:28.646Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:28.646Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cede149508cfcf76f6739"
+  },
+  "title": "Insecure file sharing or public links",
+  "slug": "insecure-file-sharing-or-public-links",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:29.531Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:29.531Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cede249508cfcf76f673e"
+  },
+  "title": "Lack of multi-factor authentication (MFA)",
+  "slug": "lack-of-multi-factor-authentication-(mfa)",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:30.342Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:30.342Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cede349508cfcf76f6743"
+  },
+  "title": "USB or external devices spreading malware",
+  "slug": "usb-or-external-devices-spreading-malware",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:31.239Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:31.239Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cede449508cfcf76f6748"
+  },
+  "title": "Inactive users with active access",
+  "slug": "inactive-users-with-active-access",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:32.654Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:32.654Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cede649508cfcf76f674d"
+  },
+  "title": "No audit logs or monitoring in place",
+  "slug": "no-audit-logs-or-monitoring-in-place",
+  "parentCategory": {
+    "$oid": "682af313cd7ba362b7afbb16"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:34.039Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:34.039Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cede849508cfcf76f6752"
+  },
+  "title": "DLP agent not installed or not active on endpoint",
+  "slug": "dlp-agent-not-installed-or-not-active-on-endpoint",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:36.188Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:36.188Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedea49508cfcf76f6757"
+  },
+  "title": "Policy not applying to specific users or groups",
+  "slug": "policy-not-applying-to-specific-users-or-groups",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:38.214Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:38.214Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedec49508cfcf76f675c"
+  },
+  "title": "False positives blocking legitimate activity",
+  "slug": "false-positives-blocking-legitimate-activity",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:40.711Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:40.711Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedee49508cfcf76f6761"
+  },
+  "title": "Users able to bypass DLP restrictions",
+  "slug": "users-able-to-bypass-dlp-restrictions",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:42.117Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:42.117Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedee49508cfcf76f6766"
+  },
+  "title": "DLP blocking business-critical applications or websites",
+  "slug": "dlp-blocking-business-critical-applications-or-websites",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:42.978Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:42.978Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedef49508cfcf76f676b"
+  },
+  "title": "File uploads to cloud services not being monitored",
+  "slug": "file-uploads-to-cloud-services-not-being-monitored",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:43.837Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:43.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedf149508cfcf76f6770"
+  },
+  "title": "USB or external device control not working",
+  "slug": "usb-or-external-device-control-not-working",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:45.037Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:45.037Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedf349508cfcf76f6775"
+  },
+  "title": "DLP not logging or alerting incidents properly",
+  "slug": "dlp-not-logging-or-alerting-incidents-properly",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:47.469Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:47.469Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedf449508cfcf76f677a"
+  },
+  "title": "Performance degradation on endpoints with DLP",
+  "slug": "performance-degradation-on-endpoints-with-dlp",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:48.993Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:48.993Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedf649508cfcf76f677f"
+  },
+  "title": "Inconsistent policy behavior across OS platforms",
+  "slug": "inconsistent-policy-behavior-across-os-platforms",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:50.070Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:50.070Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedf749508cfcf76f6784"
+  },
+  "title": "Data exfiltration not detected (email, print, etc.)",
+  "slug": "data-exfiltration-not-detected-(email-print-etc.)",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:51.304Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:51.304Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedf849508cfcf76f6789"
+  },
+  "title": "Reporting and dashboard data not updating",
+  "slug": "reporting-and-dashboard-data-not-updating",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:52.047Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:52.047Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedf849508cfcf76f678e"
+  },
+  "title": "Encryption enforcement not triggering correctly",
+  "slug": "encryption-enforcement-not-triggering-correctly",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:52.913Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:52.913Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedf949508cfcf76f6793"
+  },
+  "title": "DLP policies not syncing with AD/LDAP changes",
+  "slug": "dlp-policies-not-syncing-with-adldap-changes",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:53.844Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:53.844Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedfa49508cfcf76f6798"
+  },
+  "title": "Difficulties in testing or validating new rules/policies",
+  "slug": "difficulties-in-testing-or-validating-new-rulespolicies",
+  "parentCategory": {
+    "$oid": "682af321cd7ba362b7afbb1a"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:54.774Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:54.774Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedfb49508cfcf76f679d"
+  },
+  "title": "Camera not powering on",
+  "slug": "camera-not-powering-on",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:55.678Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:55.678Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedfc49508cfcf76f67a2"
+  },
+  "title": "No video display or black screen",
+  "slug": "no-video-display-or-black-screen",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:56.471Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:56.471Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedfd49508cfcf76f67a7"
+  },
+  "title": "Poor video quality (blurry/grainy image)",
+  "slug": "poor-video-quality-(blurrygrainy-image)",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:57.443Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:57.443Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedfe49508cfcf76f67ac"
+  },
+  "title": "Night vision not working",
+  "slug": "night-vision-not-working",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:58.446Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:58.446Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cedff49508cfcf76f67b1"
+  },
+  "title": "DVR/NVR not detecting cameras",
+  "slug": "dvrnvr-not-detecting-cameras",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:07:59.262Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:07:59.262Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0049508cfcf76f67b6"
+  },
+  "title": "Recording not happening or footage missing",
+  "slug": "recording-not-happening-or-footage-missing",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:00.081Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:00.081Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0149508cfcf76f67bb"
+  },
+  "title": "Playback not working or showing error",
+  "slug": "playback-not-working-or-showing-error",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:01.216Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:01.216Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0249508cfcf76f67c0"
+  },
+  "title": "DVR/NVR not powering on",
+  "slug": "dvrnvr-not-powering-on",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:02.236Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:02.236Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0249508cfcf76f67c5"
+  },
+  "title": "Storage device (HDD) not detected",
+  "slug": "storage-device-(hdd)-not-detected",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:02.899Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:02.899Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0349508cfcf76f67ca"
+  },
+  "title": "Camera disconnected or offline frequently",
+  "slug": "camera-disconnected-or-offline-frequently",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:03.758Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:03.758Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0449508cfcf76f67cf"
+  },
+  "title": "Unable to access CCTV remotely (mobile/web)",
+  "slug": "unable-to-access-cctv-remotely-(mobileweb)",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:04.642Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:04.642Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0549508cfcf76f67d4"
+  },
+  "title": "Camera angle misaligned or physical damage",
+  "slug": "camera-angle-misaligned-or-physical-damage",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:05.439Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:05.439Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0649508cfcf76f67d9"
+  },
+  "title": "Network cable or power cable issues",
+  "slug": "network-cable-or-power-cable-issues",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:06.239Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:06.239Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0649508cfcf76f67de"
+  },
+  "title": "Password forgotten for DVR/NVR",
+  "slug": "password-forgotten-for-dvrnvr",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:06.941Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:06.941Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1d49508cfcf76f6851"
+  },
+  "title": "Remote control not functioning",
+  "slug": "remote-control-not-functioning",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:29.217Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:29.217Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0749508cfcf76f67e3"
+  },
+  "title": "Motion detection not triggering recording/alerts",
+  "slug": "motion-detection-not-triggering-recordingalerts",
+  "parentCategory": {
+    "$oid": "682af2fbcd7ba362b7afbb0e"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:07.886Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:07.886Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0849508cfcf76f67e8"
+  },
+  "title": "Unable to join or start a video meeting",
+  "slug": "unable-to-join-or-start-a-video-meeting",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:08.682Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:08.682Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0949508cfcf76f67ed"
+  },
+  "title": "Audio not working (mic/speaker issue)",
+  "slug": "audio-not-working-(micspeaker-issue)",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:09.411Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:09.411Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0a49508cfcf76f67f2"
+  },
+  "title": "Camera not detected or not working",
+  "slug": "camera-not-detected-or-not-working",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:10.115Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:10.115Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0a49508cfcf76f67f7"
+  },
+  "title": "Poor video or audio quality (lagging/freeze)",
+  "slug": "poor-video-or-audio-quality-(laggingfreeze)",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:10.798Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:10.798Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0b49508cfcf76f67fc"
+  },
+  "title": "Screen sharing not functioning",
+  "slug": "screen-sharing-not-functioning",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:11.605Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:11.605Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0d49508cfcf76f6801"
+  },
+  "title": "Participants unable to hear or see host",
+  "slug": "participants-unable-to-hear-or-see-host",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:13.545Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:13.545Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee0f49508cfcf76f6806"
+  },
+  "title": "App crashing or not launching",
+  "slug": "app-crashing-or-not-launching",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:15.250Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:15.250Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1049508cfcf76f680b"
+  },
+  "title": "Login issues or authentication failure",
+  "slug": "login-issues-or-authentication-failure",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:16.388Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:16.388Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1149508cfcf76f6810"
+  },
+  "title": "Echo, background noise, or audio feedback",
+  "slug": "echo-background-noise-or-audio-feedback",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:17.835Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:17.835Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1249508cfcf76f6815"
+  },
+  "title": "Meeting invites or calendar sync not working",
+  "slug": "meeting-invites-or-calendar-sync-not-working",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:18.876Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:18.876Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1349508cfcf76f681a"
+  },
+  "title": "Recording not starting or saving properly",
+  "slug": "recording-not-starting-or-saving-properly",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:19.613Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:19.613Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1449508cfcf76f681f"
+  },
+  "title": "Unable to access meeting via mobile app",
+  "slug": "unable-to-access-meeting-via-mobile-app",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:20.274Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:20.274Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1449508cfcf76f6824"
+  },
+  "title": "Permissions blocked by browser or OS",
+  "slug": "permissions-blocked-by-browser-or-os",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:20.960Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:20.960Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1649508cfcf76f6829"
+  },
+  "title": "Chat or collaboration tools not loading",
+  "slug": "chat-or-collaboration-tools-not-loading",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:22.096Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:22.096Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1649508cfcf76f682e"
+  },
+  "title": "Meeting links not opening in correct app/browser",
+  "slug": "meeting-links-not-opening-in-correct-appbrowser",
+  "parentCategory": {
+    "$oid": "682af3cfcd7ba362b7afbb44"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:22.820Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:22.820Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1749508cfcf76f6833"
+  },
+  "title": "Display not powering on",
+  "slug": "display-not-powering-on",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:23.558Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:23.558Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1849508cfcf76f6838"
+  },
+  "title": "No signal or input not detected",
+  "slug": "no-signal-or-input-not-detected",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:24.659Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:24.659Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1949508cfcf76f683d"
+  },
+  "title": "Screen flickering or distorted display",
+  "slug": "screen-flickering-or-distorted-display",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:25.475Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:25.475Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1a49508cfcf76f6842"
+  },
+  "title": "Touch function not working (interactive panels)",
+  "slug": "touch-function-not-working-(interactive-panels)",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:26.295Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:26.295Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1b49508cfcf76f6847"
+  },
+  "title": "Display overheating or shutting down automatically",
+  "slug": "display-overheating-or-shutting-down-automatically",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:27.010Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:27.010Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1c49508cfcf76f684c"
+  },
+  "title": "Audio not working from built-in speakers",
+  "slug": "audio-not-working-from-built-in-speakers",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:28.445Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:28.445Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1d49508cfcf76f6856"
+  },
+  "title": "Screen freezing or lagging",
+  "slug": "screen-freezing-or-lagging",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:29.981Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:29.981Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1e49508cfcf76f685b"
+  },
+  "title": "HDMI/VGA/DisplayPort input not working",
+  "slug": "hdmivgadisplayport-input-not-working",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:30.788Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:30.788Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee1f49508cfcf76f6860"
+  },
+  "title": "Auto-rebooting or firmware errors",
+  "slug": "auto-rebooting-or-firmware-errors",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:31.449Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:31.449Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee2049508cfcf76f6865"
+  },
+  "title": "Display scheduling or content playback not working (digital signage)",
+  "slug": "display-scheduling-or-content-playback-not-working-(digital-signage)",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:32.102Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:32.102Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee2149508cfcf76f686a"
+  },
+  "title": "Calibration or alignment issues",
+  "slug": "calibration-or-alignment-issues",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:33.015Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:33.015Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee2149508cfcf76f686f"
+  },
+  "title": "Software/app not launching on display OS",
+  "slug": "softwareapp-not-launching-on-display-os",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:33.722Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:33.722Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee2249508cfcf76f6874"
+  },
+  "title": "Wall mount or stand instability/damage",
+  "slug": "wall-mount-or-stand-instabilitydamage",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:34.478Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:34.478Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686cee2349508cfcf76f6879"
+  },
+  "title": "Panel showing lines, dead pixels, or color patches",
+  "slug": "panel-showing-lines-dead-pixels-or-color-patches",
+  "parentCategory": {
+    "$oid": "686cdabfea2a64d6c8435792"
+  },
+  "createdAt": {
+    "$date": "2025-07-08T10:08:35.422Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-08T10:08:35.422Z"
+  },
+  "__v": 0
+}]

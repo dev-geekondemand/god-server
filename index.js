@@ -23,6 +23,8 @@ const { handleWebhook } = require('./controllers/subscriptionController.js')
 const { handleMongoError } = require('./utils/handleMongoError.js')
 const passport = require('passport');
 require('./config/passport');
+const cron = require('node-cron');
+const expireRequests = require('./utils/expireRequests');
 
 const jwt = require('jsonwebtoken')
 const morgan = require('morgan')
@@ -33,6 +35,8 @@ const allowedOrigins = [
   "https://god-ui.vercel.app",
   "https://god-admin-5l63.vercel.app",
   "https://geekondemand.in",
+  "http://localhost:3000",
+  "http://localhost:3001",
 ];
 
 app.use((req, res, next) => {
@@ -50,6 +54,9 @@ app.use((req, res, next) => {
 });
 
 dbConnect();
+
+// Expire unanswered requests every hour
+cron.schedule('0 * * * *', expireRequests);
 
 app.use(morgan("dev"))
 

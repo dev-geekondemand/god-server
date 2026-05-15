@@ -1,0 +1,152 @@
+[{
+  "_id": {
+    "$oid": "69cd0f9ec2fad8a8f8ad992c"
+  },
+  "name": "IT Services",
+  "slug": "it-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69cd0fb855d9eb9a53d195b1"
+  },
+  "name": "Server & DNS Configuration",
+  "slug": "server-and-dns-configuration",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69ce0cc81d0630ec1c7e4564"
+  },
+  "name": "cctv",
+  "slug": "cctv",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64bf3005a3ed2cf80a111"
+  },
+  "name": "Backup and Restore",
+  "slug": "backup-and-restore",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64c01005a3ed2cf80a123"
+  },
+  "name": "printer services",
+  "slug": "printer-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64c0b005a3ed2cf80a128"
+  },
+  "name": "Router services",
+  "slug": "router-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64c2d005a3ed2cf80a12c"
+  },
+  "name": "laptop Services",
+  "slug": "laptop-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64c4c005a3ed2cf80a12e"
+  },
+  "name": "Software Services",
+  "slug": "software-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64c68005a3ed2cf80a130"
+  },
+  "name": "E mail services",
+  "slug": "e-mail-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64c7c005a3ed2cf80a132"
+  },
+  "name": "Antivirus sevices",
+  "slug": "antivirus-sevices",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64c92005a3ed2cf80a134"
+  },
+  "name": "Scanners Services",
+  "slug": "scanners-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64ca4005a3ed2cf80a136"
+  },
+  "name": "DLP services",
+  "slug": "dlp-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64cdd005a3ed2cf80a138"
+  },
+  "name": "Backup and Restore Services",
+  "slug": "backup-and-restore-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64cf67ccbd7f947f185c2"
+  },
+  "name": "Storage Services",
+  "slug": "storage-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64d0e2bb0291269adfdcd"
+  },
+  "name": "cctv services",
+  "slug": "cctv-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69d64d302bb0291269adfded"
+  },
+  "name": "cybersequrity services",
+  "slug": "cybersequrity-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69f1db661655fddf78f67a56"
+  },
+  "name": "Cloud Services",
+  "slug": "cloud-services",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69f1db741655fddf78f67a58"
+  },
+  "name": "Business Technology",
+  "slug": "business-technology",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69f1db7d1655fddf78f67a5a"
+  },
+  "name": "IT Tips & Guides",
+  "slug": "it-tips-and-guides",
+  "__v": 0
+}]

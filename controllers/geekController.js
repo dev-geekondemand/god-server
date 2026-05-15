@@ -343,7 +343,8 @@ const updateGeekAssignments = asyncHandler(async (req, res) => {
   const geek = await Geek.findById(id);
    if (!geek) return res.status(404).json({ message: 'Geek not found' });
 
-    const GeekModel = type === 'Corporate' ? CorporateGeek : IndividualGeek;
+    const isCorporate = geek.__t === 'Corporate';
+    const GeekModel = isCorporate ? CorporateGeek : IndividualGeek;
 
     let profileCompletedPercentage = 30;
 
@@ -371,11 +372,11 @@ const updateGeekAssignments = asyncHandler(async (req, res) => {
       cat.totalGeeks += 1;
       await cat.save();
     }
-    if (type === 'Individual'){
+    if (!isCorporate){
         if( data?.qualifications){
           profileCompletedPercentage += 10;
         }
-    }else if(type === 'Corporate'){
+    }else{
             if(data?.companyDocs){
               profileCompletedPercentage += 10;
             }
@@ -394,7 +395,7 @@ const updateGeekAssignments = asyncHandler(async (req, res) => {
       data.languagePreferences = languages;
     }
 
-  const updatedGeek = await Geek.findByIdAndUpdate(id, data, { new: true }).select('-authToken').populate('primarySkill secondarySkills brandsServiced');
+  const updatedGeek = await GeekModel.findByIdAndUpdate(id, data, { new: true }).select('-authToken').populate('primarySkill secondarySkills brandsServiced');
   res.status(200).json(updatedGeek);
 
 });
@@ -1152,7 +1153,22 @@ const verifyGeekAadhaar = asyncHandler(async (req, res) => {
 
 
   const logoutGeek = asyncHandler(async (req, res) => {
-      res.clearCookie('geek_auth_token', {
+    try {
+      const token = req.cookies?.geek_auth_token;
+      if (token) {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decoded.id;
+        const logoutAt = new Date();
+        const event = await LoginEvent.findOne({ userId, role: 'Geek' }).sort({ createdAt: -1 });
+        if (event && !event.logoutAt) {
+          event.logoutAt = logoutAt;
+          event.sessionDuration = (logoutAt - event.createdAt) / 60000;
+          await event.save();
+        }
+      }
+    } catch (_) {}
+
+    res.clearCookie('geek_auth_token', {
       httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
@@ -1545,7 +1561,7 @@ const getGeeksByRefCode = asyncHandler(async (req, res) => {
 // ─── Corporate Geek ───────────────────────────────────────────────────────────
 
 const verifyOtpAndCreateCorporateGeek = asyncHandler(async (req, res) => {
-  let { mobile, otp, fullName, companyName, primarySkill, yoe, refCode, brandsServiced } = req.body;
+  let { mobile, otp, fullName, companyName, primarySkill, yoe, refCode, brandsServiced, GSTIN, CIN } = req.body;
 
   if (!mobile || !otp || !fullName?.first || !fullName?.last || !companyName || !primarySkill || !yoe) {
     return res.status(400).json({
@@ -1574,6 +1590,8 @@ const verifyOtpAndCreateCorporateGeek = asyncHandler(async (req, res) => {
     fullName,
     primarySkill,
     companyName,
+    ...(GSTIN && { GSTIN }),
+    ...(CIN && { CIN }),
     profileCompleted: false,
     profileCompletedPercentage: 30,
   });

@@ -39,9 +39,13 @@ const buildGroupId = (groupBy, dateField = '$createdAt') => {
 // GET /api/admin/loginanalytics/summary
 // ---------------------------------------------------------------------------
 const getLoginSummary = asyncHandler(async (req, res) => {
-  const [totalLogins, byRole] = await Promise.all([
+  const [totalLogins, byRole, durationAgg] = await Promise.all([
     LoginEvent.countDocuments(),
     LoginEvent.aggregate([{ $group: { _id: '$role', count: { $sum: 1 } } }]),
+    LoginEvent.aggregate([
+      { $match: { sessionDuration: { $ne: null } } },
+      { $group: { _id: null, avg: { $avg: '$sessionDuration' } } },
+    ]),
   ]);
 
   const seekerLogins = byRole.find((r) => r._id === 'Seeker')?.count ?? 0;
@@ -50,11 +54,14 @@ const getLoginSummary = asyncHandler(async (req, res) => {
   const loginsByStatus = {};
   byRole.forEach(({ _id, count }) => { loginsByStatus[_id] = count; });
 
+  const avgLoginDuration = durationAgg[0]?.avg ?? null;
+
   res.status(200).json({
     totalLogins,
     seekerLogins,
     geekLogins,
     failedLogins: 0,
+    avgLoginDuration,
     loginsByStatus,
   });
 });
@@ -120,9 +127,11 @@ const getUserLoginsList = asyncHandler(async (req, res) => {
     { $match: { createdAt: { $gte: start, $lte: end } } },
     {
       $group: {
-        _id:         { userId: '$userId', role: '$role' },
-        totalLogins: { $sum: 1 },
-        lastLogin:   { $max: '$createdAt' },
+        _id:             { userId: '$userId', role: '$role' },
+        totalLogins:     { $sum: 1 },
+        lastLogin:       { $max: '$createdAt' },
+        lastLogoutAt:    { $max: '$logoutAt' },
+        avgSessionDuration: { $avg: '$sessionDuration' },
       },
     },
     { $sort: { lastLogin: -1 } },
@@ -154,16 +163,18 @@ const getUserLoginsList = asyncHandler(async (req, res) => {
       : geekMap[userId.toString()];
 
     return {
-      _id:          userId,
-      userType:     role,
-      name:         user ? `${user.fullName?.first || ''} ${user.fullName?.last || ''}`.trim() : 'Unknown',
-      email:        user?.email        || '',
-      phone:        role === 'Seeker'  ? (user?.phone  || '') : (user?.mobile || ''),
-      registeredOn: user?.createdAt    || null,
-      city:         user?.address?.city || '',
-      refCode:      user?.refCode      || '',
-      totalLogins:  entry.totalLogins,
-      lastLogin:    entry.lastLogin,
+      _id:           userId,
+      userType:      role,
+      name:          user ? `${user.fullName?.first || ''} ${user.fullName?.last || ''}`.trim() : 'Unknown',
+      email:         user?.email        || '',
+      phone:         role === 'Seeker'  ? (user?.phone  || '') : (user?.mobile || ''),
+      registeredOn:  user?.createdAt    || null,
+      city:          user?.address?.city || '',
+      refCode:       user?.refCode      || '',
+      totalLogins:   entry.totalLogins,
+      lastLogin:     entry.lastLogin,
+      logoutAt:      entry.lastLogoutAt  || null,
+      loginDuration: entry.avgSessionDuration != null ? Math.round(entry.avgSessionDuration) : null,
     };
   });
 

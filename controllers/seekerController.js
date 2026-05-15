@@ -315,6 +315,21 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
 });
 
 const logout = asyncHandler(async (req, res) => {
+  try {
+    const token = req.cookies?.auth_token;
+    if (token) {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const userId = decoded.id;
+      const logoutAt = new Date();
+      const event = await LoginEvent.findOne({ userId, role: 'Seeker' }).sort({ createdAt: -1 });
+      if (event && !event.logoutAt) {
+        event.logoutAt = logoutAt;
+        event.sessionDuration = (logoutAt - event.createdAt) / 60000;
+        await event.save();
+      }
+    }
+  } catch (_) {}
+
   res.clearCookie('auth_token', {
     httpOnly: false,
     secure: process.env.NODE_ENV === 'production',

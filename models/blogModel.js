@@ -33,6 +33,7 @@ const blogSchema = new mongoose.Schema(
     },
     isPublished: { type: Boolean, default: true },
     publishedAt: Date,
+    scheduledAt: Date,
   },
   { timestamps: true }
 );
