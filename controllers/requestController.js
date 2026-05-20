@@ -75,6 +75,7 @@ const createRequestWithSelectedGeek = asyncHandler(async (req, res) => {
     category,
     mode,
     location,
+    scheduledAt,
   } = req.body;
 
   let issue = req.body.issue;
@@ -110,11 +111,12 @@ const createRequestWithSelectedGeek = asyncHandler(async (req, res) => {
   const request = await ServiceRequest.create({
     category,
     seeker: seekerId,
-    geek:geekState._id,
+    geek: geekState._id,
     mode,
     issue,
     location: finalLocation,
-    status: 'Matched'
+    status: 'Matched',
+    ...(scheduledAt && { scheduledAt: new Date(scheduledAt) }),
   });
 
   if (!request) {
@@ -658,12 +660,11 @@ const completeRequest = asyncHandler(async (req, res) => {
 
 
 const addReviewBySeeker = asyncHandler(async (req, res) => {
+  console.log(req.body, req.params);
   const { id } = req.params;
-  const { data } = req.body;
-
-  const { rating, comment } = data;
+  const { rating, comment } = req.body;
   
-
+  
   if (!rating || !comment) {
     return res.status(400).json({ message: 'Rating and comment are required' });
   }
