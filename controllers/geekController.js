@@ -565,6 +565,11 @@ const searchGeeks = asyncHandler(async (req, res) => {
     maxRate,
     lat,
     lng,
+    name,
+    area,
+    availableDay,
+    availableFrom,
+    availableTo,
     page = 1,
     limit = 10,
   } = req.query;
@@ -589,6 +594,51 @@ const searchGeeks = asyncHandler(async (req, res) => {
   }
   if (refCode) {
     matchQuery['refCode'] = refCode;
+  }
+
+  // Name and area filters use $and to avoid conflicting with any top-level $or
+  const andConditions = [];
+
+  if (name) {
+    const normName = normalize(name);
+    andConditions.push({
+      $or: [
+        { 'fullName.first': { $regex: normName, $options: 'i' } },
+        { 'fullName.last': { $regex: normName, $options: 'i' } },
+      ],
+    });
+  }
+
+  if (area) {
+    const normArea = normalize(area);
+    andConditions.push({
+      $or: [
+        { 'address.line1': { $regex: normArea, $options: 'i' } },
+        { 'address.line2': { $regex: normArea, $options: 'i' } },
+      ],
+    });
+  }
+
+  // Availability filter — day and/or time slot
+  if (availableDay || availableFrom || availableTo) {
+    // Each slot in availability.slots must match the day, then within that slot
+    // at least one timeSlot must cover the requested time window.
+    const slotElemMatch = {};
+    if (availableDay) slotElemMatch.day = availableDay;
+
+    if (availableFrom || availableTo) {
+      // timeSlots is an array inside the slot; use $elemMatch on it
+      const tsMatch = {};
+      if (availableFrom) tsMatch.from = { $lte: availableFrom };
+      if (availableTo)   tsMatch.to   = { $gte: availableTo };
+      slotElemMatch.timeSlots = { $elemMatch: tsMatch };
+    }
+
+    andConditions.push({ 'availability.slots': { $elemMatch: slotElemMatch } });
+  }
+
+  if (andConditions.length > 0) {
+    matchQuery['$and'] = andConditions;
   }
 
   // Rate card filter

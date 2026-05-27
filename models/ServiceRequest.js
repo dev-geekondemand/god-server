@@ -35,6 +35,10 @@ const serviceRequestSchema = new mongoose.Schema({
     type:mongoose.Schema.Types.ObjectId,
     ref: 'UserIssue',
   },
+  brand: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Brand',
+  },
   mode: {
     type: String,
     enum: ['Online', 'Offline',"All","Carry In"],
@@ -54,7 +58,7 @@ const serviceRequestSchema = new mongoose.Schema({
   },
   geekResponseStatus: {
     type: String,
-    enum: ['Pending', 'Accepted', 'Rejected','Expired'],
+    enum: ['Pending', 'Accepted', 'Rejected', 'Expired', 'Cancelled'],
     default: 'Pending'
   },
   images: [{

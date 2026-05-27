@@ -1,5 +1,5 @@
 const express = require('express');
-const { createRequestWithSelectedGeek, getMatchedGeeks,acceptRequest, rejectRequest, getGeekRequests, getSeekerRequests, getRequestById, completeRequest, autoRejectRequest, addReviewBySeeker } =require('../controllers/requestController.js');
+const { createRequestWithSelectedGeek, getMatchedGeeks,acceptRequest, rejectRequest, cancelRequest, getGeekRequests, getSeekerRequests, getRequestById, completeRequest, autoRejectRequest, addReviewBySeeker } =require('../controllers/requestController.js');
 const protectGeek = require('../middlewares/protectGeek.js');
 const { authenticateMobileJWT } = require('../middlewares/authMiddleware.js');
 
@@ -30,6 +30,7 @@ router.get('/seeker-requests', authenticateMobileJWT, getSeekerRequests);
 router.get('/:id', authenticateMobileJWT, getRequestById);
 router.post('/:id/accept', protectGeek, acceptRequest);
 router.post('/:id/reject',protectGeek, rejectRequest);
+router.put('/:id/cancel', authenticateMobileJWT, cancelRequest);
 router.put('/:id/auto-reject',autoRejectRequest);
 router.put('/:id/add-seeker-review',authenticateMobileJWT, addReviewBySeeker);
 

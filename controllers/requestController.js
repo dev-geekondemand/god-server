@@ -76,6 +76,7 @@ const createRequestWithSelectedGeek = asyncHandler(async (req, res) => {
     mode,
     location,
     scheduledAt,
+    brand,
   } = req.body;
 
   let issue = req.body.issue;
@@ -117,6 +118,7 @@ const createRequestWithSelectedGeek = asyncHandler(async (req, res) => {
     location: finalLocation,
     status: 'Matched',
     ...(scheduledAt && { scheduledAt: new Date(scheduledAt) }),
+    ...(brand && mongoose.Types.ObjectId.isValid(brand) && { brand: new mongoose.Types.ObjectId(brand) }),
   });
 
   if (!request) {
@@ -190,7 +192,7 @@ const getSeekerRequests = asyncHandler(async (req, res) => {
     
     const {id} = req.user;
     if(!id) return res.status(400).json({ message: 'User not found' });
-    const requests = await ServiceRequest.find({ seeker: id }).populate('geek').populate('category').populate('issue');
+    const requests = await ServiceRequest.find({ seeker: id }).populate('geek').populate('category').populate('issue').populate('brand');
     if(!requests) return res.status(404).json({ message: 'No requests found' });
     
     requests.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -231,7 +233,7 @@ const getSeekerRequests = asyncHandler(async (req, res) => {
 const getGeekRequests = asyncHandler(async (req, res) => {
   const { id } = req.user;
   if(!id) return res.status(400).json({ message: 'User not found' });
-  const requests = await ServiceRequest.find({ geek: id }).populate('seeker','-authToken').populate('category').populate('issue');
+  const requests = await ServiceRequest.find({ geek: id }).populate('seeker','-authToken').populate('category').populate('issue').populate('brand');
   if(!requests) return res.status(404).json({ message: 'No requests found' });
   requests.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -470,6 +472,7 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
   const request = await ServiceRequest.findById(id)
     .populate('seeker', '-authToken')
     .populate('geek')
+    .populate('brand')
     .populate({
       path: 'category',
       populate: {
@@ -659,6 +662,51 @@ const completeRequest = asyncHandler(async (req, res) => {
 });
 
 
+const cancelRequest = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const seekerId = req.user?.id;
+
+  const request = await ServiceRequest.findById(id).populate('geek').populate('category');
+  if (!request) return res.status(404).json({ message: 'Request not found' });
+
+  if (request.seeker?.toString() !== seekerId?.toString()) {
+    return res.status(403).json({ message: 'Not authorized to cancel this request' });
+  }
+
+  if (!['Matched', 'Pending'].includes(request.status)) {
+    return res.status(400).json({ message: 'Only pending requests can be cancelled' });
+  }
+
+  request.status = 'Cancelled';
+  request.geekResponseStatus = 'Cancelled';
+  await request.save();
+
+  const geek = await Geek.findById(request.geek?._id);
+  if (geek?.expoPushToken && Expo.isExpoPushToken(geek.expoPushToken)) {
+    await expo.sendPushNotificationsAsync([{
+      to: geek.expoPushToken,
+      sound: 'default',
+      title: 'Request Cancelled',
+      body: `The seeker cancelled their request for ${request.category?.title || 'a service'}.`,
+      data: {},
+    }]);
+  }
+
+  if (geek?.mobile) {
+    try {
+      await client.messages.create({
+        body: `The seeker has cancelled their service request for ${request.category?.title || 'a service'}.`,
+        from: process.env.TWILIO_PHONE_NUMBER,
+        to: geek.mobile,
+      });
+    } catch (err) {
+      console.error('[cancelRequest] SMS failed:', err.message);
+    }
+  }
+
+  res.status(200).json({ message: 'Request cancelled successfully' });
+});
+
 const addReviewBySeeker = asyncHandler(async (req, res) => {
   console.log(req.body, req.params);
   const { id } = req.params;
@@ -769,6 +817,7 @@ const getRejectedRequestsAdmin = asyncHandler(async (req, res) => {
     createRequestWithSelectedGeek,
     acceptRequest,
     rejectRequest,
+    cancelRequest,
     getSeekerRequests,
     getGeekRequests,
     getGeekPendingRequests,
