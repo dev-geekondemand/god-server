@@ -51,13 +51,15 @@ jobs:
       - name: Download release zip
         run: |
           curl -L \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            --retry 3 \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/octet-stream" \
             -o release.zip \
-            https://github.com/${{ github.repository }}/releases/download/deploy-${{ github.run_number }}/release.zip
-
-      - name: Unzip artifact
-        run: unzip release.zip
+            "https://github.com/${{ github.repository }}/releases/download/deploy-${{ github.run_number }}/release.zip"
+          
+          # Verify the file is a valid zip
+          file release.zip
+          ls -lh release.zip
 
       - name: Login to Azure
         uses: azure/login@v2
