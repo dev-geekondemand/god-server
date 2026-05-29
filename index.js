@@ -19,6 +19,7 @@ const enquiryRoutes = require('./routes/enquiryRoutes.js')
 const adRoutes = require('./routes/adRoutes.js')
 const adminRoutes = require('./routes/adminRoutes.js')
 const subscriptionRoutes = require('./routes/subscriptionRoutes.js')
+const gstRoutes = require('./routes/gstRoutes.js')
 const { handleWebhook } = require('./controllers/subscriptionController.js')
 const { handleMongoError } = require('./utils/handleMongoError.js')
 const passport = require('passport');
@@ -126,6 +127,7 @@ app.use('/api/issue', issueRoutes);
 app.use('/api/enquiry', enquiryRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/subscription', subscriptionRoutes);
+app.use('/api/gst', gstRoutes);
 
 
 

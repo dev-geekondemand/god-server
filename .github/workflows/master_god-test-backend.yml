@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[skip azure]')"
     permissions:
-      contents: write  # needed to create releases
+      contents: write
     
     steps:
       - uses: actions/checkout@v4
@@ -50,16 +50,27 @@ jobs:
     steps:
       - name: Download release zip
         run: |
+          ASSET_URL=$(curl -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/tags/deploy-${{ github.run_number }}" \
+            | jq -r '.assets[] | select(.name=="release.zip") | .url')
+
+          echo "Asset URL: $ASSET_URL"
+
           curl -L \
-            --retry 3 \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/octet-stream" \
             -o release.zip \
-            "https://github.com/${{ github.repository }}/releases/download/deploy-${{ github.run_number }}/release.zip"
-          
-          # Verify the file is a valid zip
+            "$ASSET_URL"
+
           file release.zip
           ls -lh release.zip
+
+      - name: Unzip artifact
+        run: |
+          mkdir -p app
+          unzip release.zip -d app
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -74,4 +85,4 @@ jobs:
         with:
           app-name: 'god-test-backend'
           slot-name: 'Production'
-          package: .
+          package: ./app   # deploy the unzipped folder, not the whole runner
