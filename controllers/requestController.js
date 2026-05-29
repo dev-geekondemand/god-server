@@ -148,7 +148,7 @@ const createRequestWithSelectedGeek = asyncHandler(async (req, res) => {
         sound: "default",
         title: "Service Request Recieved",
         body: `You have a new service request for ${catState.title}`,
-        data: {},
+        data: { requestId: request._id.toString(), type: 'request' },
       };
           const tickets = await expo.sendPushNotificationsAsync([message]);
            console.log(tickets);
@@ -346,7 +346,7 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
         sound: "default",
         title: "Service Request Accepted",
         body: `The request for ${request?.category?.title || 'your service'} was Accepted.`,
-        data: {},
+        data: { requestId: request._id.toString(), type: 'request' },
       };
           const tickets = await expo.sendPushNotificationsAsync([message]);
            console.log(tickets);
@@ -425,7 +425,7 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
         sound: "default",
         title: "Service Request Rejected",
         body: `The request for ${request?.category?.title || 'your service'} was Rejected by ${geek.fullName?.first || 'your selected Geek'}. You can choose another geek to resolve the issue.`,
-        data: {},
+        data: { requestId: request._id.toString(), type: 'request' },
       };
            const tickets = await expo.sendPushNotificationsAsync([message]);
            console.log(tickets);
@@ -627,7 +627,7 @@ const completeRequest = asyncHandler(async (req, res) => {
         sound: "default",
         title: "Service Request Completed",
         body: `Your request for ${request?.category?.title || 'your service'} was Completed.`,
-        data: {},
+        data: { requestId: request._id.toString(), type: 'request' },
       };
           const tickets = await sendExpoPushNotification(
             [message],
@@ -688,7 +688,7 @@ const cancelRequest = asyncHandler(async (req, res) => {
       sound: 'default',
       title: 'Request Cancelled',
       body: `The seeker cancelled their request for ${request.category?.title || 'a service'}.`,
-      data: {},
+      data: { requestId: request._id.toString(), type: 'request' },
     }]);
   }
 

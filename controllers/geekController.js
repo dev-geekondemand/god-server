@@ -381,7 +381,7 @@ const updateGeekAssignments = asyncHandler(async (req, res) => {
               profileCompletedPercentage += 10;
             }
 
-          if(data?.GSTIN && data?.CIN){
+          if(data?.GSTIN){
             profileCompletedPercentage += 20;
           }
     }
@@ -1611,7 +1611,7 @@ const getGeeksByRefCode = asyncHandler(async (req, res) => {
 // ─── Corporate Geek ───────────────────────────────────────────────────────────
 
 const verifyOtpAndCreateCorporateGeek = asyncHandler(async (req, res) => {
-  let { mobile, otp, fullName, companyName, primarySkill, yoe, refCode, brandsServiced, GSTIN, CIN } = req.body;
+  let { mobile, otp, fullName, companyName, primarySkill, yoe, refCode, brandsServiced, GSTIN } = req.body;
 
   if (!mobile || !otp || !fullName?.first || !fullName?.last || !companyName || !primarySkill || !yoe) {
     return res.status(400).json({
@@ -1641,7 +1641,6 @@ const verifyOtpAndCreateCorporateGeek = asyncHandler(async (req, res) => {
     primarySkill,
     companyName,
     ...(GSTIN && { GSTIN }),
-    ...(CIN && { CIN }),
     profileCompleted: false,
     profileCompletedPercentage: 30,
   });
@@ -1670,7 +1669,7 @@ const adminCreateCorporateGeek = asyncHandler(async (req, res) => {
   let {
     mobile, fullName, companyName, primarySkill, yoe,
     refCode, brandsServiced, secondarySkills,
-    GSTIN, CIN, teamSize, email,
+    GSTIN, teamSize, email,
   } = req.body;
 
   if (!mobile || !fullName?.first || !fullName?.last || !companyName || !primarySkill || !yoe) {
@@ -1699,7 +1698,6 @@ const adminCreateCorporateGeek = asyncHandler(async (req, res) => {
     primarySkill,
     companyName,
     GSTIN,
-    CIN,
     teamSize,
     profileCompleted: false,
     profileCompletedPercentage: 30,
