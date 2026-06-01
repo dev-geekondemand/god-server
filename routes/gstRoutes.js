@@ -1,9 +1,10 @@
 const express = require('express');
-const { getCaptcha, verifyGstin } = require('../controllers/gstController');
+const { getGstCaptcha, verifyGstinFormat, verifyGstinPortal } = require('../controllers/gstController.js');
 
 const router = express.Router();
 
-router.get('/captcha', getCaptcha);
-router.post('/verify', verifyGstin);
+router.get('/captcha', getGstCaptcha);
+router.get('/verify', verifyGstinFormat);
+router.post('/verify', verifyGstinPortal);
 
 module.exports = router;

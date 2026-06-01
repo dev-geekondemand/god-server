@@ -87,9 +87,9 @@ app.use((req, res, next) => {
   const openPaths = [
     "/api/seeker/google",
     "/api/seeker/google/callback",
-    "/api/seeker/microsoft",  
+    "/api/seeker/microsoft",
     "/api/seeker/microsoft/callback",
-    "/api/apikey/generate"
+    "/api/apikey/generate",
   ];
 
   if (openPaths.some(path => req.path.startsWith(path))) {
