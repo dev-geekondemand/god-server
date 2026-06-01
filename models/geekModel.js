@@ -176,9 +176,24 @@ const IndividualGeek = Geek.discriminator('Individual', new mongoose.Schema({
   },
 }));
 
+const TeamMemberSchema = new mongoose.Schema({
+  fullName: {
+    first: { type: String, required: true },
+    last: { type: String, required: true },
+  },
+  mobile: { type: String, required: true },  // no unique index — this is an embedded subdocument
+  email: String,
+  primarySkill: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
+  yoe: Number,
+  profileImage: {
+    public_id: String,
+    url: String,
+  },
+}, { _id: true });
+
 const CorporateGeek = Geek.discriminator('Corporate', new mongoose.Schema({
   companyName: { type: String, required: true },
-  teamMembers: [GeekSchema],
+  teamMembers: [TeamMemberSchema],
   GSTIN: String,
   CIN: String,
   isVerified: { type: Boolean, default: false },
