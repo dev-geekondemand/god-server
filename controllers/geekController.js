@@ -1126,25 +1126,30 @@ else if (pin) {
 const verifyGeekAadhaar = asyncHandler(async (req, res) => {
   const { id } = req.user;
   const { idNumber } = req.body;
-  
 
-  const geek = await IndividualGeek.findById(id)
-  
-  
-  if (!geek) {
-    return res.status(404).json({ message: 'Valid individual Geek not found' });
-  }
-
-  if (!idNumber || geek.idProof?.type !== 'Aadhar') {
+  if (!idNumber) {
     return res.status(400).json({ message: 'Valid Aadhaar number not provided' });
   }
 
-  const result = await verifyAadhaarLite(idNumber); // async task submission
+  let geek = await IndividualGeek.findById(id);
+  if (!geek) {
+    geek = await CorporateGeek.findById(id);
+  }
 
-    geek.idProof.status = 'Requested';
-    geek.idProof.requestId = result.request_id;
+  if (!geek) {
+    return res.status(404).json({ message: 'Geek not found' });
+  }
 
-    await geek.save(); 
+  if (!geek.idProof) {
+    geek.idProof = { type: 'Aadhar', status: 'Null' };
+  }
+
+  const result = await verifyAadhaarLite(idNumber);
+
+  geek.idProof.status = 'Requested';
+  geek.idProof.requestId = result.request_id;
+
+  await geek.save();
     
   
 

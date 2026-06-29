@@ -199,6 +199,13 @@ const CorporateGeek = Geek.discriminator('Corporate', new mongoose.Schema({
   isVerified: { type: Boolean, default: false },
   companyDocs: [CertificateSchema],
   teamSize: Number,
+  idProof: {
+    type: { type: String, enum: ['Aadhar', 'PAN'], default: 'Aadhar' },
+    idNumber: String,
+    isAdhaarVerified: { type: Boolean, default: false },
+    status: { type: String, enum: ['Requested', 'Verified', 'Failed', 'Null'], default: 'Null' },
+    requestId: String,
+  },
 }));
 
 

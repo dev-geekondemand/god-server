@@ -21,7 +21,8 @@ const createEnquiry = asyncHandler(async (req, res) => {
         text: `You have received a new enquiry from ${name} ( ${phone}):\n\n${message}`,
         html: `<p>You have received a new enquiry from ${name} (${email}, ${phone}):</p><p> Message: ${message}</p>`,
     }).catch((error) => {
-        console.error('Error sending email:', error);
+      console.log('Error sending shit email:', error);
+        // console.error('Error sending email:', error);
         res.status(500).json({ message: 'Error sending email' });
     })
 
