@@ -57,6 +57,26 @@ const getInnerAd = asyncHandler(async (req, res) => {
 });
 
 
+const getAdById = asyncHandler(async (req, res) => {
+    try {
+        const ad = await Ad.findById(req.params.id);
+
+        if (!ad) {
+            return res.status(404).json({ message: 'Ad not found' });
+        }
+
+        if (ad.image?.public_id) {
+            const sasUrl = await generateSasUrl(ad.image.public_id);
+            ad.image.url = sasUrl;
+        }
+
+        res.status(200).json(ad);
+    } catch (error) {
+        const { status, message } = handleMongoError(error);
+        res.status(status).json({ message });
+    }
+});
+
 const updateAd = asyncHandler(async (req, res) => {
     try {
         const ad = await Ad.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -75,6 +95,29 @@ const deleteAd = asyncHandler(async (req, res) => {
         const { status, message } = handleMongoError(error);
         res.status(status).json({ message });
     }
+});
+
+const trackAdClick = asyncHandler(async (req, res) => {
+  try {
+    const ad = await Ad.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { 'stats.clicks': 1 } },
+      { new: true }
+    );
+
+    if (!ad) {
+      return res.status(404).json({ message: 'Ad not found' });
+    }
+
+    if (!ad.link) {
+      return res.status(404).json({ message: 'Ad has no redirect link' });
+    }
+
+    res.redirect(302, ad.link);
+  } catch (error) {
+    const { status, message } = handleMongoError(error);
+    res.status(status).json({ message });
+  }
 });
 
 const getTopAds = asyncHandler(async (req, res) => {
@@ -102,7 +145,9 @@ module.exports = {
     createAd,
     getAllAds,
     getInnerAd,
+    getAdById,
     updateAd,
     deleteAd,
-    getTopAds
+    getTopAds,
+    trackAdClick
 }

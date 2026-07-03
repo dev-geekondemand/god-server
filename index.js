@@ -92,7 +92,9 @@ app.use((req, res, next) => {
     "/api/apikey/generate",
   ];
 
-  if (openPaths.some(path => req.path.startsWith(path))) {
+  const isAdClickPath = /^\/api\/ad\/[^/]+\/click$/.test(req.path);
+
+  if (openPaths.some(path => req.path.startsWith(path)) || isAdClickPath) {
     return next();
   }
 
