@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const dbConnect = ()=>{
     try{
         const connection = mongoose.connect(process.env.MONGODB_URL,{
-            dbName:"geekOnDemand",
+            dbName:"geekondemad",
             authSource: "admin",
         })
         // console.log(process.env.MONGODB_URL)
