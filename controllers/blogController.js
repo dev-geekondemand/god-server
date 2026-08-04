@@ -7,7 +7,7 @@ const { handleMongoError } = require('../utils/handleMongoError');
 
 // Create blog
 const createBlog = asyncHandler(async (req, res) => {
-  const { title, description, summary, author, slug: customSlug, tags, categories, seo, isPublished, scheduledAt } = req.body;
+  const { title, description, summary, author, slug: customSlug, tags, categories, seo, isPublished, scheduledAt, imageAlt } = req.body;
   if (!title || !description || !summary) {
     return res.status(400).json({ message: 'Title, description and summary are required' });
   }
@@ -25,6 +25,7 @@ const createBlog = asyncHandler(async (req, res) => {
     isPublished,
     publishedAt: isPublished ? new Date() : null,
     scheduledAt: scheduledAt ? new Date(scheduledAt) : null,
+    ...(imageAlt !== undefined && { coverImage: { alt: imageAlt } }),
   });
 
   res.status(201).json(blog);
@@ -33,7 +34,7 @@ const createBlog = asyncHandler(async (req, res) => {
 // Update blog
 const updateBlog = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { title, description, summary, author, slug: customSlug, tags, categories, seo, isPublished, scheduledAt } = req.body;
+  const { title, description, summary, author, slug: customSlug, tags, categories, seo, isPublished, scheduledAt, imageAlt } = req.body;
 
   const update = {
     ...(title && { title, slug: customSlug || slugify(title, { lower: true, strict: true }) }),
@@ -51,6 +52,7 @@ const updateBlog = asyncHandler(async (req, res) => {
     ...(scheduledAt !== undefined && {
       scheduledAt: scheduledAt ? new Date(scheduledAt) : null,
     }),
+    ...(imageAlt !== undefined && { 'coverImage.alt': imageAlt }),
   };
 
   const updated = await Blog.findByIdAndUpdate(id, update, { new: true })
@@ -115,7 +117,11 @@ const updateBlogImage = asyncHandler(async (req, res) => {
     if (!blog) return res.status(404).json({ message: 'Blog not found.' });
 
     const imageUrl = await uploadToAzure(file);
-    blog.coverImage = imageUrl;
+    const { imageAlt } = req.body;
+    blog.coverImage = {
+      ...imageUrl,
+      alt: imageAlt !== undefined ? imageAlt : (blog.coverImage?.alt || ''),
+    };
     await blog.save();
 
     res.status(200).json({ message: 'Blog image updated.', imageUrl });

@@ -21,7 +21,7 @@ const blogSchema = new mongoose.Schema(
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true, lowercase: true },
     description: { type: String, required: true },
-    coverImage: { public_id: String, url: String },
+    coverImage: { public_id: String, url: String, alt: String },
     summary: { type: String, required: true },
     author: { type: String, default: 'GoD Admin' },
     tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'BlogTag' }],

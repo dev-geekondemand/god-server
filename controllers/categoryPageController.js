@@ -17,6 +17,7 @@ const resolveIconUrl = async (icon) => {
 
 const resolveCategoryPageImages = async (page) => {
   await resolveIconUrl(page.hero?.image);
+  await resolveIconUrl(page.category?.smallBanner);
   if (page.problems?.length) {
     await Promise.all(page.problems.map((p) => resolveIconUrl(p.icon)));
   }
@@ -58,14 +59,14 @@ const createCategoryPage = asyncHandler(async (req, res) => {
 
 // Get all category pages (admin — includes unpublished)
 const getAllCategoryPages = asyncHandler(async (req, res) => {
-  const pages = await CategoryPage.find().populate('category', 'title slug').sort({ createdAt: -1 }).lean();
+  const pages = await CategoryPage.find().populate('category', 'title slug smallBanner').sort({ createdAt: -1 }).lean();
   const updated = await Promise.all(pages.map(resolveCategoryPageImages));
   res.status(200).json(updated);
 });
 
 // Get published category pages (public — used by sitemap/listing)
 const getPublishedCategoryPages = asyncHandler(async (req, res) => {
-  const pages = await CategoryPage.find({ isPublished: true }).populate('category', 'title slug').sort({ createdAt: -1 }).lean();
+  const pages = await CategoryPage.find({ isPublished: true }).populate('category', 'title slug smallBanner').sort({ createdAt: -1 }).lean();
   const updated = await Promise.all(pages.map(resolveCategoryPageImages));
   res.status(200).json(updated);
 });
@@ -73,7 +74,7 @@ const getPublishedCategoryPages = asyncHandler(async (req, res) => {
 // Get single category page by id (admin)
 const getCategoryPageById = asyncHandler(async (req, res) => {
   validateMongodbId(req.params.id);
-  const page = await CategoryPage.findById(req.params.id).populate('category', 'title slug').lean();
+  const page = await CategoryPage.findById(req.params.id).populate('category', 'title slug smallBanner').lean();
   if (!page) return res.status(404).json({ message: 'Category page not found' });
   await resolveCategoryPageImages(page);
   res.status(200).json(page);
@@ -91,7 +92,7 @@ const getCategoryPageByCategory = asyncHandler(async (req, res) => {
 // Get category page by slug (public)
 const getCategoryPageBySlug = asyncHandler(async (req, res) => {
   const page = await CategoryPage.findOne({ slug: req.params.slug, isPublished: true })
-    .populate('category', 'title slug')
+    .populate('category', 'title slug smallBanner')
     .lean();
   if (!page) return res.status(404).json({ message: 'Category page not found' });
   await resolveCategoryPageImages(page);
