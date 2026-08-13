@@ -41,6 +41,7 @@ const allowedOrigins = [
   "https://god-test-frontend-hwhmfabjcvfscpgn.southindia-01.azurewebsites.net",
   "https://god-admin-app-bhcga4aff0c5afgc.southindia-01.azurewebsites.net",
   "https://geekondemand.in",
+  "https://god-support-hnhahmadccdvgtcz.southindia-01.azurewebsites.net",
   "http://localhost:3000",
   "http://localhost:3001",
   "http://localhost:3002",
