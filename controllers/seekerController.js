@@ -14,6 +14,8 @@ const { handleMongoError } = require('../utils/handleMongoError');
 const {  geocodeByPin } = require('../utils/geocode');
 const serviceRequest = require('../models/ServiceRequest');
 const LoginEvent = require('../models/LoginEvent');
+const ProfileAuditLog = require('../models/profileAuditLogModel');
+const { diffFields } = require('../utils/diffProfileFields');
 // const XLSX = require('xlsx');
 
 // /controllers/authController.js
@@ -98,6 +100,12 @@ const updateProfile = asyncHandler(async (req, res) => {
 
     if (!user) return res.status(404).json({ message: 'User not found' });
 
+    const oldProfileSnapshot = {
+      fullName: user.fullName ? JSON.parse(JSON.stringify(user.fullName)) : null,
+      email: user.email,
+      phone: user.phone,
+    };
+
     if(user?.authProvider === "custom" && phone && phone !== user.phone){
       console.log("You cannot change your registered Phone");
       return res.status(403).send("You cannot change your registered Phone");
@@ -115,8 +123,6 @@ const updateProfile = asyncHandler(async (req, res) => {
       user.email = email;
     }
 
-      user.phone = phone;
-    
     if(user?.authProvider !== "custom" && phone){
       user.phone = phone;
     }
@@ -130,6 +136,23 @@ const updateProfile = asyncHandler(async (req, res) => {
       user.needsReminderToCompleteProfile = true;
     }
     await user.save();
+
+    const profileChanges = diffFields(
+      oldProfileSnapshot,
+      { fullName: user.fullName, email: user.email, phone: user.phone },
+      ['fullName', 'email', 'phone']
+    );
+    if (profileChanges.length > 0) {
+      ProfileAuditLog.create({
+        userId: user._id,
+        role: 'Seeker',
+        action: 'profile_updated',
+        changes: profileChanges,
+        performedBy: 'self',
+        performedById: user._id,
+      }).catch(() => {});
+    }
+
     res.status(200).json({ message: 'Profile updated', user });
   } catch (error) {
     const { status, message } = handleMongoError(error);
@@ -394,6 +417,8 @@ const updateAddress = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: 'Geek not found.' });
   }
 
+  const oldAddressSnapshot = user.address ? JSON.parse(JSON.stringify(user.address)) : {};
+
   // Only update fields that are provided
   if (!user.address) user.address = {};
 
@@ -440,7 +465,28 @@ const updateAddress = asyncHandler(async (req, res) => {
   
   }
 
+  if (!user.address.line1) {
+    return res.status(400).json({ message: 'Address line1 is required.' });
+  }
+
   await user.save();
+
+  const addressChanges = diffFields(oldAddressSnapshot, req.body, ['pin', 'city', 'state', 'country', 'line1', 'line2', 'line3']);
+  const oldCoords = oldAddressSnapshot?.location?.coordinates || null;
+  const newCoords = user.address?.location?.coordinates || null;
+  if (JSON.stringify(oldCoords) !== JSON.stringify(newCoords)) {
+    addressChanges.push({ field: 'coordinates', oldValue: oldCoords, newValue: newCoords });
+  }
+  if (addressChanges.length > 0) {
+    ProfileAuditLog.create({
+      userId: user._id,
+      role: 'Seeker',
+      action: 'address_updated',
+      changes: addressChanges,
+      performedBy: 'self',
+      performedById: user._id,
+    }).catch(() => {});
+  }
 
   res.status(200).json({ message: 'Address updated.', newAddress: user?.address });
 });
@@ -544,6 +590,17 @@ const updateProfileImage = asyncHandler(async (req, res) => {
 
   seeker.profileImage = imageUrl?.url;
   await seeker.save();
+
+  if (oldImageUrl !== seeker.profileImage) {
+    ProfileAuditLog.create({
+      userId: seeker._id,
+      role: 'Seeker',
+      action: 'profile_image_updated',
+      changes: [{ field: 'profileImage', oldValue: oldImageUrl || null, newValue: seeker.profileImage || null }],
+      performedBy: 'self',
+      performedById: seeker._id,
+    }).catch(() => {});
+  }
 
   res.status(200).json({ message: 'Profile image updated.', imageUrl });
 

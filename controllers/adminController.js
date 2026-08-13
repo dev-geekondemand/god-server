@@ -72,10 +72,17 @@ const logoutAdmin = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Logged out successfully' });
 });
 
+// GET /api/admin/all — used by the support-ticket assignee dropdown
+const getAllAdmins = asyncHandler(async (req, res) => {
+  const admins = await Admin.find().select('name email').sort({ name: 1 });
+  res.status(200).json(admins);
+});
+
 
 module.exports = {
   loginAdmin,
   registerAdmin,
   loadAdmin,
-  logoutAdmin
+  logoutAdmin,
+  getAllAdmins
 };

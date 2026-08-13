@@ -20,6 +20,8 @@ const crypto = require('crypto');
 const ServiceRequest = require('../models/ServiceRequest.js');
 const LoginEvent = require('../models/LoginEvent.js');
 const { handleMongoError } = require('../utils/handleMongoError.js');
+const ProfileAuditLog = require('../models/profileAuditLogModel.js');
+const { diffFields } = require('../utils/diffProfileFields.js');
 // Create new Geek
  const verifyOtpAndCreateGeek = asyncHandler(async (req, res) => {
 
@@ -395,7 +397,21 @@ const updateGeekAssignments = asyncHandler(async (req, res) => {
       data.languagePreferences = languages;
     }
 
+  const geekDetailsChanges = diffFields(geek.toObject(), data, Object.keys(data));
+
   const updatedGeek = await GeekModel.findByIdAndUpdate(id, data, { new: true }).select('-authToken').populate('primarySkill secondarySkills brandsServiced');
+
+  if (geekDetailsChanges.length > 0) {
+    ProfileAuditLog.create({
+      userId: id,
+      role: 'Geek',
+      action: 'geek_details_updated',
+      changes: geekDetailsChanges,
+      performedBy: 'self',
+      performedById: id,
+    }).catch(() => {});
+  }
+
   res.status(200).json(updatedGeek);
 
 });
@@ -471,6 +487,18 @@ const updateProfileImage = asyncHandler(async (req, res) => {
   // Update the Geek's profile image
   geek.profileImage = imageUrl;
   await geek.save();
+
+  const newImageUrl = imageUrl?.url;
+  if (oldImageUrl !== newImageUrl) {
+    ProfileAuditLog.create({
+      userId: geek._id,
+      role: 'Geek',
+      action: 'profile_image_updated',
+      changes: [{ field: 'profileImage', oldValue: oldImageUrl || null, newValue: newImageUrl || null }],
+      performedBy: 'self',
+      performedById: geek._id,
+    }).catch(() => {});
+  }
 
   res.status(200).json({ message: 'Profile image updated.', imageUrl });
  } catch(error) {
@@ -1041,6 +1069,8 @@ const updateAddress = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: "Geek not found" });
   }
 
+  const oldAddressSnapshot = geek.address ? JSON.parse(JSON.stringify(geek.address)) : {};
+
   if (!geek.address) geek.address = {};
 
   // Basic fields
@@ -1110,13 +1140,35 @@ else if (pin) {
   };
 
 }
+
+  if (!geek.address.line1) {
+    return res.status(400).json({ message: 'Address line1 is required.' });
+  }
+
   try {
   await geek.save();
 } catch (err) {
   console.log(err);
   throw err;
 }
- 
+
+  const geekAddressChanges = diffFields(oldAddressSnapshot, req.body, ['pin', 'city', 'state', 'country', 'line1', 'line2', 'line3']);
+  const oldGeekCoords = oldAddressSnapshot?.location?.coordinates || null;
+  const newGeekCoords = geek.address?.location?.coordinates || null;
+  if (JSON.stringify(oldGeekCoords) !== JSON.stringify(newGeekCoords)) {
+    geekAddressChanges.push({ field: 'coordinates', oldValue: oldGeekCoords, newValue: newGeekCoords });
+  }
+  if (geekAddressChanges.length > 0) {
+    ProfileAuditLog.create({
+      userId: geek._id,
+      role: 'Geek',
+      action: 'address_updated',
+      changes: geekAddressChanges,
+      performedBy: 'self',
+      performedById: geek._id,
+    }).catch(() => {});
+  }
+
   res.status(200).json({
     message: "Address updated successfully",
     address: geek.address

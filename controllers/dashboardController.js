@@ -29,7 +29,7 @@ const buildDateRange = (query) => {
 
 /**
  * Build the $group _id expression based on groupBy param.
- * groupBy: 'month' | 'quarter' | 'year'   (default: month)
+ * groupBy: 'day' | 'month' | 'quarter' | 'year'   (default: month)
  */
 const buildGroupId = (groupBy, dateField = '$createdAt') => {
   switch (groupBy) {
@@ -42,6 +42,13 @@ const buildGroupId = (groupBy, dateField = '$createdAt') => {
         quarter: {
           $ceil: { $divide: [{ $month: dateField }, 3] },
         },
+      };
+
+    case 'day':
+      return {
+        year:  { $year: dateField },
+        month: { $month: dateField },
+        day:   { $dayOfMonth: dateField },
       };
 
     case 'month':
@@ -93,7 +100,7 @@ const getDashboardSummary = asyncHandler(async (req, res) => {
 // Seekers registered over time, grouped by month / quarter / year
 //
 // Query params:
-//   groupBy    : 'month' | 'quarter' | 'year'   (default: month)
+//   groupBy    : 'day' | 'month' | 'quarter' | 'year'   (default: month)
 //   startDate  : ISO date string
 //   endDate    : ISO date string
 //   year       : e.g. 2024  (used when startDate/endDate are absent)
@@ -106,7 +113,7 @@ const getSeekersOverTime = asyncHandler(async (req, res) => {
   const data = await User.aggregate([
     { $match: { createdAt: { $gte: start, $lte: end } } },
     { $group: { _id: groupId, count: { $sum: 1 } } },
-    { $sort: { '_id.year': 1, '_id.month': 1, '_id.quarter': 1 } },
+    { $sort: { '_id.year': 1, '_id.quarter': 1, '_id.month': 1, '_id.day': 1 } },
     {
       $project: {
         _id: 0,
@@ -138,7 +145,7 @@ const getGeeksOverTime = asyncHandler(async (req, res) => {
   const data = await Geek.aggregate([
     { $match: { createdAt: { $gte: start, $lte: end } } },
     { $group: { _id: groupId, count: { $sum: 1 } } },
-    { $sort: { '_id.year': 1, '_id.month': 1, '_id.quarter': 1 } },
+    { $sort: { '_id.year': 1, '_id.quarter': 1, '_id.month': 1, '_id.day': 1 } },
     {
       $project: {
         _id: 0,
@@ -161,7 +168,7 @@ const getGeeksOverTime = asyncHandler(async (req, res) => {
 // Service requests grouped by category, with optional time breakdown.
 //
 // Query params:
-//   groupBy    : 'month' | 'quarter' | 'year'   (default: month)
+//   groupBy    : 'day' | 'month' | 'quarter' | 'year'   (default: month)
 //   startDate  : ISO date string
 //   endDate    : ISO date string
 //   year       : e.g. 2024
@@ -208,8 +215,9 @@ const getRequestsByCategory = asyncHandler(async (req, res) => {
             $filter: {
               input: [
                 { k: 'year',    v: '$_id.year' },
-                { k: 'month',   v: '$_id.month' },
                 { k: 'quarter', v: '$_id.quarter' },
+                { k: 'month',   v: '$_id.month' },
+                { k: 'day',     v: '$_id.day' },
               ],
               as: 'item',
               cond: { $gt: ['$$item.v', null] },
@@ -223,8 +231,9 @@ const getRequestsByCategory = asyncHandler(async (req, res) => {
       $sort: {
         categoryTitle: 1,
         'period.year': 1,
-        'period.month': 1,
         'period.quarter': 1,
+        'period.month': 1,
+        'period.day': 1,
       },
     },
   ]);

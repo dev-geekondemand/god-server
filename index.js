@@ -21,12 +21,14 @@ const adRoutes = require('./routes/adRoutes.js')
 const adminRoutes = require('./routes/adminRoutes.js')
 const subscriptionRoutes = require('./routes/subscriptionRoutes.js')
 const gstRoutes = require('./routes/gstRoutes.js')
+const ticketRoutes = require('./routes/ticketRoutes.js')
 const { handleWebhook } = require('./controllers/subscriptionController.js')
 const { handleMongoError } = require('./utils/handleMongoError.js')
 const passport = require('passport');
 require('./config/passport');
 const cron = require('node-cron');
 const expireRequests = require('./utils/expireRequests');
+const { checkSlaBreaches } = require('./utils/ticketSla');
 
 const jwt = require('jsonwebtoken')
 const morgan = require('morgan')
@@ -41,6 +43,7 @@ const allowedOrigins = [
   "https://geekondemand.in",
   "http://localhost:3000",
   "http://localhost:3001",
+  "http://localhost:3002",
 ];
 
 app.use((req, res, next) => {
@@ -61,6 +64,9 @@ dbConnect();
 
 // Expire unanswered requests every hour
 cron.schedule('0 * * * *', expireRequests);
+
+// Sweep support tickets for SLA breaches every 15 minutes
+cron.schedule('*/15 * * * *', checkSlaBreaches);
 
 app.use(morgan("dev"))
 
@@ -132,6 +138,7 @@ app.use('/api/enquiry', enquiryRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/subscription', subscriptionRoutes);
 app.use('/api/gst', gstRoutes);
+app.use('/api/ticket', ticketRoutes);
 
 
 
