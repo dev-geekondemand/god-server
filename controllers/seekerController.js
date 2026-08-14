@@ -75,6 +75,7 @@ const registerCustomUser = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+    partitioned: process.env.NODE_ENV === 'production',
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 
@@ -174,6 +175,7 @@ const loginWithGoogle = asyncHandler(async(req, res) => {
         httpOnly: true, // Can't be accessed by JavaScript
         secure: process.env.NODE_ENV === 'production', // Only for HTTPS in production
         sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict', // Prevent CSRF attacks
+        partitioned: process.env.NODE_ENV === 'production',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days expiration
       });
 
@@ -245,6 +247,7 @@ const loginWithMS = asyncHandler(async(req,res)=>{
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict',
+        partitioned: process.env.NODE_ENV === 'production',
         path: '/',
         maxAge: 7 * 24 * 60 * 60 * 1000,
       }).redirect(`${process.env.FRONTEND_URL}/login-success?token=${token}`);
@@ -323,6 +326,7 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
         httpOnly: true, // Can't be accessed by JavaScript
         secure: process.env.NODE_ENV === 'production', // Only for HTTPS in production
         sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict', // Prevent CSRF attacks
+        partitioned: process.env.NODE_ENV === 'production',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days expiration
       });
     
@@ -357,6 +361,7 @@ const logout = asyncHandler(async (req, res) => {
     httpOnly: false,
     secure: process.env.NODE_ENV === 'production',
     sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict',
+    partitioned: process.env.NODE_ENV === 'production',
     path: '/',
   });
 

@@ -25,6 +25,7 @@ const loginAdmin = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,          // REQUIRED on HTTPS (Vercel)
     sameSite: "none",      // REQUIRED for cross-domain
+    partitioned: true,     // REQUIRED for cross-site cookie to survive Incognito/private browsing (CHIPS)
     maxAge: 7 * 24 * 60 * 60 * 1000, // optional (7 days)
   });
 
@@ -67,6 +68,7 @@ const logoutAdmin = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: 'none',
+    partitioned: true,
   });
 
   res.status(200).json({ message: 'Logged out successfully' });

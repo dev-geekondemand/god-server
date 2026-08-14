@@ -75,6 +75,7 @@ const { diffFields } = require('../utils/diffProfileFields.js');
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict',
+    partitioned: process.env.NODE_ENV === 'production',
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 
@@ -166,6 +167,7 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
       httpOnly: true, // Can't be accessed by JavaScript
       secure: process.env.NODE_ENV === 'production', // Only for HTTPS in production
       sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // Prevent CSRF attacks
+      partitioned: process.env.NODE_ENV === 'production',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days expiration
     });
   
@@ -1279,6 +1281,7 @@ const verifyGeekAadhaar = asyncHandler(async (req, res) => {
       httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+      partitioned: process.env.NODE_ENV === 'production',
       path: '/',
     });
 
@@ -1711,6 +1714,7 @@ const verifyOtpAndCreateCorporateGeek = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict',
+    partitioned: process.env.NODE_ENV === 'production',
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
