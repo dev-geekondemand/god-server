@@ -36,7 +36,6 @@ const app = express();
 const PORT = process.env.PORT || 4002;
 
 const allowedOrigins = [
-  "https://god-ui.vercel.app",
   "https://god-admin-5l63.vercel.app",
   "https://god-test-frontend-hwhmfabjcvfscpgn.southindia-01.azurewebsites.net",
   "https://god-admin-app-bhcga4aff0c5afgc.southindia-01.azurewebsites.net",
@@ -44,7 +43,6 @@ const allowedOrigins = [
   "https://god-support-hnhahmadccdvgtcz.southindia-01.azurewebsites.net",
   "http://localhost:3000",
   "http://localhost:3001",
-  "http://localhost:3002",
 ];
 
 app.use((req, res, next) => {
