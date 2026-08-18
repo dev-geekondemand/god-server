@@ -25,6 +25,10 @@ var categorySchema = new mongoose.Schema({
         default:0,
         type:Number
     },
+    priority:{
+        default:0,
+        type:Number
+    },
     subCategories:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"SubCategory"

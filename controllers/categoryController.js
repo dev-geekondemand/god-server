@@ -41,7 +41,7 @@ const createCategory = asyncHandler(async (req, res) => {
 
 // Get All Categories
  const getCategories = asyncHandler(async (req, res) => {
-  const categories = await Category.find().populate('subCategories').sort({ priority: 1, name: 1 }).lean();;
+  const categories = await Category.find().populate('subCategories').sort({ priority: 1, title: 1 }).lean();;
   const updatedCategories = await Promise.all(categories.map(async (cat) => {
     if (cat.image && cat.image.public_id) {
       cat.image.url = await generateSasUrl(cat.image.public_id);
