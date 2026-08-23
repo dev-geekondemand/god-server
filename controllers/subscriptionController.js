@@ -4,7 +4,8 @@ const asyncHandler = require('express-async-handler');
 const { Geek } = require('../models/geekModel.js');
 const Subscription = require('../models/subscriptionModel.js');
 const AuditLog = require('../models/auditLogModel.js');
-const { sendSubscriptionSMS } = require('../utils/subscriptionNotifications.js');
+const Refund = require('../models/refundModel.js');
+const { sendSubscriptionSMS, sendRefundProcessedSMS } = require('../utils/subscriptionNotifications.js');
 
 const PLANS = {
   Advance: { amount: 49900, razorpayPlanId: () => process.env.RAZORPAY_PLAN_ADVANCE_ID },
@@ -138,7 +139,11 @@ const verifyPaymentAndActivate = asyncHandler(async (req, res) => {
   const geek = await Geek.findById(geekId);
   const { oldPlan } = await activatePlan(geek, sub, sub.plan, razorpay_payment_id);
 
-  await log(geekId, 'payment_success', null, null, { razorpay_payment_id, razorpay_subscription_id }, 'razorpay');
+  await log(
+    geekId, 'payment_success', null, null,
+    { razorpay_payment_id, razorpay_subscription_id, plan: sub.plan, amount: PLANS[sub.plan]?.amount },
+    'razorpay'
+  );
   await log(geekId, 'plan_activated', oldPlan, sub.plan, {}, 'razorpay');
 
   if (sub.plan === 'Professional') {
@@ -293,7 +298,15 @@ const getMySubscription = asyncHandler(async (req, res) => {
     return res.status(200).json({ plan: 'Startup', status: 'none' });
   }
 
-  res.status(200).json(sub);
+  const refundRequest = await Refund.findOne({ subscription: sub._id }).sort({ createdAt: -1 });
+  const hasOpenRefund = refundRequest && ['requested', 'processing'].includes(refundRequest.status);
+  const refundEligible = Boolean(sub.razorpayPaymentId) && Boolean(PLANS[sub.plan]) && !hasOpenRefund;
+
+  const result = sub.toObject();
+  result.refundEligible = refundEligible;
+  result.refundRequest = refundRequest || null;
+
+  res.status(200).json(result);
 });
 
 const getSubscriptionHistory = asyncHandler(async (req, res) => {
@@ -358,6 +371,38 @@ const handleWebhook = asyncHandler(async (req, res) => {
   }
 
   const { event, payload } = JSON.parse(rawBody);
+
+  // Refund events carry payload.refund.entity, not payload.subscription.entity —
+  // handle them separately before the subscription lookup below.
+  if (event === 'refund.processed' || event === 'refund.failed') {
+    const rzpRefund = payload?.refund?.entity;
+    if (!rzpRefund) return res.status(200).json({ received: true });
+
+    const refundReq = await Refund.findOne({ razorpayRefundId: rzpRefund.id });
+    if (!refundReq || refundReq.status !== 'processing') return res.status(200).json({ received: true });
+
+    if (event === 'refund.processed') {
+      refundReq.status = 'processed';
+      refundReq.processedAt = new Date();
+      await refundReq.save();
+
+      const geekForRefund = await Geek.findById(refundReq.geek);
+      if (geekForRefund) sendRefundProcessedSMS(geekForRefund, refundReq.amount).catch(() => {});
+    } else {
+      refundReq.status = 'failed';
+      refundReq.adminNote = rzpRefund?.error_description || 'Refund failed at Razorpay';
+      await refundReq.save();
+      await AuditLog.create({
+        geek: refundReq.geek,
+        action: 'refund_failed',
+        metadata: { razorpayRefundId: rzpRefund.id, errorDescription: refundReq.adminNote },
+        performedBy: 'razorpay',
+      });
+    }
+
+    return res.status(200).json({ received: true });
+  }
+
   const rzpSub = payload?.subscription?.entity;
   const rzpPayment = payload?.payment?.entity;
 
@@ -373,7 +418,11 @@ const handleWebhook = asyncHandler(async (req, res) => {
     case 'subscription.charged': {
       // Successful auto-renewal
       const { oldPlan } = await activatePlan(geek, sub, sub.plan, rzpPayment?.id);
-      await log(sub.geek, 'payment_success', null, null, { razorpay_payment_id: rzpPayment?.id, renewal: true }, 'razorpay');
+      await log(
+        sub.geek, 'payment_success', null, null,
+        { razorpay_payment_id: rzpPayment?.id, renewal: true, plan: sub.plan, amount: PLANS[sub.plan]?.amount },
+        'razorpay'
+      );
       await log(sub.geek, 'subscription_renewed', oldPlan, sub.plan, {}, 'razorpay');
 
       sendSubscriptionSMS(geek, sub.plan, true)
@@ -468,4 +517,6 @@ module.exports = {
   getAllSubscriptionsAdmin,
   getGeekSubscriptionAdmin,
   handleWebhook,
+  getRazorpay,
+  PLANS,
 };

@@ -16,7 +16,10 @@ const AUDIT_ACTIONS = [
   'plan_reactivated',
   'badge_added',
   'badge_removed',
+  'refund_requested',
   'refund_issued',
+  'refund_rejected',
+  'refund_failed',
   'subscription_renewed',
   'subscription_halted',
 ];

@@ -10,6 +10,12 @@ const {
   getGeekSubscriptionAdmin,
   handleWebhook,
 } = require('../controllers/subscriptionController.js');
+const {
+  requestRefund,
+  getAllRefundRequestsAdmin,
+  processRefundAdmin,
+  rejectRefundAdmin,
+} = require('../controllers/refundController.js');
 const protectGeek = require('../middlewares/protectGeek.js');
 const { protectAdmin } = require('../middlewares/authMiddleware.js');
 
@@ -25,9 +31,13 @@ router.post('/cancel', protectGeek, cancelSubscription);
 router.put('/change-plan', protectGeek, changePlan);
 router.get('/me', protectGeek, getMySubscription);
 router.get('/history', protectGeek, getSubscriptionHistory);
+router.post('/refund/request', protectGeek, requestRefund);
 
 // ─── Admin ────────────────────────────────────────────────────────────────────
 router.get('/admin/all', protectAdmin, getAllSubscriptionsAdmin);
 router.get('/admin/geek/:geekId', protectAdmin, getGeekSubscriptionAdmin);
+router.get('/admin/refunds', protectAdmin, getAllRefundRequestsAdmin);
+router.patch('/admin/refunds/:id/process', protectAdmin, processRefundAdmin);
+router.patch('/admin/refunds/:id/reject', protectAdmin, rejectRefundAdmin);
 
 module.exports = router;

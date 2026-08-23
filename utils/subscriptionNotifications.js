@@ -16,4 +16,17 @@ async function sendSubscriptionSMS(geek, plan, isRenewal = false) {
   });
 }
 
-module.exports = { sendSubscriptionSMS };
+async function sendRefundProcessedSMS(geek, amountPaise) {
+  if (!geek?.mobile) return;
+
+  const mobile = geek.mobile.startsWith('+') ? geek.mobile : `+91${geek.mobile}`;
+  const amount = (amountPaise / 100).toFixed(0);
+
+  await twilioClient.messages.create({
+    body: `GeekOnDemand: Your refund of Rs.${amount} has been processed and should reflect in your account within a few business days.`,
+    from: process.env.TWILIO_PHONE_NUMBER,
+    to: mobile,
+  });
+}
+
+module.exports = { sendSubscriptionSMS, sendRefundProcessedSMS };

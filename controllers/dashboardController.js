@@ -3,6 +3,8 @@ const User = require('../models/seekerModel.js');
 const { Geek } = require('../models/geekModel.js');
 const ServiceRequest = require('../models/ServiceRequest.js');
 const Category = require('../models/serviceCategory.js');
+const AuditLog = require('../models/auditLogModel.js');
+const { generateSasUrl } = require('../utils/azureBlob.js');
 
 /**
  * Build a date range match stage from query params.
@@ -161,6 +163,173 @@ const getGeeksOverTime = asyncHandler(async (req, res) => {
     total: data.reduce((sum, d) => sum + d.count, 0),
     data,
   });
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/admin/dashboard/revenue
+// Subscription revenue over time, grouped by day / month / quarter / year.
+// Sourced from AuditLog 'payment_success' (gross) and 'refund_issued' (refunded)
+// entries, since Subscription documents don't retain a historical amount —
+// only the latest payment. Entries logged before this endpoint existed won't
+// carry metadata.amount and are simply excluded (revenue is accurate from the
+// day this shipped forward, not retroactively).
+//
+// Same query params as /seekers and /geeks.
+// ---------------------------------------------------------------------------
+const getRevenueOverTime = asyncHandler(async (req, res) => {
+  const { start, end } = buildDateRange(req.query);
+  const groupBy = req.query.groupBy || 'month';
+  const groupId = buildGroupId(groupBy);
+
+  const [grossData, refundedData] = await Promise.all([
+    AuditLog.aggregate([
+      {
+        $match: {
+          action: 'payment_success',
+          createdAt: { $gte: start, $lte: end },
+          'metadata.amount': { $exists: true },
+        },
+      },
+      { $group: { _id: groupId, amount: { $sum: '$metadata.amount' }, count: { $sum: 1 } } },
+    ]),
+    AuditLog.aggregate([
+      {
+        $match: {
+          action: 'refund_issued',
+          createdAt: { $gte: start, $lte: end },
+          'metadata.amount': { $exists: true },
+        },
+      },
+      { $group: { _id: groupId, amount: { $sum: '$metadata.amount' } } },
+    ]),
+  ]);
+
+  const byPeriod = new Map();
+  const keyOf = (id) => JSON.stringify(id);
+
+  grossData.forEach(({ _id, amount, count }) => {
+    byPeriod.set(keyOf(_id), { period: _id, grossPaise: amount, refundedPaise: 0, count });
+  });
+  refundedData.forEach(({ _id, amount }) => {
+    const key = keyOf(_id);
+    const existing = byPeriod.get(key);
+    if (existing) {
+      existing.refundedPaise = amount;
+    } else {
+      byPeriod.set(key, { period: _id, grossPaise: 0, refundedPaise: amount, count: 0 });
+    }
+  });
+
+  const data = Array.from(byPeriod.values())
+    .map((d) => ({ ...d, netPaise: d.grossPaise - d.refundedPaise }))
+    .sort((a, b) => {
+      const A = a.period, B = b.period;
+      return (A.year - B.year) || ((A.quarter || 0) - (B.quarter || 0)) || ((A.month || 0) - (B.month || 0)) || ((A.day || 0) - (B.day || 0));
+    });
+
+  const totals = data.reduce(
+    (acc, d) => ({
+      totalGrossPaise: acc.totalGrossPaise + d.grossPaise,
+      totalRefundedPaise: acc.totalRefundedPaise + d.refundedPaise,
+      totalNetPaise: acc.totalNetPaise + d.netPaise,
+    }),
+    { totalGrossPaise: 0, totalRefundedPaise: 0, totalNetPaise: 0 }
+  );
+
+  res.status(200).json({
+    groupBy,
+    range: { from: start, to: end },
+    ...totals,
+    data,
+  });
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/admin/dashboard/requests/funnel
+// A current-status distribution of requests raised in the given range, shaped
+// as a sequential funnel (Raised -> Matched -> Accepted -> Completed).
+//
+// IMPORTANT: ServiceRequest has a single `status` field and no per-stage
+// timestamps (no matchedAt/acceptedAt/completedAt), so this reflects each
+// request's CURRENT status, not a true stage-transition history. Rejected and
+// Cancelled are reported separately as "dropped" rather than folded into the
+// sequential stages, since they're exits, not stages.
+//
+// Query params: startDate / endDate / year (same as buildDateRange elsewhere
+// in this file). No groupBy — this is a single-range summary.
+// ---------------------------------------------------------------------------
+const getRequestFunnel = asyncHandler(async (req, res) => {
+  const { start, end } = buildDateRange(req.query);
+
+  const byStatus = await ServiceRequest.aggregate([
+    { $match: { createdAt: { $gte: start, $lte: end } } },
+    { $group: { _id: '$status', count: { $sum: 1 } } },
+  ]);
+  const statusMap = {};
+  byStatus.forEach(({ _id, count }) => { statusMap[_id] = count; });
+
+  const raised    = Object.values(statusMap).reduce((a, b) => a + b, 0);
+  const matched   = (statusMap.Matched ?? 0) + (statusMap.Accepted ?? 0) + (statusMap.Completed ?? 0);
+  const accepted  = (statusMap.Accepted ?? 0) + (statusMap.Completed ?? 0);
+  const completed = statusMap.Completed ?? 0;
+
+  res.status(200).json({
+    range: { from: start, to: end },
+    stages: [
+      { label: 'Raised', count: raised },
+      { label: 'Matched', count: matched },
+      { label: 'Accepted', count: accepted },
+      { label: 'Completed', count: completed },
+    ],
+    dropped: { rejected: statusMap.Rejected ?? 0, cancelled: statusMap.Cancelled ?? 0 },
+  });
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/admin/dashboard/geeks/top
+// Ranked list of Geeks by number of completed requests in the given range.
+//
+// IMPORTANT: ranked by completed-request COUNT, not rating — the platform's
+// rating data is split across three inconsistent mechanisms (an embedded
+// Geek.reviews[] array, a standalone Review model linked via ServiceRequest,
+// and a geek.totalRating field that's written to in requestController.js but
+// isn't actually declared on GeekSchema). Completed-request count is the one
+// clean, unambiguous signal available.
+//
+// Query params: startDate / endDate / year (buildDateRange), limit (default 5, max 20).
+// ---------------------------------------------------------------------------
+const getTopGeeks = asyncHandler(async (req, res) => {
+  const { start, end } = buildDateRange(req.query);
+  const limit = Math.min(20, parseInt(req.query.limit) || 5);
+
+  const top = await ServiceRequest.aggregate([
+    { $match: { status: 'Completed', updatedAt: { $gte: start, $lte: end } } },
+    { $group: { _id: '$geek', completedCount: { $sum: 1 } } },
+    { $sort: { completedCount: -1 } },
+    { $limit: limit },
+    { $lookup: { from: 'geeks', localField: '_id', foreignField: '_id', as: 'geek' } },
+    { $unwind: '$geek' },
+  ]);
+
+  const geeks = await Promise.all(top.map(async (t) => {
+    let profileImageUrl = null;
+    if (t.geek.profileImage?.public_id) {
+      try {
+        profileImageUrl = await generateSasUrl(t.geek.profileImage.public_id);
+      } catch (err) {
+        console.error(`[getTopGeeks] SAS URL failed for geek ${t.geek._id}:`, err.message);
+      }
+    }
+    return {
+      geekId: t.geek._id,
+      fullName: t.geek.fullName,
+      profileImageUrl,
+      subscriptionPlan: t.geek.subscriptionPlan,
+      completedCount: t.completedCount,
+    };
+  }));
+
+  res.status(200).json({ range: { from: start, to: end }, geeks });
 });
 
 // ---------------------------------------------------------------------------
@@ -365,6 +534,9 @@ module.exports = {
   getDashboardSummary,
   getSeekersOverTime,
   getGeeksOverTime,
+  getRevenueOverTime,
+  getRequestFunnel,
+  getTopGeeks,
   getRequestsByCategory,
   getRequestsCategorySummary,
   getGeeksSecondarySkills,

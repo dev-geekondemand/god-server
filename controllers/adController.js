@@ -53,6 +53,11 @@ const getInnerAd = asyncHandler(async (req, res) => {
     }
   }
 
+  if (ads.length) {
+    Ad.updateMany({ _id: { $in: ads.map((a) => a._id) } }, { $inc: { 'stats.impressions': 1 } })
+      .catch((err) => console.error('[adController] impression increment failed:', err.message));
+  }
+
   res.status(200).json(ads);
 });
 
@@ -136,6 +141,11 @@ const getTopAds = asyncHandler(async (req, res) => {
         }
       }
     }
+
+  if (ads.length) {
+    Ad.updateMany({ _id: { $in: ads.map((a) => a._id) } }, { $inc: { 'stats.impressions': 1 } })
+      .catch((err) => console.error('[adController] impression increment failed:', err.message));
+  }
 
   res.status(200).json(ads);
 });

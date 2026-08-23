@@ -10,7 +10,23 @@ const {
   ticketCreatedEmail,
   ticketStatusUpdatedEmail,
   ticketResolvedEmail,
+  newTicketAdminEmail,
+  userReplyAdminEmail,
 } = require('../utils/ticketEmails');
+const { sendSms } = require('../utils/sendSms');
+const { ticketStatusUpdatedSms, ticketResolvedSms, ticketRepliedSms } = require('../utils/ticketSms');
+
+// Admins to notify for a raiser-initiated event (new ticket / user reply):
+// the assigned admin if one exists, otherwise everyone — mirrors the "no
+// per-admin notification preference exists" reality already noted for the
+// daily summary email.
+async function resolveNotifyAdmins(ticket) {
+  if (ticket.assignedTo) {
+    const admin = await Admin.findById(ticket.assignedTo);
+    return admin ? [admin] : [];
+  }
+  return Admin.find({});
+}
 
 const uploadAttachments = async (files) => {
   if (!files?.length) return [];
@@ -73,7 +89,16 @@ const createTicket = asyncHandler(async (req, res) => {
   try {
     if (actor.email) await sendMail(ticketCreatedEmail(ticket, actor));
   } catch (err) {
-    console.error(`[createTicket] Email failed for ticket ${ticket._id}:`, err.message);
+    console.error(`[createTicket] Raiser email failed for ticket ${ticket._id}:`, err.message);
+  }
+
+  try {
+    const admins = await resolveNotifyAdmins(ticket);
+    for (const admin of admins) {
+      if (admin.email) await sendMail(newTicketAdminEmail(ticket, admin));
+    }
+  } catch (err) {
+    console.error(`[createTicket] Admin email failed for ticket ${ticket._id}:`, err.message);
   }
 
   res.status(201).json(ticket);
@@ -129,6 +154,16 @@ const replyToTicketAsUser = asyncHandler(async (req, res) => {
   }
 
   await ticket.save();
+
+  try {
+    const admins = await resolveNotifyAdmins(ticket);
+    for (const admin of admins) {
+      if (admin.email) await sendMail(userReplyAdminEmail(ticket, admin));
+    }
+  } catch (err) {
+    console.error(`[replyToTicketAsUser] Admin email failed for ticket ${ticket._id}:`, err.message);
+  }
+
   res.status(200).json(ticket);
 });
 
@@ -265,8 +300,14 @@ const changeTicketStatus = asyncHandler(async (req, res) => {
         await sendMail(ticketStatusUpdatedEmail(ticket, actor, oldStatus, status));
       }
     }
+    if (actor) {
+      await sendSms(
+        actor.mobile || actor.phone,
+        status === 'Resolved' ? ticketResolvedSms(ticket) : ticketStatusUpdatedSms(ticket, status)
+      );
+    }
   } catch (err) {
-    console.error(`[changeTicketStatus] Email failed for ticket ${ticket._id}:`, err.message);
+    console.error(`[changeTicketStatus] Notification failed for ticket ${ticket._id}:`, err.message);
   }
 
   res.status(200).json(ticket);
@@ -320,8 +361,9 @@ const replyToTicketAdmin = asyncHandler(async (req, res) => {
   try {
     const { actor } = await resolveTicketActor(ticket.raisedBy);
     if (actor?.email) await sendMail(ticketStatusUpdatedEmail(ticket, actor, ticket.status, ticket.status));
+    if (actor) await sendSms(actor.mobile || actor.phone, ticketRepliedSms(ticket));
   } catch (err) {
-    console.error(`[replyToTicketAdmin] Email failed for ticket ${ticket._id}:`, err.message);
+    console.error(`[replyToTicketAdmin] Notification failed for ticket ${ticket._id}:`, err.message);
   }
 
   res.status(200).json(ticket);

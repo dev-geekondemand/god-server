@@ -27,9 +27,23 @@ const slaBreachAlertEmail = (ticket, admin) => ({
   text: `Hello ${admin.name || 'Admin'},\n\nTicket ${ticket.ticketNumber} ("${ticket.subject}", category: ${ticket.category}, raised by: ${ticket.raisedByModel}) has breached its SLA resolution deadline and has been auto-escalated to priority ${ticket.priority}.\n\nPlease review it as soon as possible.\n\n- GeekOnDemand Support System`,
 });
 
+const newTicketAdminEmail = (ticket, admin) => ({
+  to: admin.email,
+  subject: `New ticket ${ticket.ticketNumber} raised`,
+  text: `Hello ${admin.name || 'Admin'},\n\nA new ticket has been raised: "${ticket.subject}" (${ticket.ticketNumber}), category: ${ticket.category}.\n\nPlease review it.\n\n- GeekOnDemand Support System`,
+});
+
+const userReplyAdminEmail = (ticket, admin) => ({
+  to: admin.email,
+  subject: `New reply on ticket ${ticket.ticketNumber}`,
+  text: `Hello ${admin.name || 'Admin'},\n\nThe raiser replied on ticket "${ticket.subject}" (${ticket.ticketNumber}).\n\nPlease review it.\n\n- GeekOnDemand Support System`,
+});
+
 module.exports = {
   ticketCreatedEmail,
   ticketStatusUpdatedEmail,
   ticketResolvedEmail,
   slaBreachAlertEmail,
+  newTicketAdminEmail,
+  userReplyAdminEmail,
 };

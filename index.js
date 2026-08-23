@@ -29,6 +29,7 @@ require('./config/passport');
 const cron = require('node-cron');
 const expireRequests = require('./utils/expireRequests');
 const { checkSlaBreaches } = require('./utils/ticketSla');
+const { sendDailySummaryEmails } = require('./utils/dailySummary');
 
 const jwt = require('jsonwebtoken')
 const morgan = require('morgan')
@@ -39,6 +40,7 @@ const allowedOrigins = [
   "https://god-admin-5l63.vercel.app",
   "https://god-test-frontend-hwhmfabjcvfscpgn.southindia-01.azurewebsites.net",
   "https://god-admin-app-bhcga4aff0c5afgc.southindia-01.azurewebsites.net",
+  "https://god-support-hnhahmadccdvgtcz.southindia-01.azurewebsites.net/login",
   "https://geekondemand.in",
   "http://localhost:3000",
   "http://localhost:3001",
@@ -65,6 +67,9 @@ cron.schedule('0 * * * *', expireRequests);
 
 // Sweep support tickets for SLA breaches every 15 minutes
 cron.schedule('*/15 * * * *', checkSlaBreaches);
+
+// Email admins a summary of the previous day's activity, every morning IST
+// cron.schedule('0 7 * * *', sendDailySummaryEmails, { timezone: 'Asia/Kolkata' });
 
 app.use(morgan("dev"))
 

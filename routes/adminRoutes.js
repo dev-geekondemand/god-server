@@ -5,6 +5,9 @@ const {
   getDashboardSummary,
   getSeekersOverTime,
   getGeeksOverTime,
+  getRevenueOverTime,
+  getRequestFunnel,
+  getTopGeeks,
   getRequestsByCategory,
   getRequestsCategorySummary,
   getGeeksSecondarySkills,
@@ -43,6 +46,9 @@ router.get('/all', protectAdmin, getAllAdmins);
 router.get('/dashboard/summary',             protectAdmin, getDashboardSummary);
 router.get('/dashboard/seekers',             protectAdmin, getSeekersOverTime);
 router.get('/dashboard/geeks',               protectAdmin, getGeeksOverTime);
+router.get('/dashboard/revenue',             protectAdmin, getRevenueOverTime);
+router.get('/dashboard/requests/funnel',     protectAdmin, getRequestFunnel);
+router.get('/dashboard/geeks/top',           protectAdmin, getTopGeeks);
 router.get('/dashboard/requests',            protectAdmin, getRequestsByCategory);
 router.get('/dashboard/requests/summary',    protectAdmin, getRequestsCategorySummary);
 router.get('/dashboard/geeks/secondary-skills', protectAdmin, getGeeksSecondarySkills);
