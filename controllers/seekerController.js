@@ -339,6 +339,56 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
       });
 });
 
+// Mints a short-lived, single-purpose token so a page the seeker is already
+// logged into (e.g. god-ui) can hand off the session to another site (e.g.
+// god-support) that shares this backend but can't read this site's session
+// cookie cross-site (CHIPS partitioning scopes it per top-level site).
+const getSsoHandoffToken = asyncHandler(async (req, res) => {
+  const token = jwt.sign(
+    { id: req.user.id, purpose: 'sso' },
+    process.env.JWT_SECRET,
+    { expiresIn: '60s' }
+  );
+  res.status(200).json({ token });
+});
+
+// Consumes a handoff token minted by getSsoHandoffToken and establishes a
+// normal session (cookie) for the site that calls this, without requiring
+// the seeker to log in again there.
+const exchangeSsoToken = asyncHandler(async (req, res) => {
+  const { token } = req.body;
+  if (!token) return res.status(400).json({ message: 'Token is required' });
+
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (err) {
+    return res.status(401).json({ message: 'Invalid or expired token' });
+  }
+  if (decoded.purpose !== 'sso') {
+    return res.status(401).json({ message: 'Invalid token' });
+  }
+
+  const user = await Seeker.findById(decoded.id).select('-authToken');
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  const sessionToken = jwt.sign(
+    { id: user._id, phone: user.phone, authProvider: user.authProvider },
+    process.env.JWT_SECRET,
+    { expiresIn: '7d' }
+  );
+
+  res.cookie('auth_token', sessionToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+    partitioned: process.env.NODE_ENV === 'production',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+
+  res.status(200).json(user);
+});
+
 const logout = asyncHandler(async (req, res) => {
   try {
     const token = req.cookies?.auth_token;
@@ -397,6 +447,21 @@ const deleteUser = asyncHandler(async (req, res) => {
     const { status, message } = handleMongoError(err);
     res.status(status).json({ message });
   }
+});
+
+// Admin: delete a seeker by id along with all of their service requests
+const deleteSeekerByAdmin = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const seeker = await Seeker.findById(id);
+  if (!seeker) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  await serviceRequest.deleteMany({ seeker: id });
+  await Seeker.findByIdAndDelete(id);
+
+  res.status(200).json({ message: 'User deleted successfully' });
 });
 
 
@@ -749,6 +814,7 @@ module.exports = {
   registerCustomUser,
   getAllUsers,
   deleteUser,
+  deleteSeekerByAdmin,
   loginWithGoogle,
   loginWithMS,
   logout,
@@ -758,5 +824,7 @@ module.exports = {
   loginWithGoogleMobile,
   updateProfileImage,
   getSeekersByRefCode,
+  getSsoHandoffToken,
+  exchangeSsoToken,
   // bulkUploadSeekers,
 };

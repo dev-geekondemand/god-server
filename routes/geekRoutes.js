@@ -27,7 +27,9 @@ const {
   verifyEmail,
   getGeeksByBrand,
   getGeeksByRefCode,
-  updateGeekAssignments
+  updateGeekAssignments,
+  getSsoHandoffToken,
+  exchangeSsoToken,
 } =require('../controllers/geekController.js')
 
 const {geekBaseSchema, addressSchema} = require('../validators/geekValidators.js')
@@ -77,6 +79,8 @@ router.put("/:id/rate-card", protectGeek, updateGeekRateCard);
 router.post('/send-otp', sendOtpToPhone);
 router.post('/geek-login', verifyOtpAndLogin);
 router.post('/geek-logout', logoutGeek);
+router.get('/sso-handoff', authenticateJWT, getSsoHandoffToken);
+router.post('/sso-exchange', exchangeSsoToken);
 router.post('/push-token', protectMobileGeek, async (req, res) => {
   const { geekId, token } = req.body;
   if (!geekId || !token) {

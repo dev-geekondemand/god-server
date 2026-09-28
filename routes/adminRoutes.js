@@ -31,6 +31,7 @@ const {
   getHiringRequestsAdmin,
   getRejectedRequestsAdmin,
   getRequestById,
+  deleteRequestAdmin,
 } = require('../controllers/requestController.js');
 const { protectAdmin } = require('../middlewares/authMiddleware.js');
 
@@ -72,5 +73,6 @@ router.get('/requests',          protectAdmin, getAllRequestsAdmin);
 router.get('/requests/hiring',   protectAdmin, getHiringRequestsAdmin);
 router.get('/requests/rejected', protectAdmin, getRejectedRequestsAdmin);
 router.get('/requests/:id',      protectAdmin, getRequestById);
+router.delete('/requests/:id',   protectAdmin, deleteRequestAdmin);
 
 module.exports = router;

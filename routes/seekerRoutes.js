@@ -5,6 +5,7 @@ const {updateProfile,
     registerCustomUser,
     getAllUsers,
     deleteUser,
+    deleteSeekerByAdmin,
      loginWithGoogle,
      loginWithMS,
       verifyOtpAndLogin,
@@ -15,6 +16,8 @@ const {updateProfile,
       updateProfileImage,
       getSeekersByRefCode,
       bulkUploadSeekers,
+      getSsoHandoffToken,
+      exchangeSsoToken,
     } = require('../controllers/seekerController.js')
 const multer = require('multer');
 const {authenticateJWT, authenticateMobileJWT, protectAdmin} = require("../middlewares/authMiddleware.js")
@@ -55,6 +58,7 @@ router.post('/seekers-by-refCode',protectAdmin, getSeekersByRefCode);
 router.post('/seeker-login', verifyOtpAndLogin);
 router.get('/get-all',getAllUsers)
 router.delete('/delete',authenticateMobileJWT, deleteUser);
+router.delete('/:id', protectAdmin, deleteSeekerByAdmin);
 
 router.get('/google',
     passport.authenticate('google', { scope: ['profile', 'email'], session: false })
@@ -130,6 +134,9 @@ router.get('/mobile-me', authenticateMobileJWT,asyncHandler( async (req, res) =>
 }));
 
 router.post('/logout', logout);
+
+router.get('/sso-handoff', authenticateJWT, getSsoHandoffToken);
+router.post('/sso-exchange', exchangeSsoToken);
 
 router.put('/:id/address', authenticateJWT, updateAddress);
 router.put('/update-profile', authenticateJWT, updateProfile);

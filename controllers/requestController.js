@@ -812,6 +812,25 @@ const getRejectedRequestsAdmin = asyncHandler(async (req, res) => {
   res.status(200).json({ requests });
 });
 
+const deleteRequestAdmin = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'Invalid request id' });
+  }
+
+  const request = await ServiceRequest.findById(id);
+  if (!request) {
+    return res.status(404).json({ message: 'Request not found' });
+  }
+
+  // Remove reviews attached to this request first
+  await Review.deleteMany({ service: id });
+  await ServiceRequest.findByIdAndDelete(id);
+
+  res.status(200).json({ message: 'Request deleted successfully' });
+});
+
   module.exports = {
     getMatchedGeeks,
     createRequestWithSelectedGeek,
@@ -830,4 +849,5 @@ const getRejectedRequestsAdmin = asyncHandler(async (req, res) => {
     getAllRequestsAdmin,
     getHiringRequestsAdmin,
     getRejectedRequestsAdmin,
+    deleteRequestAdmin,
   };
