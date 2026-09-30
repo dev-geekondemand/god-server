@@ -5,14 +5,26 @@ const AddressSchema = new mongoose.Schema({
   city: String,
   state: String,
   country: String,
-  line1: {type:String, required: true},
+  line1: { type: String, required: true },
   line2: String,
   line3: String,
-  coordinates:{
-    latitude: Number,
-    longitude: Number
+  location: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      default: "Point"
+    },
+    coordinates: {
+      type: [Number], // [lng, lat]
+      default: undefined, // 🔑 IMPORTANT
+      validate: {
+        validator: (val) =>
+          val === undefined ||
+          (Array.isArray(val) && val.length === 2),
+        message: "Coordinates must be [longitude, latitude]"
+      }
+    }
   }
-  
 }, { _id: false });
 
 const serviceRequestSchema = new mongoose.Schema({

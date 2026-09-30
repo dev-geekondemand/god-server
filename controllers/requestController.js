@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const ServiceRequest = require('../models/ServiceRequest.js');
 const Service = require('../models/serviceModel.js');
 const Category = require('../models/serviceCategory.js');
+const Brand = require('../models/brandModel.js');
 const Seeker = require('../models/seekerModel.js');
 const {Geek} = require('../models/geekModel.js');
 const haversine = require('haversine-distance');
@@ -69,6 +70,36 @@ const sendMail = require('../middlewares/sendMail');
 });
 
 
+// Addresses arrive either as a raw request body or as a seeker subdocument, and the client
+// sends blank strings for fields the user left empty. Returns null when there is nothing
+// worth storing, so the optional address is omitted rather than failing validation.
+const normalizeAddress = (input) => {
+  if (!input) return null;
+
+  const src = typeof input.toObject === 'function' ? input.toObject() : input;
+  const text = (v) => (typeof v === 'string' && v.trim() ? v.trim() : undefined);
+
+  // line1 is required by AddressSchema, so without it there is no storable address
+  if (!text(src.line1)) return null;
+
+  const address = {
+    line1: text(src.line1),
+    line2: text(src.line2),
+    line3: text(src.line3),
+    city: text(src.city),
+    state: text(src.state),
+    country: text(src.country),
+    pin: text(src.pin),
+  };
+
+  const coordinates = src.location?.coordinates;
+  if (Array.isArray(coordinates) && coordinates.length === 2 && coordinates.every(Number.isFinite)) {
+    address.location = { type: 'Point', coordinates: [...coordinates] };
+  }
+
+  return address;
+};
+
 const createRequestWithSelectedGeek = asyncHandler(async (req, res) => {
   const {
     geek,
@@ -78,6 +109,8 @@ const createRequestWithSelectedGeek = asyncHandler(async (req, res) => {
     scheduledAt,
     brand,
   } = req.body;
+
+  console.log(req.body)
 
   let issue = req.body.issue;
 
@@ -94,19 +127,36 @@ const createRequestWithSelectedGeek = asyncHandler(async (req, res) => {
   const geekState = await Geek.findById(geek);
   const catState = await Category.findById(category);
 
+  console.log(geek,geekState)
+
   if (!seeker) return res.status(404).json({ message: 'User not found' });
   if (!geekState) return res.status(404).json({ message: 'Geek not found' });
   if(!catState) return res.status(400).json({ message: 'The service category does not exist' });
 
-  // Use seeker address as fallback
-  const finalLocation = location || seeker.address;
+  // The client may post a partially filled address, so only treat one as usable when it
+  // carries the line1 that AddressSchema requires; otherwise fall back to the seeker's.
+  const finalAddress = normalizeAddress(location) || normalizeAddress(seeker.address);
 
-  if (!finalLocation && mode === 'Offline') {
+  if (!finalAddress && mode === 'Offline') {
     return res.status(400).json({ message: 'Location is required for offline mode' });
   }
 
   if(!issue){
     issue = null;
+  }
+
+  // Brand may arrive as an id or as a name, so resolve either against the request's category.
+  // Matched with an anchored case-insensitive regex rather than a collation, which the
+  // production Cosmos cluster does not support.
+  let brandState = null;
+  if (brand) {
+    const brandName = String(brand).trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    brandState = mongoose.Types.ObjectId.isValid(brand)
+      ? await Brand.findOne({ _id: brand, category: catState._id })
+      : await Brand.findOne({ name: new RegExp(`^${brandName}$`, 'i'), category: catState._id });
+
+    if (!brandState) return res.status(400).json({ message: 'The brand does not exist for this service category' });
   }
 
   const request = await ServiceRequest.create({
@@ -115,10 +165,10 @@ const createRequestWithSelectedGeek = asyncHandler(async (req, res) => {
     geek: geekState._id,
     mode,
     issue,
-    location: finalLocation,
     status: 'Matched',
+    ...(finalAddress && { address: finalAddress }),
     ...(scheduledAt && { scheduledAt: new Date(scheduledAt) }),
-    ...(brand && mongoose.Types.ObjectId.isValid(brand) && { brand: new mongoose.Types.ObjectId(brand) }),
+    ...(brandState && { brand: brandState._id }),
   });
 
   if (!request) {
