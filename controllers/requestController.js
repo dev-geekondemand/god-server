@@ -120,7 +120,9 @@ const createRequestWithSelectedGeek = asyncHandler(async (req, res) => {
 
    validateMongodbId(seekerId);
 
-  if(!category || !geek) return res.status(400).json({ message: 'Missing required fields' });
+  // Name the offender — a bare "missing required fields" hides which one the client dropped
+  const missing = [!category && 'category', !geek && 'geek'].filter(Boolean);
+  if (missing.length) return res.status(400).json({ message: `Missing required fields: ${missing.join(', ')}` });
 
 
   const seeker = await Seeker.findById(seekerId);
