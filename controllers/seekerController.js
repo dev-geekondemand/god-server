@@ -287,13 +287,23 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
       
       // Verify OTP logic (you can integrate with your OTP service)
       const isVerified = await verifyOtp(phone, otp);
-      if (!isVerified) return res.status(401).json({ message: 'Invalid or expired OTP' });
-    
+      if (!isVerified) {
+        LoginEvent.create({
+          role: 'Seeker', authProvider: 'custom',
+          status: 'failed', failureReason: 'invalid_otp', identifier: phone,
+        }).catch(() => {});
+        return res.status(401).json({ message: 'Invalid or expired OTP' });
+      }
+
       // Check if user exists by phone number
       let user = await Seeker.findOne({ phone });
-      
-    
+
+
       if (!user) {
+        LoginEvent.create({
+          role: 'Seeker', authProvider: 'custom',
+          status: 'failed', failureReason: 'not_registered', identifier: phone,
+        }).catch(() => {});
         return res.status(404).json({ message: 'User not Registered. Please Register First' });
       } else {
         user.isPhoneVerified = true;

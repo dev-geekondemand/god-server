@@ -120,15 +120,24 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
         let user = await Geek.findOne({ mobile:phone });
 
           if (!user) {
+            LoginEvent.create({
+              role: 'Geek', authProvider: 'custom',
+              status: 'failed', failureReason: 'not_registered', identifier: phone,
+            }).catch(() => {});
             return res.status(404).json({ message: "User not found. Please Sign Up." });
           }
 
-        
-    
-  
+
+
     // Verify OTP logic (you can integrate with your OTP service)
     const isVerified =  await verifyOtp(phone, otp);
-    if (!isVerified) return res.status(401).json({ message: 'Invalid or expired OTP' });
+    if (!isVerified) {
+      LoginEvent.create({
+        userId: user._id, role: 'Geek', authProvider: 'custom',
+        status: 'failed', failureReason: 'invalid_otp', identifier: phone,
+      }).catch(() => {});
+      return res.status(401).json({ message: 'Invalid or expired OTP' });
+    }
   
     // Check if user exists by phone number
 
