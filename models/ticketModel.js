@@ -78,6 +78,11 @@ const ticketSchema = new Schema({
 ticketSchema.index({ status: 1, priority: 1, createdAt: -1 });
 ticketSchema.index({ raisedBy: 1, createdAt: -1 });
 ticketSchema.index({ 'sla.resolutionDueAt': 1, status: 1 });
+// The admin queue sorts newest-first and pages through the result. The compound
+// index above only serves that sort when status AND priority are both pinned,
+// so back the unfiltered and status-only views too.
+ticketSchema.index({ createdAt: -1 });
+ticketSchema.index({ status: 1, createdAt: -1 });
 
 ticketSchema.pre('save', function (next) {
   if (!this.ticketNumber) {

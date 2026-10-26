@@ -196,7 +196,9 @@ const getTicketQueue = asyncHandler(async (req, res) => {
     Ticket.find(match)
       .populate('raisedBy', 'fullName email phone mobile')
       .populate('assignedTo', 'name email')
-      .sort({ priority: -1, 'sla.resolutionDueAt': 1 })
+      // Newest first. The queue is server-paginated, so this ordering is what
+      // the admin table shows — it does no sorting of its own.
+      .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit),
   ]);

@@ -1,5 +1,5 @@
 const Seeker = require('../models/seekerModel');
-const Geek = require('../models/geekModel');
+const { Geek } = require('../models/geekModel');
 
 // The support ticket system is shared by Seekers and Geeks, but
 // `authenticateJWT` decodes either a seeker or a geek cookie/token into the
