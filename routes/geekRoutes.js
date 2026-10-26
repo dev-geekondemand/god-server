@@ -39,6 +39,7 @@ const { pollAadhaarStatus } = require('../controllers/adhaarVerificationControll
 const { authenticateJWT,authenticateMobileJWT, protectAdmin } = require('../middlewares/authMiddleware.js');
 const {singleUploader, uploadLimiter} = require('../middlewares/azureUploads.js');
 const protectGeek  = require('../middlewares/protectGeek.js');
+const allowAdminOrSelf = require('../middlewares/allowAdminOrSelf.js');
 const { protectMobileGeek } = require('../middlewares/protectMobileGeek.js');
 const {Geek} = require('../models/geekModel.js');
 
@@ -128,8 +129,8 @@ router.get('/mobile-me', authenticateMobileJWT, getGeekById);
 router.get('/findGeek/:id',findGeekById);
 router.get('/:brandId',getGeeksByBrand);
 
-// Delete
-router.delete('/:id', deleteGeek);
+// Delete — admin, or the geek deleting their own account. Nothing else.
+router.delete('/:id', allowAdminOrSelf('Geek'), deleteGeek);
 
 
 

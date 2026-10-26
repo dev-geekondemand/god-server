@@ -21,6 +21,7 @@ const {updateProfile,
     } = require('../controllers/seekerController.js')
 const multer = require('multer');
 const {authenticateJWT, authenticateMobileJWT, protectAdmin} = require("../middlewares/authMiddleware.js")
+const allowAdminOrSelf = require("../middlewares/allowAdminOrSelf.js")
 const passport = require('passport');
 const msalConfig = require('../config/msalConfig');
 const { ConfidentialClientApplication } = require('@azure/msal-node');
@@ -58,7 +59,8 @@ router.post('/seekers-by-refCode',protectAdmin, getSeekersByRefCode);
 router.post('/seeker-login', verifyOtpAndLogin);
 router.get('/get-all',getAllUsers)
 router.delete('/delete',authenticateMobileJWT, deleteUser);
-router.delete('/:id', protectAdmin, deleteSeekerByAdmin);
+// Delete — admin, or the seeker deleting their own account. Nothing else.
+router.delete('/:id', allowAdminOrSelf('Seeker'), deleteSeekerByAdmin);
 
 router.get('/google',
     passport.authenticate('google', { scope: ['profile', 'email'], session: false })
