@@ -16,6 +16,44 @@ const {Expo} = require('expo-server-sdk');
 const expo = new Expo();
 const client = require("../config/twilio");
 const sendMail = require('../middlewares/sendMail');
+const expireRequests = require('../utils/expireRequests');
+
+// Seeker data belongs to the seeker and admins. The geek assigned to a request
+// gets only what the job needs: name and photo while the request is pending,
+// plus phone and address once they have accepted it. Google/Microsoft seekers
+// often have no phone, so their email stands in as the contact.
+const seekerViewForGeek = (request) => {
+  const s = request?.seeker;
+  if (!s || typeof s !== 'object') return s;
+  const view = { _id: s._id, fullName: s.fullName, profileImage: s.profileImage };
+  if (request.geekResponseStatus === 'Accepted') {
+    view.phone = s.phone;
+    view.address = s.address;
+    if (!s.phone) view.email = s.email;
+  }
+  return view;
+};
+
+// Plain object of a request with its seeker narrowed to the geek's view.
+const forGeek = (request) => {
+  const obj = typeof request.toObject === 'function' ? request.toObject() : request;
+  return { ...obj, seeker: seekerViewForGeek(obj) };
+};
+
+// Reviewers shown alongside a request: public identity only.
+const REVIEWER_FIELDS = 'fullName profileImage';
+
+// SMS / email / push are best-effort. A failed send (bad number, Twilio or SMTP
+// outage, stale push token) must never undo or misreport the action that
+// triggered it — otherwise users retry and create duplicates, or a reject is
+// silently lost.
+const notify = async (label, fn) => {
+  try {
+    await fn();
+  } catch (err) {
+    console.error(`[notify:${label}]`, err?.message || err);
+  }
+};
 
  const getMatchedGeeks = asyncHandler(async (req, res) => {
   const { serviceId } = req.params;
@@ -186,56 +224,40 @@ const createRequestWithSelectedGeek = asyncHandler(async (req, res) => {
   catState.requests?.push(request?._id);
   await catState.save();
 
-  if (geekState.expoPushToken) {
-    const token = geekState.expoPushToken;
-    console.log(token);
+  // The request exists now; notifications below can't change that outcome.
+  if (Expo.isExpoPushToken(geekState.expoPushToken)) {
+    await notify('create:push-geek', () => expo.sendPushNotificationsAsync([{
+      to: geekState.expoPushToken,
+      sound: "default",
+      title: "Service Request Recieved",
+      body: `You have a new service request for ${catState.title}`,
+      data: { requestId: request._id.toString(), type: 'request' },
+    }]));
+  }
 
-    if (!Expo.isExpoPushToken(token)) {
-        console.log("Invalid push token");
-        throw new Error("Invalid push token", 400);
-      }
+  await notify('create:sms-geek', () => client.messages.create({
+    body: `You have a new service request for ${catState.title}. Please review it as soon as possible.`,
+    from: process.env.TWILIO_PHONE_NUMBER,
+    to: geekState.mobile
+  }));
 
-      const message = {
-        to: token,
-        sound: "default",
-        title: "Service Request Recieved",
-        body: `You have a new service request for ${catState.title}`,
-        data: { requestId: request._id.toString(), type: 'request' },
-      };
-          const tickets = await expo.sendPushNotificationsAsync([message]);
-           console.log(tickets);
-        }
+  if (seeker?.phone) {
+    await notify('create:sms-seeker', () => client.messages.create({
+      body: `Your service request for ${catState.title} has been sent. We'll notify you once a Geek accepts your request.`,
+      from: process.env.TWILIO_PHONE_NUMBER,
+      to: seeker.phone
+    }));
+  } else if (seeker?.email) {
+    await notify('create:email-seeker', () => sendMail({
+      to: seeker.email,
+      from: process.env.SMTP_EMAIL,
+      subject: "Service Request Sent",
+      text: `Hey ${seeker.fullName?.first || ''} ${seeker.fullName?.last || ''},
 
-        await client.messages.create({
-          body: `You have a new service request for ${catState.title}. Please review it as soon as possible.`,
-          from: process.env.TWILIO_PHONE_NUMBER,
-          to: geekState.mobile
-        });
+Your service request for ${catState.title} has been sent. We'll notify you once a Geek accepts your request.`,
+    }));
+  }
 
-       if(seeker?.phone){
-         await client.messages.create({
-          body: `Your service request for ${catState.title} has been sent. We'll notify you once a Geek accepts your request.`,
-          from: process.env.TWILIO_PHONE_NUMBER,
-          to: seeker?.phone
-        });
-       }else{
-         const data={
-            to:seeker.email,
-            from:process.env.SMTP_EMAIL,
-            subject:"Service Request Sent",
-            text:
-            `Hey ${seeker.fullName.first} ${seeker.fullName.last},
-            
-            Your service request for ${catState.title} has been sent. We'll notify you once a Geek accepts your request.`,
-
-        }
-        await sendMail(data)
-       }
-
-        
-
-    
-        
   res.status(201).json(request);
 });
 
@@ -244,18 +266,13 @@ const getSeekerRequests = asyncHandler(async (req, res) => {
     
     const {id} = req.user;
     if(!id) return res.status(400).json({ message: 'User not found' });
-    const requests = await ServiceRequest.find({ seeker: id }).populate('geek').populate('category').populate('issue').populate('brand');
+    // Legacy requests with no geek are skipped rather than deleted — a GET must
+    // not destroy data.
+    const requests = await ServiceRequest.find({ seeker: id, geek: { $ne: null } }).populate('geek', '-authToken').populate('category').populate('issue').populate('brand');
     if(!requests) return res.status(404).json({ message: 'No requests found' });
-    
+
     requests.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-    const deleted =  await ServiceRequest.deleteMany({
-    seeker: id,
-    geek: null,
-  });
-
-  console.log(deleted);
-    
     
     for(let i = 0; i < requests.length; i++){
     if(requests[i].category?.image?.public_id){
@@ -309,206 +326,127 @@ const getGeekRequests = asyncHandler(async (req, res) => {
   //   }
   // }
 
-  res.status(200).json(requests);
+  res.status(200).json(requests.map(forGeek));
 });
 
 
 const getGeekPendingRequests = asyncHandler(async (req, res) => {
   const { id } = req.params;
   if(!id) return res.status(400).json({ message: 'User not found' });
-  const requests = await ServiceRequest.find({ geek: id, status: 'Pending' }).populate('seeker').populate('category');
+  const requests = await ServiceRequest.find({ geek: id, status: 'Pending' }).populate('seeker', '-authToken').populate('category');
   if(!requests) return res.status(404).json({ message: 'No requests found' });
   requests.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  res.status(200).json(requests);
+  res.status(200).json(requests.map(forGeek));
 })
 
 
+// Manual (admin) trigger for the same sweep the hourly cron in index.js runs,
+// so there is a single copy of the expiry logic.
 const autoRejectRequest = asyncHandler(async (req, res) => {
-  const requests = await ServiceRequest.find({
-    geekResponseStatus: 'Pending',
-    status: { $in: ['Pending', 'Matched'] },
-  }).populate('seeker').populate('category');
-
-  const now = new Date();
-  const oneDay = 24 * 60 * 60 * 1000;
-
-  for (const request of requests) {
-    const timeDiff = now - request.createdAt;
-    if (timeDiff > oneDay) {
-      request.status = 'Rejected';
-      request.geekResponseStatus = 'Expired';
-      await request.save();
-
-      if (request?.seeker?.phone) {
-        try {
-          await client.messages.create({
-            body: `Your request for ${request.category?.title || 'your service'} has expired due to no response from the selected Geek. Please create a new request with a different Geek.`,
-            from: process.env.TWILIO_PHONE_NUMBER,
-            to: request.seeker.phone,
-          });
-        } catch (err) {
-          console.error(`[autoReject] SMS failed for request ${request._id}:`, err.message);
-        }
-      }
-    }
-  }
-
+  await expireRequests();
   res.status(200).json({ message: 'Requests updated successfully' });
 });
 
 
 
 
- const acceptRequest = asyncHandler(async (req, res) => {
-    const { id } = req.params;
-    const geekId = req.user?._id;
-    const request = await ServiceRequest.findById(id);
-  
-    if (!request || request.geek.toString() !== geekId.toString()) {
-      return res.status(403).json({ message: 'Not authorized or invalid request' });
-    }
-    if(!request) return res.status(404).json({ message: 'Request not found' });
-    if(request.geekResponseStatus === 'Expired') return res.status(404).json({ message: 'Request expired in 24 hours.' });
-    if(request.geekResponseStatus === 'Accepted') return res.status(404).json({ message: 'Request already accepted' });
-    if(request.geekResponseStatus === 'Rejected') return res.status(404).json({ message: 'Request already rejected' });
+// Tells the seeker about a geek's response: push if they have the app, then SMS,
+// falling back to email when there's no phone. All best-effort (see notify).
+const notifySeekerOfResponse = async (seeker, request, { title, push, sms, emailSubject, emailText }) => {
+  if (!seeker) return;
+  if (Expo.isExpoPushToken(seeker.expoPushToken)) {
+    await notify(`${title}:push`, () => expo.sendPushNotificationsAsync([{
+      to: seeker.expoPushToken,
+      sound: "default",
+      title,
+      body: push,
+      data: { requestId: request._id.toString(), type: 'request' },
+    }]));
+  }
+  const phone = seeker.phone?.trim();
+  if (phone && phone.startsWith('+')) {
+    await notify(`${title}:sms`, () => client.messages.create({ body: sms, from: process.env.TWILIO_PHONE_NUMBER, to: phone }));
+  } else if (seeker.email) {
+    await notify(`${title}:email`, () => sendMail({
+      to: seeker.email,
+      from: process.env.SMTP_EMAIL,
+      subject: emailSubject,
+      text: `Hey ${seeker.fullName?.first || ''} ${seeker.fullName?.last || ''},\n\n${emailText}`,
+    }));
+  }
+};
 
-    const seeker = await Seeker.findById(request.seeker);
+// Loads a request for the assigned geek to respond to. Returns { request } or
+// { status, message } when it can't be responded to. Only Pending requests can
+// be accepted or rejected (not Cancelled/Expired/already answered).
+const loadRequestForResponse = async (id, geekId) => {
+  if (!mongoose.Types.ObjectId.isValid(id)) return { status: 400, message: 'Invalid request ID' };
+  const request = await ServiceRequest.findById(id).populate('category');
+  if (!request) return { status: 404, message: 'Request not found' };
+  if (!geekId || String(request.geek) !== String(geekId)) return { status: 403, message: 'Not authorized or invalid request' };
+  const blocked = {
+    Accepted: 'Request already accepted',
+    Rejected: 'Request already rejected',
+    Expired: 'Request expired in 24 hours.',
+    Cancelled: 'The seeker cancelled this request',
+  }[request.geekResponseStatus];
+  if (blocked) return { status: 409, message: blocked };
+  return { request };
+};
+
+ const acceptRequest = asyncHandler(async (req, res) => {
+    const geekId = req.user?._id;
+    const { request, status, message } = await loadRequestForResponse(req.params.id, geekId);
+    if (!request) return res.status(status).json({ message });
 
     const geek = await Geek.findById(geekId);
-    if (!geek) {
-      return res.status(404).json({ message: 'Geek not found' });
-    }
-  
-  
+    if (!geek) return res.status(404).json({ message: 'Geek not found' });
+    const seeker = await Seeker.findById(request.seeker);
+
     request.geekResponseStatus = 'Accepted';
     request.responseAt = new Date();
     request.status = 'Accepted';
     await request.save();
 
-    if (seeker.expoPushToken) {
-      console.log(typeof seeker.expoPushToken);
-      const token = seeker.expoPushToken;
-    if (!Expo.isExpoPushToken(token)) {
-        console.log("Invalid push token");
-        throw new Error("Invalid push token", 400);
-      }
+    const service = request.category?.title || 'your service';
+    await notifySeekerOfResponse(seeker, request, {
+      title: 'Service Request Accepted',
+      push: `The request for ${service} was Accepted.`,
+      sms: `The request for ${service} was Accepted by ${geek.fullName?.first || 'your Geek'}. You can now connect and resolve the issue.`,
+      emailSubject: 'Service Request Accepted',
+      emailText: `Your service request for ${service} has been accepted. You can now connect and resolve the issue.`,
+    });
 
-      const message = {
-        to: seeker.expoPushToken,
-        sound: "default",
-        title: "Service Request Accepted",
-        body: `The request for ${request?.category?.title || 'your service'} was Accepted.`,
-        data: { requestId: request._id.toString(), type: 'request' },
-      };
-          const tickets = await expo.sendPushNotificationsAsync([message]);
-           console.log(tickets);
-        }
-
-        const phone = seeker?.phone?.trim();
-
-        if (phone && phone.startsWith('+')) {
-          await client.messages.create({
-          body: `The request for ${request?.category?.title || 'your service'} was Accepted by ${geek.fullName?.first || 'your Geek'}. You can now connect and resolve the issue.`,
-          from: process.env.TWILIO_PHONE_NUMBER,
-          to: seeker.phone
-        })
-      }else{
-        const data={
-            to:seeker.email,
-            from:process.env.SMTP_EMAIL,
-            subject:"Service Request Accepted",
-            text:
-            `Hey ${seeker?.fullName?.first || ''} ${seeker.fullName?.last || ''},
-            
-            Your service request for ${request?.category?.title || 'your service'} has been accepted.You can now connect and resolve the issue.`,
-
-        }
-        await sendMail(data)
-      }
-
-
-  
     res.status(200).json({ message: 'Request accepted' });
   });
-  
+
 
 
   // Reject request
  const rejectRequest = asyncHandler(async (req, res) => {
-  
-    const { id } = req.params;
     const geekId = req.user?._id;
     const geek = await Geek.findById(geekId);
-    if (!geek) {
-      console.log("Geek not found");
-      
-      return res.status(404).json({ message: 'Geek not found' });
-    }
-  
-    const request = await ServiceRequest.findById(id).populate('seeker').populate('geek').populate('category');
+    if (!geek) return res.status(404).json({ message: 'Geek not found' });
 
-    if (!request || request.geek?._id?.toString() !== geekId.toString()) {
-      console.log("Not authorized or invalid request",  request.geek?._id?.toString(),  geekId.toString());
-      return res.status(403).json({ message: 'Not authorized or invalid request' });
-    }
-
-    if(!request) {
-      console.log("Request not found");
-      return res.status(404).json({ message: 'Request not found' });
-    }
-    if(request.geekResponseStatus === 'Accepted') return res.status(404).json({ message: 'Request already accepted' });
-    if(request.geekResponseStatus === 'Rejected') return res.status(404).json({ message: 'Request already rejected' });
-    if(request.geekResponseStatus === 'Expired') return res.status(404).json({ message: 'Request expired in 24 hours.' });
-  
+    const { request, status, message } = await loadRequestForResponse(req.params.id, geekId);
+    if (!request) return res.status(status).json({ message });
     const seeker = await Seeker.findById(request.seeker);
-  
+
+    // Save BEFORE notifying, so a failed SMS can't lose the rejection.
     request.geekResponseStatus = 'Rejected';
     request.responseAt = new Date();
     request.status = 'Rejected';
-
-    if (seeker.expoPushToken) {
-    if (!Expo.isExpoPushToken(seeker.expoPushToken)) {
-        console.log("Invalid push token");
-        throw new Error("Invalid push token", 400);
-      }
-
-      const message = {
-        to: seeker.expoPushToken,
-        sound: "default",
-        title: "Service Request Rejected",
-        body: `The request for ${request?.category?.title || 'your service'} was Rejected by ${geek.fullName?.first || 'your selected Geek'}. You can choose another geek to resolve the issue.`,
-        data: { requestId: request._id.toString(), type: 'request' },
-      };
-           const tickets = await expo.sendPushNotificationsAsync([message]);
-           console.log(tickets);
-        
-        }
-
-      const phone = seeker?.phone?.trim();
-
-        if (phone && phone.startsWith('+')) {
-          await client.messages.create({
-          body: `The request for ${request?.category?.title || 'your service'} was Rejected by ${geek.fullName?.first || 'your Geek'}. You can choose another geek to resolve the issue.`,
-          from: process.env.TWILIO_PHONE_NUMBER,
-          to: seeker.phone
-        })
-      }else{
-        const data={
-            to:seeker.email,
-            from:process.env.SMTP_EMAIL,
-            subject:"Service Request Rejected",
-            text:
-            `Hey ${seeker.fullName.first} ${seeker.fullName?.last || ''},
-            
-            Your service request for ${request?.category?.title || 'your service'} has been rejected. You can choose another geek to resolve the issue.`,
-
-        }
-        await sendMail(data)
-      }
-
-  
     await request.save();
-  
+
+    const service = request.category?.title || 'your service';
+    await notifySeekerOfResponse(seeker, request, {
+      title: 'Service Request Rejected',
+      push: `The request for ${service} was Rejected by ${geek.fullName?.first || 'your selected Geek'}. You can choose another geek to resolve the issue.`,
+      sms: `The request for ${service} was Rejected by ${geek.fullName?.first || 'your Geek'}. You can choose another geek to resolve the issue.`,
+      emailSubject: 'Service Request Rejected',
+      emailText: `Your service request for ${service} has been rejected. You can choose another geek to resolve the issue.`,
+    });
+
     res.status(200).json({ message: 'Request rejected' });
   });
 
@@ -523,7 +461,7 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
 
   const request = await ServiceRequest.findById(id)
     .populate('seeker', '-authToken')
-    .populate('geek')
+    .populate('geek', '-authToken')
     .populate('brand')
     .populate({
       path: 'category',
@@ -534,11 +472,26 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
       path: 'reviews',
       populate: {
         path: 'postedBy',
+        select: REVIEWER_FIELDS,
       },
       options: {
         sort: { createdAt: -1 },
       },
     });
+
+  if (!request) {
+    return res.status(404).json({ message: "Request not found" });
+  }
+
+  // Only the request's seeker, its assigned geek, or an admin (the admin route
+  // sets req.admin via protectAdmin) may see it.
+  const userId = String(req.user?.id ?? req.user?._id ?? '');
+  const isAdmin = !!req.admin;
+  const isOwnerSeeker = !!userId && String(request.seeker?._id ?? request.seeker) === userId;
+  const isAssignedGeek = !!userId && String(request.geek?._id ?? request.geek) === userId;
+  if (!isAdmin && !isOwnerSeeker && !isAssignedGeek) {
+    return res.status(403).json({ message: 'Not authorized to view this request' });
+  }
 
     if(request?.seeker?.profileImage?.public_id){
       if(request.seeker.profileImage.public_id){
@@ -588,10 +541,8 @@ const autoRejectRequest = asyncHandler(async (req, res) => {
       }
     }
 
-  if (!request) {
-    return res.status(404).json({ message: "Request not found" });
-  }
-  res.status(200).json(request);
+  // A geek viewing their assigned request gets the narrowed seeker view.
+  res.status(200).json(isAdmin || isOwnerSeeker ? request : forGeek(request));
 });
 
 
@@ -627,8 +578,16 @@ const completeRequest = asyncHandler(async (req, res) => {
   if (!request) return res.status(404).json({ message: 'Request not found' });
 
   if (request.geek?._id?.toString() !== req.user?._id?.toString()) {
- 
+
     return res.status(403).json({ message: 'Unauthorized' });
+  }
+
+  // Only work the geek accepted, and that isn't finished yet, can be completed.
+  if (request.status === 'Completed' || request.isCompleted) {
+    return res.status(409).json({ message: 'Request already completed' });
+  }
+  if (request.geekResponseStatus !== 'Accepted') {
+    return res.status(409).json({ message: 'Only accepted requests can be completed' });
   }
 
   const media = { images: [], video: null };
@@ -646,10 +605,12 @@ const completeRequest = asyncHandler(async (req, res) => {
     media.video = uploaded;
   }
 
-  // Validate media presence (either image or video is mandatory)
+  // Validate media presence (either image or video is mandatory). `video` is a
+  // nested path, so Mongoose returns an object even when none was uploaded —
+  // check for an actual stored file.
   const hasMedia =
     (request?.images?.length || 0) + media.images.length > 0 ||
-    request?.video || media.video;
+    !!request?.video?.public_id || !!media.video;
   if (!hasMedia) {
     return res.status(400).json({
       message: 'Please upload at least one related image or video before completing the request.',
@@ -667,50 +628,18 @@ const completeRequest = asyncHandler(async (req, res) => {
   const geek = await Geek.findById(request.geek);
 
   await request.save();
-  if ( seeker && seeker?.expoPushToken) {
-    if (!Expo.isExpoPushToken(seeker?.expoPushToken)) {
-        console.log("Invalid push token");
-        throw new Error("Invalid push token", 400);
-      }
 
+  const service = request.category?.title || 'your service';
+  const geekName = geek?.fullName?.first || 'your Geek';
+  await notifySeekerOfResponse(seeker, request, {
+    title: 'Service Request Completed',
+    push: `Your request for ${service} was Completed.`,
+    sms: `The request for ${service} was Completed by ${geekName}. You can now review the service.`,
+    emailSubject: 'Service Request Completed',
+    emailText: `The request for ${service} was Completed by ${geekName}. You can now review the service.`,
+  });
 
-      const message = {
-        to: seeker?.expoPushToken, 
-        sound: "default",
-        title: "Service Request Completed",
-        body: `Your request for ${request?.category?.title || 'your service'} was Completed.`,
-        data: { requestId: request._id.toString(), type: 'request' },
-      };
-          const tickets = await sendExpoPushNotification(
-            [message],
-          );
-
-          console.log(tickets);
-        }
-
-        const phone = seeker?.phone?.trim();
-
-        if (phone && phone.startsWith('+')) {
-          await client.messages.create({
-          body: `The request for ${request?.category?.title || 'your service'} was Completed by ${geek.fullName?.first || 'your Geek'}. You can now  review the service.`,
-          from: process.env.TWILIO_PHONE_NUMBER,
-          to: seeker.phone
-        })
-      }else{
-        const data={
-            to:seeker.email,
-            from:process.env.SMTP_EMAIL,
-            subject:"Service Request Completed",
-            text:
-            `Hey ${seeker.fullName.first} ${seeker.fullName?.last || ''},
-            
-           The request for ${request?.category?.title || 'your service'} was Completed by ${geek?.fullName?.first || 'your Geek'}. You can now  review the service.`,
-
-        }
-        await sendMail(data)
-      }
-
-  res.status(200).json({ message: 'Request marked as completed', media: request.media });
+  res.status(200).json({ message: 'Request marked as completed', media: { images: request.images, video: request.video } });
 });
 
 
@@ -759,36 +688,51 @@ const cancelRequest = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Request cancelled successfully' });
 });
 
+// The Review collection is the source of truth: recompute a request's average
+// from its actual reviews instead of incrementally (which drifted).
+// ServiceRequest.totalRating is declared as a String, hence the formatting.
+const recomputeRequestRating = async (request) => {
+  const reviews = await Review.find({ service: request._id }).select('rating').lean();
+  const avg = reviews.length ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length : 0;
+  request.totalRating = String(Math.round(avg * 10) / 10);
+};
+
 const addReviewBySeeker = asyncHandler(async (req, res) => {
-  console.log(req.body, req.params);
   const { id } = req.params;
-  const { rating, comment } = req.body;
-  
-  
-  if (!rating || !comment) {
-    return res.status(400).json({ message: 'Rating and comment are required' });
+  const rating = Number(req.body.rating);
+  const comment = typeof req.body.comment === 'string' ? req.body.comment.trim() : '';
+
+  if (!comment || !Number.isInteger(rating) || rating < 1 || rating > 5) {
+    return res.status(400).json({ message: 'A rating from 1 to 5 and a comment are required' });
+  }
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'Invalid request ID' });
   }
 
   const request = await ServiceRequest.findById(id);
   if (!request) return res.status(404).json({ message: 'Request not found' });
-  
+
   if (request.seeker?.toString() !== req.user?.id?.toString()) {
     return res.status(403).json({ message: 'Unauthorized' });
   }
 
-  const geek = await Geek.findById(request.geek);
+  // Only finished work can be reviewed, and only once per seeker.
+  if (request.status !== 'Completed' && !request.isCompleted) {
+    return res.status(400).json({ message: 'You can review a request once it is completed' });
+  }
+  if (await Review.exists({ service: request._id, postedBy: req.user.id })) {
+    return res.status(409).json({ message: 'You have already reviewed this request' });
+  }
 
-const newRating = await Review.create({
+  const newRating = await Review.create({
     postedBy: req.user.id,
     rating,
     comment,
     service: request._id
   });
 
-  request.reviews?.push(newRating._id);
-  request.totalRating = (request.totalRating * request.reviews.length + rating) / (request.reviews.length + 1);
-  geek.totalRating = (geek.totalRating * geek.reviews.length + rating) / (geek.reviews.length + 1);
-
+  request.reviews.push(newRating._id);
+  await recomputeRequestRating(request);
   await request.save();
   res.status(200).json({ message: 'Review added successfully' });
 });
@@ -813,9 +757,8 @@ const deleteReviweBySeeker = asyncHandler(async (req, res) => {
 
   await Review.findByIdAndDelete(reviewId);
 
-  request.ratings = request.ratings.filter((id) => id.toString() !== reviewId.toString());
-
-  request.totalRating = (request.totalRating * request.ratings.length) / (request.ratings.length - 1);
+  request.reviews = request.reviews.filter((rid) => rid.toString() !== reviewId.toString());
+  await recomputeRequestRating(request);
 
   await request.save();
   res.status(200).json({ message: 'Review deleted successfully' });

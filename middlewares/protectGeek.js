@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const { Geek } = require('../models/geekModel');
+const { hasGeekSession } = require('../utils/geekSessions');
 
 const protectGeek = asyncHandler(async (req, res, next) => {
   let token;
@@ -19,22 +19,18 @@ const protectGeek = asyncHandler(async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Find geek by ID
-    const geek = await Geek.findById(decoded.id);
-    
-    if (!geek || !geek.authToken) {
+    // The token must be one of the geek's active sessions (any device). Checked
+    // on a separate lean read so req.user never carries the session list.
+    const sessions = await Geek.findById(decoded.id).select('authToken +authTokens').lean();
+    if (!sessions) {
       return res.status(401).json({ message: 'Not authorized, geek not found or not logged in' });
     }
-
-    // Compare the hashed token in DB
-    const isMatch = await bcrypt.compare(token, geek.authToken);
-    
-    if (!isMatch) {
+    if (!(await hasGeekSession(sessions, token))) {
       return res.status(401).json({ message: 'Invalid or expired token. Login Again.' });
     }
 
     // Attach geek to request
-    req.user = geek;
+    req.user = await Geek.findById(decoded.id);
     next();
   } catch (err) {
     return res.status(401).json({ message: 'Token verification failed. Login Again.' });

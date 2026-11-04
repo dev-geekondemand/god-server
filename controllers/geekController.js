@@ -7,7 +7,6 @@ const {uploadToAzure} = require('../middlewares/azureUploads.js');
 const AadhaarVerification = require('../models/verifiedAdhaarModel.js');
 const { sendOtp, verifyOtp } = require('../utils/otpService.js');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const { generateSasUrl, deleteFromAzure } = require('../utils/azureBlob.js');
 const { default: mongoose } = require('mongoose');
 // const XLSX = require("xlsx");
@@ -22,6 +21,8 @@ const LoginEvent = require('../models/LoginEvent.js');
 const { handleMongoError } = require('../utils/handleMongoError.js');
 const ProfileAuditLog = require('../models/profileAuditLogModel.js');
 const { diffFields } = require('../utils/diffProfileFields.js');
+const { addGeekSession, removeGeekSession } = require('../utils/geekSessions.js');
+const { mintHandoffToken, consumeHandoffToken, setHandoffSession } = require('../utils/ssoHandoff.js');
 // Create new Geek
  const verifyOtpAndCreateGeek = asyncHandler(async (req, res) => {
 
@@ -33,14 +34,14 @@ const { diffFields } = require('../utils/diffProfileFields.js');
 
   mobile = mobile.replace(/\D/g, ''); // Remove non-digits
   mobile = mobile.length === 12 ? "+" + mobile : "+91" + mobile;
-  
+
+  // Check for an existing account BEFORE verifying: verifyOtp consumes the
+  // OTP, and the user still needs it to log in instead.
+  let geek = await Geek.findOne({ mobile });
+  if (geek) return res.status(409).json({ message: 'User already exists. Please login instead.' });
 
   const isVerified = await verifyOtp(mobile, otp);
   if (!isVerified) return res.status(401).json({ message: 'Invalid or expired OTP' });
-
-  // Check if user already exists
-  let geek = await Geek.findOne({ mobile });
-  if (geek) return res.status(409).json({ message: 'User already exists. Please login instead.' });
 
   // Create new user
   geek = await IndividualGeek.create({
@@ -65,10 +66,8 @@ const { diffFields } = require('../utils/diffProfileFields.js');
     expiresIn: '7d',
   });
 
-  // Hash the token and save it
-  const hashedToken = await bcrypt.hash(token, 10);
-  geek.authToken = hashedToken;
-  await geek.save();
+  // Record it as an active session (one of several devices)
+  await addGeekSession(geek._id, token);
 
   // Set the token in an HttpOnly cookie
   res.cookie('geek_auth_token', token, {
@@ -149,12 +148,6 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
     };
   
     const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '7d' });
-  
-    // Hash the token using bcrypt
-    const hashedToken = await bcrypt.hash(token, 10);
-  
-    // Save the hashed token to the user record in the database
-    user.authToken = hashedToken;
 
     LoginEvent.create({ userId: user._id, role: 'Geek', authProvider: 'custom' }).catch(() => {});
 
@@ -170,7 +163,10 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
     
     
     await user.save();
-  
+
+    // Record it as an active session; other devices stay logged in
+    await addGeekSession(user._id, token);
+
     // Store JWT token in HttpOnly cookie
     res.cookie('geek_auth_token', token, {
       httpOnly: true, // Can't be accessed by JavaScript
@@ -1276,6 +1272,8 @@ const verifyGeekAadhaar = asyncHandler(async (req, res) => {
       if (token) {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decoded.id;
+        // End only this device's session
+        await removeGeekSession(userId, token);
         const logoutAt = new Date();
         const event = await LoginEvent.findOne({ userId, role: 'Geek' }).sort({ createdAt: -1 });
         if (event && !event.logoutAt) {
@@ -1302,30 +1300,15 @@ const verifyGeekAadhaar = asyncHandler(async (req, res) => {
 // god-support) that shares this backend but can't read this site's session
 // cookie cross-site (CHIPS partitioning scopes it per top-level site).
 const getSsoHandoffToken = asyncHandler(async (req, res) => {
-  const token = jwt.sign(
-    { id: req.user.id, purpose: 'sso' },
-    process.env.JWT_SECRET,
-    { expiresIn: '60s' }
-  );
-  res.status(200).json({ token });
+  res.status(200).json({ token: mintHandoffToken(req.user.id) });
 });
 
-// Consumes a handoff token minted by getSsoHandoffToken and establishes a
-// normal session (cookie) for the site that calls this, without requiring
-// the geek to log in again there.
+// Consumes a handoff token minted by getSsoHandoffToken (once only) and
+// establishes a normal session (cookie) for the site that calls this, without
+// requiring the geek to log in again there.
 const exchangeSsoToken = asyncHandler(async (req, res) => {
-  const { token } = req.body;
-  if (!token) return res.status(400).json({ message: 'Token is required' });
-
-  let decoded;
-  try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET);
-  } catch (err) {
-    return res.status(401).json({ message: 'Invalid or expired token' });
-  }
-  if (decoded.purpose !== 'sso') {
-    return res.status(401).json({ message: 'Invalid token' });
-  }
+  const { decoded, status, message } = await consumeHandoffToken(req.body?.token);
+  if (!decoded) return res.status(status).json({ message });
 
   const geek = await Geek.findById(decoded.id).select('-authToken');
   if (!geek) return res.status(404).json({ message: 'Geek not found' });
@@ -1335,14 +1318,9 @@ const exchangeSsoToken = asyncHandler(async (req, res) => {
     process.env.JWT_SECRET,
     { expiresIn: '7d' }
   );
-
-  res.cookie('geek_auth_token', sessionToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-    partitioned: process.env.NODE_ENV === 'production',
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  });
+  // Without this, protectGeek would reject every handed-off session.
+  await addGeekSession(geek._id, sessionToken);
+  setHandoffSession(res, 'geek', sessionToken);
 
   res.status(200).json(geek);
 });
@@ -1739,11 +1717,12 @@ const verifyOtpAndCreateCorporateGeek = asyncHandler(async (req, res) => {
   mobile = mobile.replace(/\D/g, '');
   mobile = mobile.length === 12 ? '+' + mobile : '+91' + mobile;
 
-  const isVerified = await verifyOtp(mobile, otp);
-  if (!isVerified) return res.status(401).json({ message: 'Invalid or expired OTP' });
-
+  // Existence check first: verifyOtp consumes the OTP (see verifyOtpAndCreateGeek).
   const existing = await Geek.findOne({ mobile });
   if (existing) return res.status(409).json({ message: 'User already exists. Please login instead.' });
+
+  const isVerified = await verifyOtp(mobile, otp);
+  if (!isVerified) return res.status(401).json({ message: 'Invalid or expired OTP' });
 
   const cat = await Category.findById(primarySkill);
   if (cat) { cat.totalGeeks += 1; await cat.save(); }
@@ -1764,8 +1743,7 @@ const verifyOtpAndCreateCorporateGeek = asyncHandler(async (req, res) => {
 
   const tokenPayload = { id: geek._id, mobile: geek.mobile };
   const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '7d' });
-  geek.authToken = await bcrypt.hash(token, 10);
-  await geek.save();
+  await addGeekSession(geek._id, token);
 
   res.cookie('geek_auth_token', token, {
     httpOnly: true,

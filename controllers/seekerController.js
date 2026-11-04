@@ -8,6 +8,7 @@ const { ConfidentialClientApplication } = require('@azure/msal-node');
 const sendMail = require('../middlewares/sendMail');
 const msalClient = new ConfidentialClientApplication(msalConfig);
 const crypto = require('crypto');
+const { mintHandoffToken, consumeHandoffToken, setHandoffSession } = require('../utils/ssoHandoff.js');
 const { deleteFromAzure } = require('../utils/azureBlob');
 const { uploadToAzure } = require('../middlewares/azureUploads');
 const { handleMongoError } = require('../utils/handleMongoError');
@@ -35,12 +36,13 @@ const registerCustomUser = asyncHandler(async (req, res) => {
     phone = "+91" + phone; // 10-digit number, add country code
   }
 
+  // Check for an existing account BEFORE verifying: verifyOtp consumes the
+  // OTP, and the user still needs it to log in instead.
+  let user = await Seeker.findOne({ phone });
+  if (user) return res.status(409).json({ message: 'User already exists. Please login instead.' });
+
   const isVerified = await  verifyOtp(phone, otp);
   if (!isVerified) return res.status(401).json({ message: 'Invalid or expired OTP' });
-
-  // Check if user already exists
-  let user = await Seeker.findOne({ phone });
-  if (user) return res.status(404).json({ message: 'User already exists. Please login instead.' });
 
   // Create new user
   user = await Seeker.create({
@@ -285,19 +287,9 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
   
     
       
-      // Verify OTP logic (you can integrate with your OTP service)
-      const isVerified = await verifyOtp(phone, otp);
-      if (!isVerified) {
-        LoginEvent.create({
-          role: 'Seeker', authProvider: 'custom',
-          status: 'failed', failureReason: 'invalid_otp', identifier: phone,
-        }).catch(() => {});
-        return res.status(401).json({ message: 'Invalid or expired OTP' });
-      }
-
-      // Check if user exists by phone number
+      // Look the user up BEFORE verifying: verifyOtp consumes the OTP, and an
+      // unregistered user still needs it to register instead.
       let user = await Seeker.findOne({ phone });
-
 
       if (!user) {
         LoginEvent.create({
@@ -305,9 +297,17 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
           status: 'failed', failureReason: 'not_registered', identifier: phone,
         }).catch(() => {});
         return res.status(404).json({ message: 'User not Registered. Please Register First' });
-      } else {
-        user.isPhoneVerified = true;
       }
+
+      const isVerified = await verifyOtp(phone, otp);
+      if (!isVerified) {
+        LoginEvent.create({
+          userId: user._id, role: 'Seeker', authProvider: 'custom',
+          status: 'failed', failureReason: 'invalid_otp', identifier: phone,
+        }).catch(() => {});
+        return res.status(401).json({ message: 'Invalid or expired OTP' });
+      }
+      user.isPhoneVerified = true;
     
       // Generate JWT token for the user
       const tokenPayload = {
@@ -316,7 +316,9 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
         authProvider: user.authProvider,
       };
     
-      const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '1d' });
+      // Must match the cookie's 7-day maxAge below, or the browser keeps sending
+      // a dead token after day one and /seeker/me starts answering 403.
+      const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '7d' });
     
       // Hash the token using bcrypt
       const hashedToken = await bcrypt.hash(token, 10);
@@ -354,30 +356,15 @@ const verifyOtpAndLogin = asyncHandler(async (req, res) => {
 // god-support) that shares this backend but can't read this site's session
 // cookie cross-site (CHIPS partitioning scopes it per top-level site).
 const getSsoHandoffToken = asyncHandler(async (req, res) => {
-  const token = jwt.sign(
-    { id: req.user.id, purpose: 'sso' },
-    process.env.JWT_SECRET,
-    { expiresIn: '60s' }
-  );
-  res.status(200).json({ token });
+  res.status(200).json({ token: mintHandoffToken(req.user.id) });
 });
 
-// Consumes a handoff token minted by getSsoHandoffToken and establishes a
-// normal session (cookie) for the site that calls this, without requiring
-// the seeker to log in again there.
+// Consumes a handoff token minted by getSsoHandoffToken (once only) and
+// establishes a normal session (cookie) for the site that calls this, without
+// requiring the seeker to log in again there.
 const exchangeSsoToken = asyncHandler(async (req, res) => {
-  const { token } = req.body;
-  if (!token) return res.status(400).json({ message: 'Token is required' });
-
-  let decoded;
-  try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET);
-  } catch (err) {
-    return res.status(401).json({ message: 'Invalid or expired token' });
-  }
-  if (decoded.purpose !== 'sso') {
-    return res.status(401).json({ message: 'Invalid token' });
-  }
+  const { decoded, status, message } = await consumeHandoffToken(req.body?.token);
+  if (!decoded) return res.status(status).json({ message });
 
   const user = await Seeker.findById(decoded.id).select('-authToken');
   if (!user) return res.status(404).json({ message: 'User not found' });
@@ -388,13 +375,7 @@ const exchangeSsoToken = asyncHandler(async (req, res) => {
     { expiresIn: '7d' }
   );
 
-  res.cookie('auth_token', sessionToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-    partitioned: process.env.NODE_ENV === 'production',
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  });
+  setHandoffSession(res, 'seeker', sessionToken);
 
   res.status(200).json(user);
 });
@@ -430,7 +411,7 @@ const logout = asyncHandler(async (req, res) => {
 
 const getAllUsers = asyncHandler(async (req, res) => {
   try{
-    const users = await Seeker.find();
+    const users = await Seeker.find().select('-authToken');
     res.status(200).json({ users });
   } catch (err) {
     const { status, message } = handleMongoError(err);

@@ -4,6 +4,7 @@ const asyncHandler = require('express-async-handler');
 const Admin = require('../models/adminModel.js');
 const Seeker = require('../models/seekerModel.js');
 const { Geek } = require('../models/geekModel.js');
+const { hasGeekSession } = require('../utils/geekSessions.js');
 
 // Guards a destructive action on one account so that ONLY an authenticated
 // admin, or the owner of that exact account, may perform it.
@@ -29,15 +30,25 @@ const resolveAdmin = async (req) => {
 };
 
 // Geek and seeker sessions use different cookies, and mobile clients send a
-// Bearer header instead.
-const actorToken = (req) => {
+// Bearer header instead. The target model's own cookie is tried first so a
+// browser holding both sessions is judged by the right one.
+const actorToken = (req, modelName) => {
   const bearer = req.headers.authorization?.startsWith('Bearer')
     ? req.headers.authorization.split(' ')[1]
     : null;
-  return req.cookies?.geek_auth_token || req.cookies?.auth_token || bearer || null;
+  const own = modelName === 'Seeker' ? req.cookies?.auth_token : req.cookies?.geek_auth_token;
+  const other = modelName === 'Seeker' ? req.cookies?.geek_auth_token : req.cookies?.auth_token;
+  return own || bearer || other || null;
 };
 
-const allowAdminOrSelf = (modelName) => {
+// Options:
+// - `requireActiveSession` (default true) also demands that the token be a live
+//   session, so a logged-out token can't be replayed. Geeks keep a list of
+//   sessions (any device passes). Seekers only store their latest session, so
+//   for routine seeker edits turn this off, or a seeker logged in on two
+//   devices is locked out of editing on the older one.
+// - `param` (default 'id') names the route parameter holding the account id.
+const allowAdminOrSelf = (modelName, { requireActiveSession = true, param = 'id' } = {}) => {
   const Model = MODELS[modelName];
   if (!Model) throw new Error(`allowAdminOrSelf: unknown model "${modelName}"`);
 
@@ -49,7 +60,7 @@ const allowAdminOrSelf = (modelName) => {
       return next();
     }
 
-    const token = actorToken(req);
+    const token = actorToken(req, modelName);
     if (!token || token === 'null') {
       return res.status(401).json({ message: 'Not authorized, login required' });
     }
@@ -61,21 +72,29 @@ const allowAdminOrSelf = (modelName) => {
       return res.status(401).json({ message: 'Invalid or expired token' });
     }
 
-    const targetId = req.params.id;
+    const targetId = req.params[param];
     if (!decoded?.id || String(decoded.id) !== String(targetId)) {
-      return res.status(403).json({ message: 'You can only delete your own account' });
+      return res.status(403).json({ message: 'You can only access your own account' });
     }
 
-    const account = await Model.findById(targetId).select('authToken');
+    const account = await Model.findById(targetId)
+      .select(modelName === 'Geek' ? 'authToken +authTokens' : 'authToken')
+      .lean();
     if (!account) {
       return res.status(404).json({ message: `${modelName} not found` });
     }
 
-    // OTP logins store a bcrypt hash of the issued token, so logging out
-    // invalidates it. When one is present we require it to match, which stops a
-    // stale token being replayed. OAuth logins (e.g. loginWithGoogle) never set
-    // authToken, so the verified JWT is all those sessions have to offer.
-    if (account.authToken && !(await bcrypt.compare(token, account.authToken))) {
+    req.user = decoded;
+    if (!requireActiveSession) return next();
+
+    if (modelName === 'Geek') {
+      if (!(await hasGeekSession(account, token))) {
+        return res.status(401).json({ message: 'Invalid or expired token. Login again.' });
+      }
+    } else if (account.authToken && !(await bcrypt.compare(token, account.authToken))) {
+      // Seeker OTP logins store a bcrypt hash of the latest token, so logging
+      // out invalidates it. OAuth logins (e.g. loginWithGoogle) never set
+      // authToken, so the verified JWT is all those sessions have to offer.
       return res.status(401).json({ message: 'Invalid or expired token. Login again.' });
     }
 

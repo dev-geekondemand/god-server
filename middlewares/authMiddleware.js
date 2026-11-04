@@ -19,6 +19,25 @@ const Admin = require('../models/adminModel.js');
 };
 
 
+// Same as authenticateJWT, but for geek-only routes (e.g. /geek/me): reads the
+// geek cookie first, so a browser that also holds a seeker session isn't
+// resolved to the seeker (which made /geek/me answer "Geek not found").
+const authenticateGeekJWT = (req, res, next) => {
+  const token = req.cookies?.geek_auth_token || req.headers['authorization']?.split(' ')[1] || req.cookies?.auth_token;
+
+  if (!token) {
+    return res.status(403).json({ message: "No token provided, authorization denied." });
+  }
+
+  try {
+    req.user = jwt.verify(token, process.env.JWT_SECRET);
+    next();
+  } catch (err) {
+    return res.status(403).json({ message: 'Invalid token' });
+  }
+};
+
+
 const authenticateMobileJWT = (req, res, next) => {
   const token = req.headers['authorization']?.split(' ')[1] || req.cookies?.auth_token || req.cookies?.geek_auth_token // Get token from cookies;
   if (!token || token === 'null') {
@@ -63,4 +82,4 @@ const protectAdmin = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = { authenticateJWT, protectAdmin, authenticateMobileJWT };
+module.exports = { authenticateJWT, authenticateGeekJWT, protectAdmin, authenticateMobileJWT };

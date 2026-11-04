@@ -82,7 +82,9 @@ const uploadToAzure = async (file) => {
 
 const uploadValidator = async (req, res, next) => {
   try {
-    
+    // No multipart files at all (e.g. a plain request) — nothing to validate.
+    if (!req.files) return next();
+
     if (req.files.images) {
       await Promise.all(
         req.files.images.map(async (file) => {

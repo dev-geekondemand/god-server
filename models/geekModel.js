@@ -120,8 +120,16 @@ const GeekSchema = new mongoose.Schema({
     required:true
   },
   reviews:[ReviewSchema],
+  // Legacy single-session bcrypt hash; superseded by authTokens (see utils/geekSessions.js).
   authToken:{
     type:String
+  },
+  // SHA-256 fingerprints of active session JWTs, newest last. Never returned by
+  // default — load with .select('+authTokens').
+  authTokens:{
+    type:[String],
+    select:false,
+    default:undefined
   },
   services:[{
     type: mongoose.Schema.Types.ObjectId,

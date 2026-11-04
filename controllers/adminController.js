@@ -44,9 +44,9 @@ const registerAdmin = asyncHandler(async (req, res) => {
   const existing = await Admin.findOne({ email });
   if (existing) return res.status(400).json({ message: 'Admin already exists' });
 
+  // No login cookie here: the caller is an existing admin creating someone
+  // else's account, and must stay logged in as themselves.
   const admin = await Admin.create({ name, email, password });
-  res.cookie('admin', generateToken(admin._id), { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-
 
   res.status(201).json({
     _id: admin._id,

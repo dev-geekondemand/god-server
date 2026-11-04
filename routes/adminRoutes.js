@@ -39,7 +39,9 @@ const router = express.Router();
 
 // Auth
 router.post('/admin-login', loginAdmin);
-router.post('/register', registerAdmin);
+// Only an existing admin may create another admin. Left open, anyone could mint
+// an admin cookie and pass every protectAdmin route.
+router.post('/register', protectAdmin, registerAdmin);
 router.get('/load-admin', protectAdmin, loadAdmin);
 router.get('/all', protectAdmin, getAllAdmins);
 

@@ -38,7 +38,11 @@ const client = new OAuth2Client(process.env.GOOGLE_OAUTH_MOBILE_CLIENT_ID);
 const msalClient = new ConfidentialClientApplication(msalConfig);
 
 const profileImageUploader = singleUploader(['image/jpeg', 'image/png'], 'profileImage');
+// Seeker data is readable/editable only by that seeker or an admin.
+const seekerSelfOrAdmin = allowAdminOrSelf('Seeker', { requireActiveSession: false });
+
 router.post('/:id/profile-image',
+  seekerSelfOrAdmin, // before the uploader, so unauthorised uploads never land
   uploadLimiter,
   profileImageUploader,
   updateProfileImage
@@ -57,7 +61,8 @@ router.post('/custom/send-otp', sendOtpToPhone);
 router.post('/custom/register', registerCustomUser);
 router.post('/seekers-by-refCode',protectAdmin, getSeekersByRefCode);
 router.post('/seeker-login', verifyOtpAndLogin);
-router.get('/get-all',getAllUsers)
+// Full seeker list (PII) — admin only. The API key alone is public.
+router.get('/get-all', protectAdmin, getAllUsers)
 router.delete('/delete',authenticateMobileJWT, deleteUser);
 // Delete — admin, or the seeker deleting their own account. Nothing else.
 router.delete('/:id', allowAdminOrSelf('Seeker'), deleteSeekerByAdmin);
@@ -140,7 +145,7 @@ router.post('/logout', logout);
 router.get('/sso-handoff', authenticateJWT, getSsoHandoffToken);
 router.post('/sso-exchange', exchangeSsoToken);
 
-router.put('/:id/address', authenticateJWT, updateAddress);
+router.put('/:id/address', seekerSelfOrAdmin, updateAddress);
 router.put('/update-profile', authenticateJWT, updateProfile);
 
 router.post('/verify-mail', authenticateJWT,sendVerificationEmail);

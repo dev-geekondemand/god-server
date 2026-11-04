@@ -1,14 +1,17 @@
 const express = require('express');
 const { createRequestWithSelectedGeek, getMatchedGeeks,acceptRequest, rejectRequest, cancelRequest, getGeekRequests, getSeekerRequests, getRequestById, completeRequest, autoRejectRequest, addReviewBySeeker } =require('../controllers/requestController.js');
 const protectGeek = require('../middlewares/protectGeek.js');
-const { authenticateMobileJWT } = require('../middlewares/authMiddleware.js');
+const { authenticateMobileJWT, protectAdmin } = require('../middlewares/authMiddleware.js');
 
 const router = express.Router();
 
 const { azureUploader, uploadValidator, uploadLimiter } = require("../middlewares/azureUploads.js");
 
+// Login is checked first so anonymous callers never get their files buffered
+// and processed (sharp / ffmpeg) by the uploader and validator.
 router.put(
   '/:id/complete',
+  protectGeek,
   uploadLimiter,
   azureUploader(
     ['image/jpeg', 'image/png', 'video/mp4'],
@@ -18,7 +21,6 @@ router.put(
     ]
   ),
   uploadValidator,
-  protectGeek,
   completeRequest
 );
 
@@ -31,7 +33,9 @@ router.get('/:id', authenticateMobileJWT, getRequestById);
 router.post('/:id/accept', protectGeek, acceptRequest);
 router.post('/:id/reject',protectGeek, rejectRequest);
 router.put('/:id/cancel', authenticateMobileJWT, cancelRequest);
-router.put('/:id/auto-reject',autoRejectRequest);
+// Expiry runs automatically every hour (cron in index.js); this is only an
+// admin's manual "run it now". The :id is ignored — it sweeps all requests.
+router.put('/:id/auto-reject', protectAdmin, autoRejectRequest);
 router.put('/:id/add-seeker-review',authenticateMobileJWT, addReviewBySeeker);
 
 

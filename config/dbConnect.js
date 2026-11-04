@@ -7,12 +7,14 @@ const dbConnect = ()=>{
             authSource: "admin",
         })
         // console.log(process.env.MONGODB_URL)
-        connection.then(()=>{console.log("✅ Connected to DB");})
+        connection
+            .then(()=>{console.log("✅ Connected to DB");})
+            .catch((e)=>{console.error("❌ Database connection error:", e.message);})
     }catch(e){
-        console.error("❌ Database connection error:", e.message); 
+        console.error("❌ Database connection error:", e.message);
     }
 }
- 
+
 
 // const dbConnect = ()=>{ 
 //     try{

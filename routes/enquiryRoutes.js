@@ -6,8 +6,9 @@ const { enquiryLimiter } = require('../middlewares/rateLimiter.js');
 const router = express.Router();
 
 router.post('/', enquiryLimiter, createEnquiry);
-router.get('/', getAllEnquiries);
-router.get('/:id', getEnquiryById);
+// Submitters' names, emails and phones — admin only.
+router.get('/', protectAdmin, getAllEnquiries);
+router.get('/:id', protectAdmin, getEnquiryById);
 router.put('/:id',protectAdmin, updateEnquiryById);
 router.delete('/:id',protectAdmin, deleteEnquiryById);
 
