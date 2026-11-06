@@ -46,7 +46,7 @@ const requestRefund = asyncHandler(async (req, res) => {
     geek: geekId,
     razorpayPaymentId: sub.razorpayPaymentId,
     plan: sub.plan,
-    amount: PLANS[sub.plan].amount,
+    amount: PLANS[sub.plan].baseAmount, // GST is non-refundable
     reason: reason.trim(),
     status: 'requested',
   });

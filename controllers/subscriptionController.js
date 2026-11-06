@@ -7,9 +7,18 @@ const AuditLog = require('../models/auditLogModel.js');
 const Refund = require('../models/refundModel.js');
 const { sendSubscriptionSMS, sendRefundProcessedSMS } = require('../utils/subscriptionNotifications.js');
 
+// Amounts in paise. Plan prices are exclusive of GST: `baseAmount` is the listed
+// price, `amount` is what the geek is charged (base + 18% GST) and must match the
+// Razorpay plan behind each plan ID. Refunds cover `baseAmount` only.
+const GST_RATE = 0.18;
+const withGst = (basePaise) => {
+  const gstAmount = Math.round(basePaise * GST_RATE);
+  return { baseAmount: basePaise, gstAmount, amount: basePaise + gstAmount };
+};
+
 const PLANS = {
-  Advance: { amount: 49900, razorpayPlanId: () => process.env.RAZORPAY_PLAN_ADVANCE_ID },
-  Professional: { amount: 99900, razorpayPlanId: () => process.env.RAZORPAY_PLAN_PROFESSIONAL_ID },
+  Advance: { ...withGst(49900), razorpayPlanId: () => process.env.RAZORPAY_PLAN_ADVANCE_ID },
+  Professional: { ...withGst(99900), razorpayPlanId: () => process.env.RAZORPAY_PLAN_PROFESSIONAL_ID },
 };
 
 let _razorpay;
@@ -111,6 +120,8 @@ const createSubscription = asyncHandler(async (req, res) => {
     razorpayKeyId: process.env.RAZORPAY_KEY_ID,
     plan,
     amount: PLANS[plan].amount,
+    baseAmount: PLANS[plan].baseAmount,
+    gstAmount: PLANS[plan].gstAmount,
   });
 });
 
@@ -258,6 +269,8 @@ const changePlan = asyncHandler(async (req, res) => {
       razorpayKeyId: process.env.RAZORPAY_KEY_ID,
       plan: newPlan,
       amount: PLANS[newPlan].amount,
+      baseAmount: PLANS[newPlan].baseAmount,
+      gstAmount: PLANS[newPlan].gstAmount,
     });
   }
 
@@ -420,7 +433,7 @@ const handleWebhook = asyncHandler(async (req, res) => {
       const { oldPlan } = await activatePlan(geek, sub, sub.plan, rzpPayment?.id);
       await log(
         sub.geek, 'payment_success', null, null,
-        { razorpay_payment_id: rzpPayment?.id, renewal: true, plan: sub.plan, amount: PLANS[sub.plan]?.amount },
+        { razorpay_payment_id: rzpPayment?.id, renewal: true, plan: sub.plan, amount: rzpPayment?.amount ?? PLANS[sub.plan]?.amount },
         'razorpay'
       );
       await log(sub.geek, 'subscription_renewed', oldPlan, sub.plan, {}, 'razorpay');
